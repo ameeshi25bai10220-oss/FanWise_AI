@@ -1,0 +1,11 @@
+fan_id,room_type,raw_records,exact_duplicates_removed,duplicate_pct,null_datetime_removed,sentinel_255_removed,out_of_range_sensors_removed,invalid_speed_op_removed,total_excluded_records,final_clean_records,reconciled_exact_check
+Bedroom_Fan_1,Bedroom,79384,6705,8.45,0,7,0,0,6712,72672,True
+Bedroom_Fan_2,Bedroom,179243,129802,72.42,0,22,0,0,129824,49419,True
+Bedroom_Fan_3,Bedroom,110409,84,0.08,0,2,0,0,86,110323,True
+Drawingroom_Fan_1,Drawingroom,60444,46,0.08,0,28,22,0,96,60348,True
+Drawingroom_Fan_2,Drawingroom,43529,3038,6.98,0,2,0,0,3040,40489,True
+Drawingroom_Fan_3,Drawingroom,77764,25,0.03,0,2,0,0,27,77737,True
+Lounge_Fan_1,Lounge,21305,26,0.12,0,28,0,0,54,21251,True
+Lounge_Fan_2,Lounge,55488,20,0.04,1,11,0,0,32,55456,True
+Lounge_Fan_3,Lounge,47766,41,0.09,1,558,4,0,604,47162,True
+TOTAL_ALL_FANS,ALL,675332,139787,20.7,2,660,26,0,140475,534857,True
