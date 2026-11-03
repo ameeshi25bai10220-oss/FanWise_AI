@@ -1,0 +1,73 @@
+{
+  "model_name": "XGBoost",
+  "class_names": [
+    "Cold",
+    "Neutral",
+    "Hot"
+  ],
+  "class_mapping": {
+    "Cold": 0,
+    "Neutral": 1,
+    "Hot": 2
+  },
+  "tsv_to_class_rule": "TSV <= -1 \u2192 Cold (0); TSV == 0 \u2192 Neutral (1); TSV >= 1 \u2192 Hot (2)",
+  "numeric_features": [
+    "Air temperature (C)",
+    "Relative humidity (%)",
+    "Air velocity (m/s)",
+    "Outdoor monthly air temperature (C)",
+    "Clo",
+    "Met"
+  ],
+  "categorical_features": [
+    "Season",
+    "Building type",
+    "Cooling startegy_building level"
+  ],
+  "all_features": [
+    "Air temperature (C)",
+    "Relative humidity (%)",
+    "Air velocity (m/s)",
+    "Outdoor monthly air temperature (C)",
+    "Clo",
+    "Met",
+    "Season",
+    "Building type",
+    "Cooling startegy_building level"
+  ],
+  "training_rows": 114375,
+  "val_results": {
+    "Logistic Regression": {
+      "accuracy": 0.4124,
+      "macro_precision": 0.419,
+      "macro_recall": 0.457,
+      "macro_f1": 0.3705,
+      "weighted_f1": 0.3517
+    },
+    "Random Forest": {
+      "accuracy": 0.4344,
+      "macro_precision": 0.4373,
+      "macro_recall": 0.4347,
+      "macro_f1": 0.4353,
+      "weighted_f1": 0.4362
+    },
+    "XGBoost": {
+      "accuracy": 0.4415,
+      "macro_precision": 0.4497,
+      "macro_recall": 0.445,
+      "macro_f1": 0.4446,
+      "weighted_f1": 0.4439
+    }
+  },
+  "test_results": {
+    "model": "XGBoost",
+    "accuracy": 0.4658,
+    "macro_precision": 0.4502,
+    "macro_recall": 0.4522,
+    "macro_f1": 0.4511,
+    "weighted_f1": 0.4666
+  },
+  "smote_applied": true,
+  "random_state": 42,
+  "group_split_key": "Data contributor"
+}
