@@ -43,3 +43,10 @@ Thumbs.db
 catboost_info/
 .ipynb_checkpoints/
 *.tmp
+
+# Raw Datasets (>150MB) - Excluded from GitHub repository tracking
+archive (2)/
+archive (3)/
+RDD Datset/
+SupplementaryData/
+doi_10_6078_D1V67R__v20180717/
