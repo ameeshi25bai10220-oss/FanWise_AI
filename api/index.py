@@ -1,10 +1,10 @@
 """
 FanWise AI / AACI - Vercel Serverless API & Web Application
 ============================================================
-Exposes the complete 3-Model integrated AACI software pipeline on Vercel:
-  - Model 1: Thermal Comfort Intelligence (ASHRAE DB-II)
+Lightweight serverless runtime for Vercel deployment:
+  - Model 1: Thermal Comfort Intelligence (ASHRAE DB-II 900 XGBoost trees)
   - Model 2: Occupancy Intelligence (Modules 1 & 2 Spatial)
-  - Model 3: Energy Intelligence (Physics Engine + ML Advisory)
+  - Model 3: Energy Intelligence (Physics Engine + LightGBM Advisory)
   - Fan Digital Twin Virtual Runtime & TwinSupervisor
   - Multi-Objective Adaptive Controller & Safety Guard (P1-P5)
 
@@ -15,36 +15,42 @@ Routes:
   POST /api/override         -> Set manual user override (P2 priority)
   POST /api/override/clear   -> Clear manual user override
   GET  /api/twins            -> Inspect fleet of virtual fan digital twins
-  GET  /api/demo/<int:id>    -> Execute preconfigured demo scenarios (1-6)
 """
 
 import os
 import sys
-import time
 from typing import Any, Dict
 
-# Ensure project root is in sys.path for absolute imports
+# Ensure project root is in sys.path
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 from flask import Flask, jsonify, render_template, request
 
-# Import integrated AACI pipeline
-from aaci_ml.system_architecture.integration.pipeline import AACIPipeline
+# Try importing LightweightPipeline (fast serverless runner ~55MB bundle)
+# Fallback to AACIPipeline if heavy ML dependencies are present
+try:
+    from api.lightweight_pipeline import LightweightPipeline
+    pipeline_class = LightweightPipeline
+    engine_type = "Lightweight Pure-NumPy Engine (~55MB)"
+except Exception:
+    from aaci_ml.system_architecture.integration.pipeline import AACIPipeline
+    pipeline_class = AACIPipeline
+    engine_type = "Full C++ AACIPipeline"
 
 # Initialize Flask app
 templates_dir = os.path.join(ROOT_DIR, "templates")
 app = Flask(__name__, template_folder=templates_dir)
 
-# Global pipeline instance (cached across serverless warm invocations)
+# Global pipeline instance
 _pipeline_instance = None
 
 
-def get_pipeline() -> AACIPipeline:
+def get_pipeline():
     global _pipeline_instance
     if _pipeline_instance is None:
-        _pipeline_instance = AACIPipeline()
+        _pipeline_instance = pipeline_class()
     return _pipeline_instance
 
 
@@ -72,6 +78,7 @@ def health():
         "service": "FanWise AI - AACI Multi-Model Pipeline",
         "version": "Phase 5 - Stage 5",
         "platform": "Vercel Serverless Python",
+        "engine": engine_type,
         "models": {
             "model_1_comfort": "AVAILABLE (ASHRAE DB-II XGBoost)",
             "model_2_occupancy": "AVAILABLE (Module 1 XGBoost + Module 2 Spatial)",
@@ -79,7 +86,6 @@ def health():
         },
         "digital_twin": "ACTIVE",
         "adaptive_controller": "ACTIVE",
-        "active_fans": pipe._twin_supervisor.list_active_fans(),
     })
 
 
@@ -95,7 +101,6 @@ def recommend():
     payload = request.get_json(silent=True) or {}
     pipe = get_pipeline()
 
-    # Fallback to sensible defaults if fields omitted
     telemetry: Dict[str, Any] = {
         "fan_id": payload.get("fan_id", "Bedroom_Fan_1"),
         "temperature_c": float(payload.get("temperature_c", 30.5)),
@@ -115,7 +120,9 @@ def recommend():
             fan_id=telemetry["fan_id"],
             provenance=telemetry["provenance"],
         )
-        return jsonify(result.to_dict()), 200
+        # Handle dict or dataclass
+        out = result if isinstance(result, dict) else result.to_dict()
+        return jsonify(out), 200
     except Exception as exc:
         return jsonify({
             "error": "Pipeline execution failed",
@@ -160,7 +167,7 @@ def clear_override():
 def get_twins():
     """Returns digital twin virtual state for all managed fans."""
     pipe = get_pipeline()
-    twins_state = pipe._twin_supervisor.inspect_all_twins()
+    twins_state = getattr(pipe, "_twins", {})
     return jsonify({
         "active_twins_count": len(twins_state),
         "twins": twins_state,
@@ -170,4 +177,3 @@ def get_twins():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
