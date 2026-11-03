@@ -1,94 +1,46 @@
 # FanWise AI / AACI - Vercel Deployment Guide
 
-This project is fully configured for zero-configuration serverless deployment on [Vercel](https://vercel.com).
+This project integrates three production Machine Learning models (Thermal Comfort, Occupancy Intelligence, and Energy Modeling) into a single unified software pipeline.
 
 ---
 
-## 1. Architecture on Vercel
+## 1. The 729 MB Dependency Bundle & Vercel Large Functions
+
+Because the pipeline incorporates **XGBoost**, **LightGBM**, **Scikit-Learn** (with **SciPy**), **Pandas**, and **NumPy**, the uncompressed Linux runtime bundle is approximately **~729 MB**.
+
+Standard serverless functions on AWS Lambda have a legacy ceiling of 250 MB uncompressed, which triggers `[LAMBDA_SIZE_EXCEEDED]`.
+
+### The Solution: Enable Vercel Large Functions (Free on Hobby & Pro)
+Vercel's **Fluid Compute** supports **Large Functions up to 5 GB** for heavy data science and ML workloads.
+
+To enable this:
+1. Open your project on the **[Vercel Dashboard](https://vercel.com)**.
+2. Go to **Settings** → **Environment Variables**.
+3. Add a new variable:
+   - **Key / Name:** `VERCEL_SUPPORT_LARGE_FUNCTIONS`
+   - **Value:** `1`
+   - **Target:** Check *Production*, *Preview*, and *Development*.
+4. Save and click **Redeploy** on your latest deployment.
+
+---
+
+## 2. Modern Configuration Overview
 
 ```
-FanWise AI (Vercel Serverless)
-├── api/index.py            ← Vercel serverless entrypoint (Flask WSGI)
-│   ├── /                   ← Interactive Web Dashboard
-│   ├── /api/health         ← Diagnostics & 3-model availability
-│   ├── /api/recommend      ← End-to-end 22-field AACI pipeline execution
-│   ├── /api/override       ← Manual user override (P2)
-│   └── /api/twins          ← Digital twin fleet inspection
-├── templates/index.html    ← Modern Tailwind CSS interactive UI
-├── vercel.json             ← @vercel/python configuration & routing
-├── .vercelignore           ← Excludes raw datasets (>150MB) to stay within bundle limits
-└── requirements.txt        ← Production serverless runtime dependencies
-```
-
----
-
-## 2. Deploying via Vercel Web Dashboard (Recommended)
-
-1. Log in to [vercel.com](https://vercel.com) with your GitHub account.
-2. Click **"Add New..."** → **"Project"**.
-3. Select your repository: `FanWise_AI` (`bhargav25bai10209-blip/FanWise_AI`).
-4. **Build and Output Settings:** Leave default (Vercel automatically detects `vercel.json`).
-5. Click **"Deploy"**.
-6. Deployment will complete in ~1–2 minutes!
-
----
-
-## 3. Deploying via Vercel CLI (Alternative)
-
-If you have Node.js and the Vercel CLI installed:
-
-```bash
-npm install -g vercel
-vercel login
-vercel --prod
+FanWise AI
+├── api/index.py            ← Serverless entrypoint (Flask)
+├── templates/index.html    ← Tailwind CSS web interface
+├── vercel.json             ← Modern rewrites (no legacy 'builds')
+├── .python-version         ← Python 3.12 pinned runtime
+├── .vercelignore           ← Excludes raw datasets (>150MB) and test logs
+└── requirements.txt        ← Production inference dependencies
 ```
 
 ---
 
-## 4. Live API Endpoints
+## 3. Live Endpoints
 
-Once deployed at `https://your-project.vercel.app`:
-
-### A. Web Dashboard
-- `GET /` — Full interactive control console with live sliders, animated virtual fan, presets, and 3-model intelligence cards.
-
-### B. Health Diagnostics
-```http
-GET /api/health
-```
-**Response:**
-```json
-{
-  "status": "healthy",
-  "service": "FanWise AI - AACI Multi-Model Pipeline",
-  "version": "Phase 5 - Stage 5",
-  "platform": "Vercel Serverless Python",
-  "models": {
-    "model_1_comfort": "AVAILABLE (ASHRAE DB-II XGBoost)",
-    "model_2_occupancy": "AVAILABLE (Module 1 XGBoost + Module 2 Spatial)",
-    "model_3_energy": "AVAILABLE (Physics Engine + LightGBM Advisory)"
-  },
-  "digital_twin": "ACTIVE",
-  "adaptive_controller": "ACTIVE",
-  "active_fans": ["Bedroom_Fan_1"]
-}
-```
-
-### C. Recommendation Endpoint
-```http
-POST /api/recommend
-Content-Type: application/json
-
-{
-  "temperature_c": 31.0,
-  "relative_humidity_pct": 65.0,
-  "light_lux": 500.0,
-  "co2_ppm": 1200.0,
-  "fan_speed": 2,
-  "fan_mode": "BLDC",
-  "room_category": "Bedroom"
-}
-```
-**Response (22-Field Contract):**
-Returns the complete `IntegrationResult` JSON including `recommended_speed` (0–5), `decision_explanation`, `model1_result`, `model2_result`, `model3_result`, `candidate_scores`, and mandatory value provenance.
-
+Once deployed:
+- `GET /` — Interactive web dashboard with animated virtual ceiling fan, real-time sensor sliders, and 3-model intelligence cards.
+- `GET /api/health` — Diagnostics confirming availability of Model 1, Model 2, Model 3, and Digital Twin.
+- `POST /api/recommend` — Executes full AACI pipeline and returns 22-field `IntegrationResult` with recommended fan speed (0–5).
