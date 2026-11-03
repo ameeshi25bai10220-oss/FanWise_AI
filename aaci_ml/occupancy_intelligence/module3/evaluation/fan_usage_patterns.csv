@@ -1,0 +1,10 @@
+fan_id,room_type,clean_records,calendar_days,active_days,total_run_hours,daily_run_hours,duty_cycle_pct,fan_on_packet_pct,modal_speed,mean_speed_on,mean_power_on_W,total_eSpent_kWh,total_eSaved_kWh,total_sessions,median_session_min,mean_session_min,night_session_median_min,day_session_median_min,max_session_hours
+Bedroom_Fan_1,Bedroom,72672,304,168,7254.2,43.18,99.43,98.16,1,2.11,18.86,152.65,179.63,2333,13.0,35.1,12.0,13.0,80.8
+Bedroom_Fan_2,Bedroom,49419,433,407,5498.5,13.51,52.91,88.55,5,4.24,38.8,208.77,222.13,5969,8.0,17.3,8.0,8.0,11.3
+Bedroom_Fan_3,Bedroom,110323,522,522,6524.3,12.5,52.08,43.2,5,3.84,34.26,215.12,239.58,7792,8.0,15.5,6.0,9.0,3.5
+Drawingroom_Fan_1,Drawingroom,60348,533,449,5762.8,12.83,45.05,84.75,5,4.34,39.55,235.99,248.02,5916,9.0,23.3,10.0,9.0,18.0
+Drawingroom_Fan_2,Drawingroom,40489,448,309,3992.1,12.92,37.13,77.3,5,3.42,30.62,126.71,139.99,2966,10.0,20.9,9.0,10.0,15.3
+Drawingroom_Fan_3,Drawingroom,77737,333,298,1900.0,6.38,23.77,97.8,1,2.94,24.24,56.87,65.86,1553,17.0,61.1,24.0,17.0,20.0
+Lounge_Fan_1,Lounge,21251,251,128,906.2,7.08,15.04,61.75,5,3.48,31.24,24.53,28.92,816,15.0,38.0,17.0,15.0,10.5
+Lounge_Fan_2,Lounge,55456,360,315,6758.1,21.45,78.22,93.67,5,3.76,34.11,247.88,265.03,4902,14.0,27.3,15.0,14.0,8.4
+Lounge_Fan_3,Lounge,47162,450,383,5557.2,14.51,51.46,75.1,5,4.46,41.09,231.23,243.35,5497,5.0,14.6,4.0,5.0,11.1

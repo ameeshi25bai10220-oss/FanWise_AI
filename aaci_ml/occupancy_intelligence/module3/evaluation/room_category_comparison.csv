@@ -1,0 +1,4 @@
+room_type,clean_records,total_run_hours,daily_run_hours,duty_cycle_pct,fan_on_packet_pct,mean_power_on_W,total_eSpent_kWh,total_eSaved_kWh,median_session_min,night_session_median_min,day_session_median_min
+Bedroom,232414,19277.0,23.06,68.14,76.64,30.64,576.54,641.34,9.67,8.67,10.0
+Drawingroom,178574,11654.9,10.71,35.32,86.62,31.47,419.57,453.87,12.0,14.33,12.0
+Lounge,123869,13221.5,14.35,48.24,76.84,35.48,503.64,537.3,11.33,12.0,11.33
