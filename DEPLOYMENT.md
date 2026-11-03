@@ -91,3 +91,4 @@ Content-Type: application/json
 ```
 **Response (22-Field Contract):**
 Returns the complete `IntegrationResult` JSON including `recommended_speed` (0–5), `decision_explanation`, `model1_result`, `model2_result`, `model3_result`, `candidate_scores`, and mandatory value provenance.
+
