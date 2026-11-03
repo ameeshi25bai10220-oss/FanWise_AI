@@ -1,0 +1,6 @@
+held_out_room_id,held_out_room_type,train_sample_count,test_sample_count,best_rf_unseen_mae,best_rf_within_one_acc
+1,Lecture Room 1,43776,8352,1.375,0.7178
+2,Lecture Room 2,43776,8352,1.232,0.7304
+3,Office Space 3,43776,8352,1.044,0.6807
+4,Office Space 4,38592,13536,1.901,0.4959
+5,Library Space 5,38592,13536,1.146,0.6672

@@ -1,0 +1,6 @@
+room_id,room_type,total_records,valid_timestamps,first_timestamp,last_timestamp,calendar_span_days,unique_calendar_dates,actual_observed_intervals,actual_observed_hours,calendar_nominal_hours,gaps_gt_10min,gaps_gt_30min,gaps_gt_60min
+1,Lecture Room 1,8352,8352,2021-09-07 00:00:00+08:00,2021-12-23 23:55:00+08:00,108.0,29,8352,696.0,696.0,7,7,7
+2,Lecture Room 2,8352,8352,2021-09-07 00:00:00+08:00,2021-12-23 23:55:00+08:00,108.0,29,8352,696.0,696.0,7,7,7
+3,Office Space 3,8352,8352,2021-09-07 00:00:00+08:00,2021-12-23 23:55:00+08:00,108.0,29,8352,696.0,696.0,7,7,7
+4,Office Space 4,13536,13536,2021-09-07 00:00:00+08:00,2021-12-23 23:55:00+08:00,108.0,47,13536,1128.0,1128.0,11,11,11
+5,Library Space 5,13536,13536,2021-09-07 00:00:00+08:00,2021-12-23 23:55:00+08:00,108.0,47,13536,1128.0,1128.0,11,11,11

@@ -1,0 +1,6 @@
+room_id,room_type,valid_observations,occupied_observations,utilization_rate_pct,mean_headcount_occupied,peak_headcount,total_sessions_count,gap_aware_mean_session_min,gap_aware_median_session_min,gap_aware_max_session_min,peak_usage_window,peak_usage_avg_headcount
+1,Lecture Room 1,8352,1760,21.07,7.61,38,62,141.9,82.5,630.0,15:00 - 16:00,4.3
+2,Lecture Room 2,8352,2374,28.42,4.25,22,63,188.4,150.0,680.0,15:00 - 16:00,5.71
+3,Office Space 3,8352,3333,39.91,3.89,13,40,416.6,502.5,870.0,14:00 - 15:00,4.71
+4,Office Space 4,13536,8813,65.11,5.12,18,62,710.7,885.0,2540.0,15:00 - 16:00,8.64
+5,Library Space 5,13536,5759,42.55,4.39,16,78,369.2,427.5,755.0,15:00 - 16:00,5.4

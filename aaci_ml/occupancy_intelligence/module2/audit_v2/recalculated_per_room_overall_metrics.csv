@@ -1,0 +1,6 @@
+room_id,room_type,total_test_samples,overall_mae,overall_rmse,within_one_acc,exact_acc,empty_room_mae,empty_room_exact_acc
+1,Lecture Room 1,1253,0.256,0.522,0.9385,0.8284,0.252,0.8304
+2,Lecture Room 2,1253,1.051,2.446,0.7861,0.7398,0.195,0.9454
+3,Office Space 3,1253,0.51,0.915,0.8029,0.6816,0.354,0.784
+4,Office Space 4,2031,0.631,0.955,0.771,0.5707,0.237,0.8912
+5,Library Space 5,2031,0.257,0.501,0.9306,0.8045,0.15,0.9105
