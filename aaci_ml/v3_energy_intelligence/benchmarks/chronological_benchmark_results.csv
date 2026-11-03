@@ -1,0 +1,8 @@
+model,split,mae_wh,rmse_wh,r2_score,mae_joules,mape_percent,mdape_percent,inactive_accuracy_percent,latency_us,model_size_kb
+Persistence Baseline,Chronological Test,1.4818,2.6158,-0.6114,5334.48,205.69,83.43,67.92,0.0,0.0
+Global Historical Mean,Chronological Test,1.2404,2.0938,-0.0324,4465.45,182.83,84.91,0.0,0.0,0.0
+Fan-Specific Mean,Chronological Test,1.2968,2.1436,-0.0821,4668.56,207.0,81.71,0.0,0.0,0.0
+Ridge Regression,Chronological Test,1.1917,1.9068,0.1438,4290.1,176.65,82.31,40.06,0.07,0.77
+Random Forest,Chronological Test,1.2088,1.903,0.1472,4351.5,182.14,81.93,34.39,0.74,5217.94
+LightGBM Regressor,Chronological Test,1.1873,1.8982,0.1515,4274.12,171.08,80.85,33.08,0.48,301.77
+XGBoost Regressor,Chronological Test,1.1853,1.8979,0.1517,4267.1,171.93,80.63,33.01,0.26,474.53

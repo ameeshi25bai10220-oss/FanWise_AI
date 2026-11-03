@@ -1,0 +1,10 @@
+fan_id,total_records,temp_255_count,hum_255_count,both_255_count,only_temp_255,only_hum_255,temp_zero_count,hum_zero_count,temp_neg_count,hum_neg_count,temp_high_abnormal,hum_high_abnormal,valid_temp_min_C,valid_temp_max_C,valid_temp_mean_C,valid_hum_min_pct,valid_hum_max_pct,valid_hum_mean_pct
+Bedroom_Fan_1,79384,8,8,8,0,0,0,0,0,0,0,0,19.0,40.0,32.82,17.0,95.0,63.82
+Bedroom_Fan_2,179243,22,22,22,0,0,0,0,0,0,0,0,21.0,41.0,34.42,10.0,90.0,57.49
+Bedroom_Fan_3,110409,2,2,2,0,0,0,0,0,0,0,0,20.0,41.0,31.31,10.0,89.0,44.4
+Drawingroom_Fan_1,60444,29,29,29,0,0,22,22,0,0,0,0,20.0,39.0,31.58,10.0,94.0,57.77
+Drawingroom_Fan_2,43529,2,2,2,0,0,0,0,0,0,0,0,22.0,37.0,32.27,7.0,90.0,58.1
+Drawingroom_Fan_3,77764,2,2,2,0,0,0,0,0,0,0,0,19.0,41.0,30.28,8.0,90.0,54.73
+Lounge_Fan_1,21305,28,28,28,0,0,0,0,0,0,0,0,19.0,37.0,31.04,15.0,76.0,51.1
+Lounge_Fan_2,55488,11,11,11,0,0,0,0,0,0,0,0,18.0,44.0,33.16,10.0,82.0,45.37
+Lounge_Fan_3,47766,558,558,558,0,0,0,0,0,0,0,4,18.0,42.0,31.37,5.0,95.0,66.56

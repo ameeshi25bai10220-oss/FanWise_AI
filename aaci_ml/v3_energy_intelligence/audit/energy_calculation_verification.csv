@@ -1,0 +1,10 @@
+fan_id,records_tested,spent_exceptions,saved_exceptions,max_abs_residual_spent,max_abs_residual_saved,zero_speed_rows,zero_speed_anomalies,backlog_rows_gt_900s,backlog_exceptions
+Bedroom_Fan_1,79384,0,0,0.0,0.0,1413,0,3476,0
+Bedroom_Fan_2,179243,0,0,0.0,0.0,16044,0,11624,0
+Bedroom_Fan_3,110409,0,0,0.0,0.0,62747,0,6433,0
+Drawingroom_Fan_1,60444,0,0,0.0,0.0,9285,0,4433,0
+Drawingroom_Fan_2,43529,0,0,0.0,0.0,9279,0,2336,0
+Drawingroom_Fan_3,77764,0,0,0.0,0.0,1714,0,574,0
+Lounge_Fan_1,21305,0,0,0.0,0.0,8161,0,697,0
+Lounge_Fan_2,55487,0,0,0.0,0.0,3534,0,3467,0
+Lounge_Fan_3,47765,0,0,0.0,0.0,11844,0,5161,0

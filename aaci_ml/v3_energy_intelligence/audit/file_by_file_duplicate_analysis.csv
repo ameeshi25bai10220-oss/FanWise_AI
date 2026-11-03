@@ -1,0 +1,10 @@
+fan_id,total_raw_rows,full_row_duplicates,content_duplicates_diff_sno,content_duplicate_pct,total_unique_timestamps,duplicate_timestamps,clean_rows_after_dedup,intra_minute_events,max_repeat_count
+Bedroom_Fan_1,79384,0,6705,8.45,45309,34075,72679,27370,4
+Bedroom_Fan_2,179243,0,129802,72.42,41434,137809,49441,8007,118
+Bedroom_Fan_3,110409,0,84,0.08,95051,15358,110325,15274,2
+Drawingroom_Fan_1,60444,0,46,0.08,51551,8893,60398,8847,2
+Drawingroom_Fan_2,43529,0,3038,6.98,32274,11255,40491,8217,3
+Drawingroom_Fan_3,77764,0,25,0.03,56832,20932,77739,20907,2
+Lounge_Fan_1,21305,0,26,0.12,17807,3498,21279,3472,2
+Lounge_Fan_2,55488,0,20,0.04,47047,8440,55468,8421,2
+Lounge_Fan_3,47766,0,41,0.09,38931,8834,47725,8794,2

@@ -1,0 +1,10 @@
+target_fan_id,room_category,adaptation_records,test_records,mae_zero_shot_wh,mae_few_shot_wh,r2_few_shot,adaptation_improvement_pct
+Bedroom_Fan_1,Bedroom,391,68821,0.5606,0.5535,0.2199,1.27
+Bedroom_Fan_2,Bedroom,1128,44338,1.3796,1.3791,0.0632,0.03
+Bedroom_Fan_3,Bedroom,898,102989,0.7568,0.7608,0.2063,-0.53
+Drawingroom_Fan_1,Drawingroom,4173,51741,1.3802,1.3815,0.1226,-0.1
+Drawingroom_Fan_2,Drawingroom,868,37286,0.735,0.7327,0.2284,0.31
+Drawingroom_Fan_3,Drawingroom,3821,73161,0.6407,0.619,0.1691,3.39
+Lounge_Fan_1,Lounge,2789,17775,0.5368,0.5385,0.2928,-0.33
+Lounge_Fan_2,Lounge,384,51602,1.2875,1.2874,0.1171,0.0
+Lounge_Fan_3,Lounge,511,41355,1.3346,1.3353,0.0921,-0.05

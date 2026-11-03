@@ -1,0 +1,94 @@
+[
+  {
+    "file_name": "Single_Fan.csv",
+    "file_size_bytes": 68839,
+    "rows": 16,
+    "cols": 385,
+    "column_sample": [
+      "Unnamed: 0",
+      "Speed 7 - 1.7 m",
+      "Unnamed: 2",
+      "Unnamed: 3",
+      "Unnamed: 4",
+      "Unnamed: 5",
+      "Unnamed: 6",
+      "Unnamed: 7",
+      "Unnamed: 8",
+      "Unnamed: 9"
+    ],
+    "total_columns": 385,
+    "data_preview": {
+      "Unnamed: 0": {
+        "0": NaN,
+        "1": "R1",
+        "2": "R2"
+      },
+      "Speed 7 - 1.7 m": {
+        "0": "C1",
+        "1": "0.501722222",
+        "2": "0.469033333"
+      },
+      "Unnamed: 2": {
+        "0": "C2",
+        "1": "0.360255556",
+        "2": "0.488966667"
+      },
+      "Unnamed: 3": {
+        "0": "C3",
+        "1": "0.684688889",
+        "2": "0.637822222"
+      },
+      "Unnamed: 4": {
+        "0": "C4",
+        "1": "0.449666667",
+        "2": "0.520211111"
+      }
+    }
+  },
+  {
+    "file_name": "Two_Fan.csv",
+    "file_size_bytes": 239147,
+    "rows": 16,
+    "cols": 1345,
+    "column_sample": [
+      "Unnamed: 0",
+      "Case 1 - 1.7 m",
+      "Unnamed: 2",
+      "Unnamed: 3",
+      "Unnamed: 4",
+      "Unnamed: 5",
+      "Unnamed: 6",
+      "Unnamed: 7",
+      "Unnamed: 8",
+      "Unnamed: 9"
+    ],
+    "total_columns": 1345,
+    "data_preview": {
+      "Unnamed: 0": {
+        "0": NaN,
+        "1": "R1",
+        "2": "R2"
+      },
+      "Case 1 - 1.7 m": {
+        "0": "C1",
+        "1": "0.029888889",
+        "2": "0.017744444"
+      },
+      "Unnamed: 2": {
+        "0": "C2",
+        "1": "0.015144444",
+        "2": "0.024922222"
+      },
+      "Unnamed: 3": {
+        "0": "C3",
+        "1": "0.025933333",
+        "2": "0.032866667"
+      },
+      "Unnamed: 4": {
+        "0": "C4",
+        "1": "0.001544444",
+        "2": "0.021833333"
+      }
+    }
+  }
+]

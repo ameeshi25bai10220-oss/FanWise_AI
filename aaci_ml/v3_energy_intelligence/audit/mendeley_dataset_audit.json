@@ -1,0 +1,551 @@
+[
+  {
+    "file_name": "Bedroom_Fan_1.csv",
+    "fan_id": "Bedroom_Fan_1",
+    "room_category": "Bedroom",
+    "file_size_bytes": 3740013,
+    "total_raw_rows": 79384,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 6705,
+    "content_duplicate_pct": 8.45,
+    "total_unique_timestamps": 45309,
+    "duplicate_timestamps": 34075,
+    "clean_records_after_dedup": 72679,
+    "sensor_errors": {
+      "temperature_255_count": 8,
+      "humidity_255_count": 8,
+      "both_255_count": 8,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 19.0,
+      "temperature_max_C": 40.0,
+      "temperature_mean_C": 32.82,
+      "humidity_min_pct": 17.0,
+      "humidity_max_pct": 95.0,
+      "humidity_mean_pct": 63.82
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Bedroom_Fan_2.csv",
+    "fan_id": "Bedroom_Fan_2",
+    "room_category": "Bedroom",
+    "file_size_bytes": 8489962,
+    "total_raw_rows": 179243,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 129802,
+    "content_duplicate_pct": 72.42,
+    "total_unique_timestamps": 41434,
+    "duplicate_timestamps": 137809,
+    "clean_records_after_dedup": 49441,
+    "sensor_errors": {
+      "temperature_255_count": 22,
+      "humidity_255_count": 22,
+      "both_255_count": 22,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 21.0,
+      "temperature_max_C": 41.0,
+      "temperature_mean_C": 34.42,
+      "humidity_min_pct": 10.0,
+      "humidity_max_pct": 90.0,
+      "humidity_mean_pct": 57.49
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Bedroom_Fan_3.csv",
+    "fan_id": "Bedroom_Fan_3",
+    "room_category": "Bedroom",
+    "file_size_bytes": 4753859,
+    "total_raw_rows": 110409,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 84,
+    "content_duplicate_pct": 0.08,
+    "total_unique_timestamps": 95051,
+    "duplicate_timestamps": 15358,
+    "clean_records_after_dedup": 110325,
+    "sensor_errors": {
+      "temperature_255_count": 2,
+      "humidity_255_count": 2,
+      "both_255_count": 2,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 20.0,
+      "temperature_max_C": 41.0,
+      "temperature_mean_C": 31.31,
+      "humidity_min_pct": 10.0,
+      "humidity_max_pct": 89.0,
+      "humidity_mean_pct": 44.4
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Drawingroom_Fan_1.csv",
+    "fan_id": "Drawingroom_Fan_1",
+    "room_category": "Drawingroom",
+    "file_size_bytes": 2794273,
+    "total_raw_rows": 60444,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 46,
+    "content_duplicate_pct": 0.08,
+    "total_unique_timestamps": 51551,
+    "duplicate_timestamps": 8893,
+    "clean_records_after_dedup": 60398,
+    "sensor_errors": {
+      "temperature_255_count": 29,
+      "humidity_255_count": 29,
+      "both_255_count": 29,
+      "temperature_zero_count": 22,
+      "humidity_zero_count": 22
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 20.0,
+      "temperature_max_C": 39.0,
+      "temperature_mean_C": 31.58,
+      "humidity_min_pct": 10.0,
+      "humidity_max_pct": 94.0,
+      "humidity_mean_pct": 57.77
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Drawingroom_Fan_2.csv",
+    "fan_id": "Drawingroom_Fan_2",
+    "room_category": "Drawingroom",
+    "file_size_bytes": 1984708,
+    "total_raw_rows": 43529,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 3038,
+    "content_duplicate_pct": 6.98,
+    "total_unique_timestamps": 32274,
+    "duplicate_timestamps": 11255,
+    "clean_records_after_dedup": 40491,
+    "sensor_errors": {
+      "temperature_255_count": 2,
+      "humidity_255_count": 2,
+      "both_255_count": 2,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 22.0,
+      "temperature_max_C": 37.0,
+      "temperature_mean_C": 32.27,
+      "humidity_min_pct": 7.0,
+      "humidity_max_pct": 90.0,
+      "humidity_mean_pct": 58.1
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Drawingroom_Fan_3.csv",
+    "fan_id": "Drawingroom_Fan_3",
+    "room_category": "Drawingroom",
+    "file_size_bytes": 3544127,
+    "total_raw_rows": 77764,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 25,
+    "content_duplicate_pct": 0.03,
+    "total_unique_timestamps": 56832,
+    "duplicate_timestamps": 20932,
+    "clean_records_after_dedup": 77739,
+    "sensor_errors": {
+      "temperature_255_count": 2,
+      "humidity_255_count": 2,
+      "both_255_count": 2,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 19.0,
+      "temperature_max_C": 41.0,
+      "temperature_mean_C": 30.28,
+      "humidity_min_pct": 8.0,
+      "humidity_max_pct": 90.0,
+      "humidity_mean_pct": 54.73
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Lounge_Fan_1.csv",
+    "fan_id": "Lounge_Fan_1",
+    "room_category": "Lounge",
+    "file_size_bytes": 931141,
+    "total_raw_rows": 21305,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 26,
+    "content_duplicate_pct": 0.12,
+    "total_unique_timestamps": 17807,
+    "duplicate_timestamps": 3498,
+    "clean_records_after_dedup": 21279,
+    "sensor_errors": {
+      "temperature_255_count": 28,
+      "humidity_255_count": 28,
+      "both_255_count": 28,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 19.0,
+      "temperature_max_C": 37.0,
+      "temperature_mean_C": 31.04,
+      "humidity_min_pct": 15.0,
+      "humidity_max_pct": 76.0,
+      "humidity_mean_pct": 51.1
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Lounge_Fan_2.csv",
+    "fan_id": "Lounge_Fan_2",
+    "room_category": "Lounge",
+    "file_size_bytes": 2579359,
+    "total_raw_rows": 55488,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 20,
+    "content_duplicate_pct": 0.04,
+    "total_unique_timestamps": 47047,
+    "duplicate_timestamps": 8440,
+    "clean_records_after_dedup": 55468,
+    "sensor_errors": {
+      "temperature_255_count": 11,
+      "humidity_255_count": 11,
+      "both_255_count": 11,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 18.0,
+      "temperature_max_C": 44.0,
+      "temperature_mean_C": 33.16,
+      "humidity_min_pct": 10.0,
+      "humidity_max_pct": 82.0,
+      "humidity_mean_pct": 45.37
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  },
+  {
+    "file_name": "Lounge_Fan_3.csv",
+    "fan_id": "Lounge_Fan_3",
+    "room_category": "Lounge",
+    "file_size_bytes": 2177603,
+    "total_raw_rows": 47766,
+    "total_columns": 9,
+    "column_names": [
+      "S.No.",
+      "datetime",
+      "temperature",
+      "humidity",
+      "mode",
+      "speed",
+      "opTime",
+      "eSpent",
+      "eSaved"
+    ],
+    "full_row_duplicates_including_sno": 0,
+    "content_duplicates_excluding_sno": 41,
+    "content_duplicate_pct": 0.09,
+    "total_unique_timestamps": 38931,
+    "duplicate_timestamps": 8834,
+    "clean_records_after_dedup": 47725,
+    "sensor_errors": {
+      "temperature_255_count": 558,
+      "humidity_255_count": 558,
+      "both_255_count": 558,
+      "temperature_zero_count": 0,
+      "humidity_zero_count": 0
+    },
+    "valid_sensor_ranges": {
+      "temperature_min_C": 18.0,
+      "temperature_max_C": 42.0,
+      "temperature_mean_C": 31.37,
+      "humidity_min_pct": 5.0,
+      "humidity_max_pct": 95.0,
+      "humidity_mean_pct": 66.56
+    },
+    "physical_energy_validation": {
+      "power_constants_W": {
+        "0": 0,
+        "1": 10,
+        "2": 15,
+        "3": 20,
+        "4": 27,
+        "5": 48
+      },
+      "saved_constants_W": {
+        "0": 0,
+        "1": 14,
+        "2": 19,
+        "3": 35,
+        "4": 37,
+        "5": 48
+      },
+      "max_abs_residual_spent_Joules": 0.0,
+      "max_abs_residual_saved_Joules": 0.0,
+      "formula_exact_match_pct": 100.0
+    }
+  }
+]
