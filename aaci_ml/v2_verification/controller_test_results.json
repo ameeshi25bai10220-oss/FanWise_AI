@@ -1,0 +1,128 @@
+[
+  {
+    "scenario_id": "A",
+    "description": "Cold room, Cold prediction",
+    "action": "DECREASE_SAFETY",
+    "target_speed": 1,
+    "speed_delta": -1,
+    "passed": true,
+    "reason": "Safety Guard Active: Room temperature (18.0C) is below 20.0C. Locking fan speed to prevent thermal distress."
+  },
+  {
+    "scenario_id": "B",
+    "description": "Cold room, Hot prediction (Safety Lockout Test)",
+    "action": "HOLD_SAFETY",
+    "target_speed": 1,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Safety Guard Active: Room is cold (17.5C). Suppressing conflicting Hot prediction."
+  },
+  {
+    "scenario_id": "C",
+    "description": "Hot room, Hot prediction",
+    "action": "INCREASE",
+    "target_speed": 3,
+    "speed_delta": 1,
+    "passed": true,
+    "reason": "Hot discomfort predicted with 80.0% confidence. Increasing speed by 1 to enhance convective cooling."
+  },
+  {
+    "scenario_id": "D",
+    "description": "Hot room, Neutral prediction (Safety Floor Test)",
+    "action": "INCREASE_SAFETY",
+    "target_speed": 2,
+    "speed_delta": 1,
+    "passed": true,
+    "reason": "Safety Guard Active: Extreme room heat (33.0C). Enforcing minimum speed 2 for convective relief."
+  },
+  {
+    "scenario_id": "E",
+    "description": "Neutral room, Neutral prediction (Hold comfort / Eco)",
+    "action": "HOLD_COMFORT",
+    "target_speed": 2,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Neutral comfort predicted (70.0% confidence). Maintaining speed 2."
+  },
+  {
+    "scenario_id": "F",
+    "description": "Low-confidence prediction (Uncertainty abstention)",
+    "action": "HOLD_UNCERTAIN",
+    "target_speed": 2,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Prediction confidence (40.0%) is low or margin is narrow. Maintaining speed to avoid erratic changes."
+  },
+  {
+    "scenario_id": "G",
+    "description": "Rapid temperature fluctuation within 5-min cooldown",
+    "action": "HOLD_COOLDOWN",
+    "target_speed": 3,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Hysteresis stabilization: Fan speed adjusted recently (200s cooldown remaining)."
+  },
+  {
+    "scenario_id": "H",
+    "description": "Repeated Hot predictions at maximum speed 5",
+    "action": "HOLD",
+    "target_speed": 5,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Hot discomfort predicted, but fan is already at maximum speed."
+  },
+  {
+    "scenario_id": "I",
+    "description": "Repeated Cold predictions at minimum speed 0",
+    "action": "HOLD",
+    "target_speed": 0,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Cold discomfort predicted, but fan is already off."
+  },
+  {
+    "scenario_id": "J",
+    "description": "Manual fan-speed override respected",
+    "action": "HOLD_MANUAL",
+    "target_speed": 4,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Manual override active (29895238 mins remaining). Auto-control paused."
+  },
+  {
+    "scenario_id": "K",
+    "description": "Missing temperature reading (Sensor fault)",
+    "action": "HOLD_SENSOR_FAULT",
+    "target_speed": 2,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Sensor fault: Missing or invalid room temperature reading. Holding current speed safely."
+  },
+  {
+    "scenario_id": "L",
+    "description": "Invalid fan-speed reading (Sanitization test)",
+    "action": "HOLD_COMFORT",
+    "target_speed": 5,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Neutral comfort predicted (80.0% confidence). Maintaining speed 5."
+  },
+  {
+    "scenario_id": "M",
+    "description": "Fan already at maximum speed boundary",
+    "action": "HOLD",
+    "target_speed": 5,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Hot discomfort predicted, but fan is already at maximum speed."
+  },
+  {
+    "scenario_id": "N",
+    "description": "Fan already at minimum speed boundary",
+    "action": "HOLD",
+    "target_speed": 0,
+    "speed_delta": 0,
+    "passed": true,
+    "reason": "Cold discomfort predicted, but fan is already off."
+  }
+]

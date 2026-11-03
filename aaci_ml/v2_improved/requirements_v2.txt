@@ -1,0 +1,21 @@
+# AACI V2 Requirements
+# Core ML & Inference
+numpy>=1.26.4
+pandas>=2.2.0
+scikit-learn>=1.5.0
+joblib>=1.4.0
+
+# Gradient Boosting Frameworks
+xgboost>=2.0.0
+lightgbm>=4.0.0
+catboost>=1.2.0
+
+# Class Imbalance & Optimization
+imbalanced-learn>=0.12.0
+optuna>=4.0.0
+
+# Explainability & Visualizations
+shap>=0.45.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+

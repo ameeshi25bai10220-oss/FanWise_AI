@@ -1,0 +1,57 @@
+{
+  "Cold": {
+    "precision": 0.3378937321030862,
+    "recall": 0.35745540222147426,
+    "f1-score": 0.34739941118743867,
+    "support": 2971.0
+  },
+  "Neutral": {
+    "precision": 0.4850434782608696,
+    "recall": 0.46968676321993935,
+    "f1-score": 0.4772416153319644,
+    "support": 5938.0
+  },
+  "Hot": {
+    "precision": 0.5276307431717129,
+    "recall": 0.5294242617378373,
+    "f1-score": 0.528525980911983,
+    "support": 4707.0
+  },
+  "accuracy": 0.46584900117508815,
+  "macro avg": {
+    "precision": 0.4501893178452229,
+    "recall": 0.45218880905975034,
+    "f1-score": 0.4510556691437954,
+    "support": 13616.0
+  },
+  "weighted avg": {
+    "precision": 0.4676577820285374,
+    "recall": 0.46584900117508815,
+    "f1-score": 0.46663896552818657,
+    "support": 13616.0
+  },
+  "cross_class_confusion": {
+    "hot_predicted_as_cold_pct": 11.28,
+    "cold_predicted_as_hot_pct": 21.27
+  },
+  "balanced_accuracy": 0.4522,
+  "baseline_comparisons": {
+    "majority_class": {
+      "predicts": "Neutral",
+      "accuracy": 0.4361,
+      "balanced_accuracy": 0.3333,
+      "macro_f1": 0.2024,
+      "weighted_f1": 0.2649,
+      "note": "Macro F1 = 0.000 since minority classes never predicted"
+    },
+    "uniform_random": {
+      "accuracy": 0.3299,
+      "balanced_accuracy": 0.3314,
+      "macro_f1": 0.3243
+    },
+    "proportional_random": {
+      "accuracy": 0.3578,
+      "macro_f1": 0.3363
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "brier_score_raw": 0.6175,
+  "brier_score_isotonic": 0.6561,
+  "brier_score_sigmoid": 0.655
+}

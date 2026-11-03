@@ -1,0 +1,17 @@
+{
+  "V2 Raw Probabilities": {
+    "brier_sum": 0.6175,
+    "log_loss": 1.0188,
+    "ece": 0.0573
+  },
+  "V2 Isotonic Calibrated": {
+    "brier_sum": 0.6244,
+    "log_loss": 1.0959,
+    "ece": 0.0606
+  },
+  "V2 Sigmoid Calibrated": {
+    "brier_sum": 0.6294,
+    "log_loss": 1.0384,
+    "ece": 0.0713
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "original_model": {
+    "model": "XGBoost",
+    "mapping": "A (TSV<=-1:Cold, 0:Neutral, >=1:Hot)",
+    "test_accuracy": 0.4658,
+    "test_macro_f1": 0.4511,
+    "test_balanced_acc": 0.4522,
+    "per_class": {
+      "Cold": {
+        "precision": 0.3379,
+        "recall": 0.3575,
+        "f1-score": 0.3474,
+        "support": 2971.0
+      },
+      "Neutral": {
+        "precision": 0.485,
+        "recall": 0.4697,
+        "f1-score": 0.4772,
+        "support": 5938.0
+      },
+      "Hot": {
+        "precision": 0.5276,
+        "recall": 0.5294,
+        "f1-score": 0.5285,
+        "support": 4707.0
+      }
+    },
+    "cross_confusion": {
+      "hot_as_cold_pct": 11.28,
+      "cold_as_hot_pct": 21.27
+    }
+  },
+  "baselines": {
+    "majority_class": {
+      "predicts": "Neutral",
+      "accuracy": 0.4361,
+      "balanced_accuracy": 0.3333,
+      "macro_f1": 0.2024,
+      "weighted_f1": 0.2649,
+      "note": "Macro F1 = 0.000 since minority classes never predicted"
+    },
+    "uniform_random": {
+      "accuracy": 0.3299,
+      "balanced_accuracy": 0.3314,
+      "macro_f1": 0.3243
+    },
+    "proportional_random": {
+      "accuracy": 0.3578,
+      "macro_f1": 0.3363
+    }
+  },
+  "mapping_comparison": {
+    "A": {
+      "test_macro_f1": 0.4511,
+      "class_dist": {
+        "Cold": 25452,
+        "Neutral": 44063,
+        "Hot": 34939
+      }
+    },
+    "B": {
+      "test_macro_f1": 0.4265,
+      "class_dist": {
+        "Cold": 8699,
+        "Neutral": 80902,
+        "Hot": 14853
+      }
+    }
+  },
+  "best_mapping": "A",
+  "experiments": {
+    "xgb_smote": {
+      "accuracy": 0.4415,
+      "balanced_accuracy": 0.445,
+      "macro_precision": 0.4497,
+      "macro_recall": 0.445,
+      "macro_f1": 0.4446,
+      "weighted_f1": 0.4439
+    },
+    "xgb_sample_weight": {
+      "accuracy": 0.4361,
+      "balanced_accuracy": 0.4419,
+      "macro_precision": 0.4433,
+      "macro_recall": 0.4419,
+      "macro_f1": 0.4397,
+      "weighted_f1": 0.4376
+    },
+    "xgb_no_balance": {
+      "accuracy": 0.4334,
+      "balanced_accuracy": 0.4277,
+      "macro_precision": 0.4519,
+      "macro_recall": 0.4277,
+      "macro_f1": 0.4307,
+      "weighted_f1": 0.4328
+    },
+    "xgb_tuned_val": {
+      "macro_f1": 0.4458,
+      "config": {
+        "n_estimators": 400,
+        "max_depth": 8,
+        "learning_rate": 0.08,
+        "subsample": 0.7,
+        "colsample_bytree": 0.7
+      }
+    },
+    "rf_tuned_val": {
+      "macro_f1": 0.4405
+    },
+    "xgb_sensor_only_val": {
+      "accuracy": 0.4123,
+      "balanced_accuracy": 0.4227,
+      "macro_precision": 0.4214,
+      "macro_recall": 0.4227,
+      "macro_f1": 0.414,
+      "weighted_f1": 0.4122
+    },
+    "xgb_extended_val": {
+      "accuracy": 0.4427,
+      "balanced_accuracy": 0.4484,
+      "macro_precision": 0.4487,
+      "macro_recall": 0.4484,
+      "macro_f1": 0.4458,
+      "weighted_f1": 0.4442
+    }
+  },
+  "improved_model": {
+    "best_experiment": "xgb_tuned",
+    "best_val_macro_f1": 0.4458,
+    "test_macro_f1": 0.4445,
+    "genuinely_better": false,
+    "saved": false
+  },
+  "leakage_audit": {
+    "contributor_overlap": false,
+    "overlap_contributors": [],
+    "publication_overlap": false,
+    "preprocessor_fit_on_train_only": true,
+    "smote_on_train_only": true,
+    "test_not_used_in_model_selection": true,
+    "leaky_features_used": []
+  }
+}

@@ -1,0 +1,15 @@
+scenario_id,description,action,target_speed,speed_delta,passed,reason
+A,"Cold room, Cold prediction",DECREASE_SAFETY,1,-1,True,Safety Guard Active: Room temperature (18.0C) is below 20.0C. Locking fan speed to prevent thermal distress.
+B,"Cold room, Hot prediction (Safety Lockout Test)",HOLD_SAFETY,1,0,True,Safety Guard Active: Room is cold (17.5C). Suppressing conflicting Hot prediction.
+C,"Hot room, Hot prediction",INCREASE,3,1,True,Hot discomfort predicted with 80.0% confidence. Increasing speed by 1 to enhance convective cooling.
+D,"Hot room, Neutral prediction (Safety Floor Test)",INCREASE_SAFETY,2,1,True,Safety Guard Active: Extreme room heat (33.0C). Enforcing minimum speed 2 for convective relief.
+E,"Neutral room, Neutral prediction (Hold comfort / Eco)",HOLD_COMFORT,2,0,True,Neutral comfort predicted (70.0% confidence). Maintaining speed 2.
+F,Low-confidence prediction (Uncertainty abstention),HOLD_UNCERTAIN,2,0,True,Prediction confidence (40.0%) is low or margin is narrow. Maintaining speed to avoid erratic changes.
+G,Rapid temperature fluctuation within 5-min cooldown,HOLD_COOLDOWN,3,0,True,Hysteresis stabilization: Fan speed adjusted recently (200s cooldown remaining).
+H,Repeated Hot predictions at maximum speed 5,HOLD,5,0,True,"Hot discomfort predicted, but fan is already at maximum speed."
+I,Repeated Cold predictions at minimum speed 0,HOLD,0,0,True,"Cold discomfort predicted, but fan is already off."
+J,Manual fan-speed override respected,HOLD_MANUAL,4,0,True,Manual override active (29895238 mins remaining). Auto-control paused.
+K,Missing temperature reading (Sensor fault),HOLD_SENSOR_FAULT,2,0,True,Sensor fault: Missing or invalid room temperature reading. Holding current speed safely.
+L,Invalid fan-speed reading (Sanitization test),HOLD_COMFORT,5,0,True,Neutral comfort predicted (80.0% confidence). Maintaining speed 5.
+M,Fan already at maximum speed boundary,HOLD,5,0,True,"Hot discomfort predicted, but fan is already at maximum speed."
+N,Fan already at minimum speed boundary,HOLD,0,0,True,"Cold discomfort predicted, but fan is already off."

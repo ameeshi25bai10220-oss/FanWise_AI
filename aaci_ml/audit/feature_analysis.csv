@@ -1,0 +1,71 @@
+feature,category,target_leakage,fan_available,in_dataset,missing_pct,notes
+Publication (Citation),Metadata,False,False,True,1.5,Study reference – identifier only
+Data contributor,Metadata,False,False,True,0.0,Researcher name – group key
+Year,Metadata,False,False,True,0.2,Study year – minor temporal context
+Season,User/Context,False,True,True,0.2,Derivable from calendar date
+Koppen climate classification,Derived,False,True,True,0.0,Derivable from GPS location + API
+Climate,User/Context,False,True,True,0.0,"Location-based, coarser label"
+City,Metadata,False,True,True,0.0,User-provided or GPS
+Country,Metadata,False,True,True,0.0,User-provided or GPS
+Building type,User/Context,False,True,True,3.9,User sets in app once
+Cooling startegy_building level,User/Context,False,True,True,1.1,User sets in app once
+Cooling startegy_operation mode for MM buildings,User/Context,False,False,True,75.4,"MM-building specific, N/A for fan"
+Heating strategy_building level,User/Context,False,False,True,64.9,Rarely available to fan system
+Age,Occupant,False,False,True,59.5,Not measurable by fan
+Sex,Occupant,False,False,True,37.7,Not measurable by fan
+Thermal sensation,TARGET,True,False,True,2.9,TARGET – not a feature
+Thermal sensation acceptability,TARGET-derived,True,False,True,42.0,LEAKAGE – encodes TSV acceptability
+Thermal preference,TARGET-derived,True,False,True,20.5,LEAKAGE – 'warmer/cooler/no change'
+Air movement acceptability,TARGET-derived,True,False,True,84.8,LEAKAGE – comfort vote variant
+Air movement preference,TARGET-derived,True,False,True,59.7,LEAKAGE – preference vote
+Thermal comfort,TARGET-derived,True,False,True,66.2,LEAKAGE – comfort score (1-6)
+PMV,Derived/Leakage,True,False,True,38.0,LEAKAGE – computed from inputs
+PPD,Derived/Leakage,True,False,True,38.0,LEAKAGE – computed from PMV
+SET,Derived/Leakage,True,False,True,38.2,LEAKAGE – standard effective temp
+Clo,Occupant,False,False,True,7.4,Not measurable; must be defaulted
+Met,Occupant,False,False,True,16.0,Not measurable; must be defaulted
+activity_10,Occupant,False,False,True,91.8,Activity 10-min avg – not available
+activity_20,Occupant,False,False,True,91.0,Activity 20-min avg – not available
+activity_30,Occupant,False,False,True,91.9,Activity 30-min avg – not available
+activity_60,Occupant,False,False,True,91.1,Activity 60-min avg – not available
+Air temperature (C),Sensor,False,True,True,7.1,Room thermometer – primary input
+Air temperature (F),Duplicate,False,False,True,7.1,Fahrenheit duplicate – drop
+Ta_h (C),Sensor-high,False,False,True,74.0,High-res T variant – rarely available
+Ta_h (F),Duplicate,False,False,True,74.0,Fahrenheit duplicate
+Ta_m (C),Sensor-mid,False,False,True,71.0,Mid-res T variant – rarely available
+Ta_m (F),Duplicate,False,False,True,71.0,Fahrenheit duplicate
+Ta_l (C),Sensor-low,False,False,True,90.3,Low-res T variant – rarely available
+Ta_l (F),Duplicate,False,False,True,90.3,Fahrenheit duplicate
+Operative temperature (C),Derived,False,False,True,64.7,69.8% missing; needs MRT sensor
+Operative temperature (F),Duplicate,False,False,True,64.7,Fahrenheit duplicate
+Radiant temperature (C),Sensor,False,False,True,69.8,69.8% missing; needs IR sensor
+Radiant temperature (F),Duplicate,False,False,True,69.8,Fahrenheit duplicate
+Globe temperature (C),Sensor,False,False,True,75.8,75.8% missing; needs globe thermometer
+Globe temperature (F),Duplicate,False,False,True,75.8,Fahrenheit duplicate
+Tg_h (C),Sensor-high,False,False,True,50.7,Globe T high – rare
+Tg_h (F),Duplicate,False,False,True,50.7,Fahrenheit duplicate
+Tg_m (C),Sensor-mid,False,False,True,75.9,Globe T mid – rare
+Tg_m (F),Duplicate,False,False,True,75.9,Fahrenheit duplicate
+Tg_l (C),Sensor-low,False,False,True,78.4,Globe T low – rare
+Tg_l (F),Duplicate,False,False,True,78.4,Fahrenheit duplicate
+Relative humidity (%),Sensor,False,True,True,9.1,Humidity sensor – primary input
+Humidity preference,TARGET-derived,True,False,True,88.6,LEAKAGE – comfort vote variant
+Humidity sensation,TARGET-derived,True,False,True,88.3,LEAKAGE – comfort vote variant
+Air velocity (m/s),Sensor,False,True,True,16.4,Fan RPM -> velocity lookup table
+Air velocity (fpm),Duplicate,False,False,True,16.5,fpm duplicate – drop
+Velocity_h (m/s),Sensor-high,False,False,True,79.6,High-speed variant – 76% missing
+Velocity_h (fpm),Duplicate,False,False,True,79.6,fpm duplicate
+Velocity_m (m/s),Sensor-mid,False,False,True,73.7,Mid-speed variant – 76% missing
+Velocity_m (fpm),Duplicate,False,False,True,73.7,fpm duplicate
+Velocity_l (m/s),Sensor-low,False,False,True,90.5,Low-speed variant – 76% missing
+Velocity_l (fpm),Duplicate,False,False,True,90.5,fpm duplicate
+Subject's height (cm),Occupant,False,False,False,,Not measurable by fan
+Subject's weight (kg),Occupant,False,False,False,,Not measurable by fan
+Blind (curtain),Environment,False,False,True,94.7,Rarely digitized
+Fan,Environment,False,True,True,87.7,Fan on/off state – AACI controls
+Window,Environment,False,False,True,79.5,Rarely digitized
+Door,Environment,False,False,True,89.7,Rarely digitized
+Heater,Environment,False,False,True,92.2,Rarely digitized
+Outdoor monthly air temperature (C),Derived,False,True,True,26.3,Weather API / monthly average
+Outdoor monthly air temperature (F),Duplicate,False,False,True,26.3,Fahrenheit duplicate
+Database,Metadata,False,False,True,0.0,DB version identifier

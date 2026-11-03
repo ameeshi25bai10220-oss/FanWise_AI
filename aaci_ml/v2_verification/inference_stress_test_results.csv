@@ -1,0 +1,10 @@
+test_case,predicted_class,confidence,action,target_speed,status
+Nominal Summer Office,Neutral,0.5439,HOLD_COMFORT,2,PASS
+Extreme Heat (>45C),Hot,0.9093,INCREASE,4,PASS
+Extreme Cold (<5C),Cold,0.8357,DECREASE_SAFETY,1,PASS
+High Humidity (98% RH),Neutral,0.5418,HOLD_COOLDOWN,1,PASS
+Near Zero Humidity (5% RH),Hot,0.6851,HOLD_COOLDOWN,2,PASS
+High Airspeed (2.5 m/s),Neutral,0.451,HOLD_COOLDOWN,5,PASS
+Still Air (0.0 m/s),Hot,0.4006,HOLD_COOLDOWN,0,PASS
+Missing Outdoor Temp (None),Neutral,0.4182,HOLD_COOLDOWN,2,PASS
+Missing Temperature (Sensor Fault),Cold,0.4636,HOLD_SENSOR_FAULT,2,PASS

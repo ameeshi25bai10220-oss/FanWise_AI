@@ -1,0 +1,3 @@
+mapping,n_Cold,pct_Cold,n_Neutral,pct_Neutral,n_Hot,pct_Hot,test_accuracy,test_balanced_accuracy,test_macro_precision,test_macro_recall,test_macro_f1,test_weighted_f1
+A,25452,24.4,44063,42.2,34939,33.4,0.4658,0.4522,0.4502,0.4522,0.4511,0.4666
+B,8699,8.3,80902,77.5,14853,14.2,0.7445,0.4164,0.4521,0.4164,0.4265,0.7225

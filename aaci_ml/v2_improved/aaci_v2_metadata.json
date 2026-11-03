@@ -1,0 +1,78 @@
+{
+  "model_name": "Candidate 2 (XGBoost + Eng)",
+  "class_names": [
+    "Cold",
+    "Neutral",
+    "Hot"
+  ],
+  "class_mapping": {
+    "Cold": 0,
+    "Neutral": 1,
+    "Hot": 2
+  },
+  "numeric_features": [
+    "Air temperature (C)",
+    "Relative humidity (%)",
+    "Air velocity (m/s)",
+    "Outdoor monthly air temperature (C)",
+    "Clo",
+    "Met",
+    "vapor_pressure_hpa",
+    "dew_point_c",
+    "apparent_temp_c",
+    "humidex",
+    "cooling_effect_c",
+    "effective_temp_c",
+    "delta_tout_tin",
+    "convective_heat_exchange",
+    "evaporative_cooling_potential"
+  ],
+  "categorical_features": [
+    "Season",
+    "Building type",
+    "Cooling startegy_building level"
+  ],
+  "all_raw_inputs": [
+    "Air temperature (C)",
+    "Relative humidity (%)",
+    "Air velocity (m/s)",
+    "Outdoor monthly air temperature (C)",
+    "Clo",
+    "Met",
+    "Season",
+    "Building type",
+    "Cooling startegy_building level"
+  ],
+  "is_engineered_v2": true,
+  "test_metrics": {
+    "accuracy": 0.4635,
+    "balanced_accuracy": 0.4548,
+    "macro_precision": 0.4498,
+    "macro_recall": 0.4548,
+    "macro_f1": 0.4517,
+    "weighted_f1": 0.4644,
+    "cold_recall": 0.38,
+    "neutral_recall": 0.4458,
+    "hot_recall": 0.5386,
+    "brier_score": 0.6175
+  },
+  "baseline_metrics": {
+    "accuracy": 0.4658,
+    "balanced_accuracy": 0.4522,
+    "macro_precision": 0.4502,
+    "macro_recall": 0.4522,
+    "macro_f1": 0.4511,
+    "weighted_f1": 0.4666,
+    "cold_recall": 0.3575,
+    "neutral_recall": 0.4697,
+    "hot_recall": 0.5294,
+    "brier_score": 0.6165
+  },
+  "calibration_metrics": {
+    "brier_score_raw": 0.6175,
+    "brier_score_isotonic": 0.6561,
+    "brier_score_sigmoid": 0.655
+  },
+  "random_state": 42,
+  "training_rows": 90838
+}
