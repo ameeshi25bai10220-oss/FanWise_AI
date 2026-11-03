@@ -1,0 +1,196 @@
+{
+  "inventory_version": "2.0_verified",
+  "project": "AACI Model 2 - Occupancy & Spatial Intelligence",
+  "verified_at": "2026-11-03T23:05:00+05:30",
+  "resolution_of_dataset_identity": {
+    "user_query_context": "User noted that 'RDD' was originally intended to refer to ROBOD (Room-level Occupancy and Building Operation Dataset).",
+    "physical_filesystem_finding": "On disk, two distinct folders exist: 'SupplementaryData/' contains the official ROBOD dataset (52,128 rows, 5 rooms), while 'RDD Datset/' is a separate physical folder containing 9 CSV files (675,332 rows) of real-world Indian residential Atomberg smart-fan telemetry.",
+    "dataset_identity_verdict": "ROBOD and RDD Datset are two physically distinct datasets present in the workspace. ROBOD = SupplementaryData/ (NUS SDE4); RDD = RDD Datset/ (Atomberg fan fleet). Both are genuinely present on disk."
+  },
+  "datasets": {
+    "archive_2_uci_occupancy": {
+      "name": "UCI Room Occupancy Detection Dataset",
+      "exact_path": "archive (2)/Occupancy.csv",
+      "provenance": "University of Mons, Belgium (Candanedo & Feldheim, 2016)",
+      "total_records": 20560,
+      "columns_count": 7,
+      "sampling_interval_minutes": 1,
+      "date_range": {
+        "start": "2015-02-02 14:19:00",
+        "end": "2015-02-18 09:19:00"
+      },
+      "target_variable": "Occupancy",
+      "target_type": "Binary (0=Unoccupied, 1=Occupied)",
+      "ground_truth_method": "Time-stamped digital camera snapshots taken every minute",
+      "features": [
+        "Temperature",
+        "Humidity",
+        "Light",
+        "CO2",
+        "HumidityRatio"
+      ],
+      "data_quality": {
+        "missing_values": 0,
+        "duplicate_timestamps": 0,
+        "frozen_sensor_readings": 1441,
+        "physical_violations": 0
+      },
+      "partitions": [
+        {
+          "name": "Partition 1 (Official Test 1 - datatest.txt)",
+          "rows": 2665,
+          "indices": "0 to 2664",
+          "start": "2015-02-02 14:19:00",
+          "end": "2015-02-04 10:43:00",
+          "occupancy_rate": 0.3647,
+          "role": "Historical Evaluation Set (Precedes training chronologically)"
+        },
+        {
+          "name": "Partition 2 (Official Training - datatraining.txt)",
+          "rows": 8143,
+          "indices": "2665 to 10807",
+          "start": "2015-02-04 17:51:00",
+          "end": "2015-02-10 09:33:00",
+          "occupancy_rate": 0.2123,
+          "role": "Primary Training & Rolling-Origin Validation Set"
+        },
+        {
+          "name": "Partition 3 (Official Test 2 - datatest2.txt)",
+          "rows": 9752,
+          "indices": "10808 to 20559",
+          "start": "2015-02-11 14:48:00",
+          "end": "2015-02-18 09:19:00",
+          "occupancy_rate": 0.2101,
+          "role": "Primary Forward-in-Time Evaluation Benchmark"
+        }
+      ]
+    },
+    "robod_dataset": {
+      "name": "ROBOD - Room-level Occupancy and Building Operation Dataset",
+      "exact_path": "SupplementaryData/",
+      "provenance": "School of Design and Environment 4 (SDE4), National University of Singapore (NUS)",
+      "readme_path": "SupplementaryData/README.md",
+      "total_records": 52128,
+      "rooms_count": 5,
+      "building": "SDE4 Net-Zero Energy Building, Singapore",
+      "sampling_interval_minutes": 5,
+      "date_range": {
+        "start": "2021-09-07 00:00:00+08:00",
+        "end": "2021-12-23 23:55:00+08:00"
+      },
+      "target_variables": {
+        "occupant_presence": {
+          "type": "binary (0 or 1)",
+          "meaning": "Instantaneous human presence status",
+          "null_count": 0
+        },
+        "occupant_count": {
+          "type": "integer (0 to 38)",
+          "meaning": "Instantaneous room occupant headcount",
+          "null_count": 0,
+          "ground_truth_method": "Ceiling-mounted fish-eye cameras with validated deep-learning computer vision detection"
+        }
+      },
+      "energy_measurement_verification": {
+        "variable": "ceiling_fan_energy [kWh]",
+        "counter_type": "Interval energy consumed per 5-minute sampling step (NOT cumulative counter)",
+        "proof_of_interval_type": "Non-monotonic series with 12,000+ negative first-differences across rooms; values range from 0.0 to 0.037 kWh per interval, perfectly matching 5-minute fan power consumption (0 to 440 W)",
+        "total_fan_energy_kwh_across_dataset": 288.67,
+        "availability": "Available for 100% of rows across all 5 rooms (0 nulls)"
+      },
+      "bms_and_hvac_verification": {
+        "type": "Direct physical BMS sub-meters and controller feedback transducers (Schneider Electric / Johnson Controls BMS)",
+        "sub_meters": ["ceiling_fan_energy", "lighting_energy", "plug_load_energy", "chilled_water_energy", "fcu_fan_energy / ahu_fan_energy"],
+        "actuator_transducers": ["fcu_fan_speed / ahu_fan_speed [Hz]", "supply_air_temperature", "supply_air_pressure", "damper_position", "cooling_coil_valve_position"]
+      },
+      "files": [
+        {
+          "file": "combined_Room1.csv",
+          "room_type": "Lecture Room",
+          "days_logged": 29,
+          "rows": 8352,
+          "columns": 27,
+          "occupant_presence_rate": 0.2107,
+          "max_occupants": 38,
+          "ceiling_fan_energy_kwh": 70.28,
+          "duplicate_timestamps": 0
+        },
+        {
+          "file": "combined_Room2.csv",
+          "room_type": "Lecture Room",
+          "days_logged": 29,
+          "rows": 8352,
+          "columns": 27,
+          "occupant_presence_rate": 0.2842,
+          "max_occupants": 22,
+          "ceiling_fan_energy_kwh": 30.12,
+          "duplicate_timestamps": 0
+        },
+        {
+          "file": "combined_Room3.csv",
+          "room_type": "Office Space",
+          "days_logged": 29,
+          "rows": 8352,
+          "columns": 35,
+          "occupant_presence_rate": 0.3991,
+          "max_occupants": 13,
+          "ceiling_fan_energy_kwh": 68.81,
+          "duplicate_timestamps": 0
+        },
+        {
+          "file": "combined_Room4.csv",
+          "room_type": "Office Space",
+          "days_logged": 47,
+          "rows": 13536,
+          "columns": 35,
+          "occupant_presence_rate": 0.6511,
+          "max_occupants": 18,
+          "ceiling_fan_energy_kwh": 65.96,
+          "duplicate_timestamps": 0
+        },
+        {
+          "file": "combined_Room5.csv",
+          "room_type": "Library Space",
+          "days_logged": 47,
+          "rows": 13536,
+          "columns": 35,
+          "occupant_presence_rate": 0.4255,
+          "max_occupants": 16,
+          "ceiling_fan_energy_kwh": 53.50,
+          "duplicate_timestamps": 0
+        }
+      ]
+    },
+    "rdd_fan_telemetry": {
+      "name": "RDD - Residential Ceiling Fan IoT Telemetry Dataset",
+      "exact_path": "RDD Datset/",
+      "provenance": "Atomberg Residential Smart Ceiling Fan Fleet Telemetry (India)",
+      "total_records": 675332,
+      "fans_count": 9,
+      "room_types": ["Bedroom (3 fans)", "Drawingroom (3 fans)", "Lounge (3 fans)"],
+      "files": [
+        {"file": "Bedroom_Fan_1.csv", "rows": 79384},
+        {"file": "Bedroom_Fan_2.csv", "rows": 179243},
+        {"file": "Bedroom_Fan_3.csv", "rows": 110409},
+        {"file": "Drawingroom_Fan_1.csv", "rows": 60444},
+        {"file": "Drawingroom_Fan_2.csv", "rows": 43529},
+        {"file": "Drawingroom_Fan_3.csv", "rows": 77764},
+        {"file": "Lounge_Fan_1.csv", "rows": 21305},
+        {"file": "Lounge_Fan_2.csv", "rows": 55488},
+        {"file": "Lounge_Fan_3.csv", "rows": 47766}
+      ],
+      "columns": [
+        "S.No.",
+        "datetime",
+        "temperature",
+        "humidity",
+        "mode",
+        "speed",
+        "opTime",
+        "eSpent",
+        "eSaved"
+      ],
+      "role": "Real-world residential smart fan speed control targets, operational modes, and BLDC energy saving validation"
+    }
+  }
+}

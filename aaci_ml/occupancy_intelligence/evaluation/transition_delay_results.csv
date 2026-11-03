@@ -1,0 +1,13 @@
+algorithm,feature_set,entry_delay_min,departure_delay_min,max_entry_delay_min
+logistic_regression,set_a,0.25,1.7083333333333333,2.0
+logistic_regression,set_b,7.208333333333333,24.375,62.0
+logistic_regression,set_c,0.25,1.7083333333333333,2.0
+decision_tree,set_a,14.125,1.0,175.0
+decision_tree,set_b,1.625,17.208333333333332,12.0
+decision_tree,set_c,14.125,1.0,175.0
+random_forest,set_a,0.20833333333333334,1.7083333333333333,1.0
+random_forest,set_b,3.625,6.958333333333333,16.0
+random_forest,set_c,1.2083333333333333,1.125,22.0
+xgboost,set_a,9.125,1.0833333333333333,175.0
+xgboost,set_b,1.125,17.291666666666668,11.0
+xgboost,set_c,10.958333333333334,1.0416666666666667,175.0

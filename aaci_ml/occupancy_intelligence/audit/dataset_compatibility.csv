@@ -1,0 +1,19 @@
+Feature_Category,Feature_Name,Archive2_UCI,ROBOD_NUS,RDD_Atomberg,Unit,Edge_Hardware_Classification,Recommended_Usage
+Environmental,Temperature,Yes,Yes,Yes,Celsius,Direct Smart-Fan Sensor (AHT20/SHT40),Core feature across all modules
+Environmental,Relative_Humidity,Yes,Yes,Yes,Percentage (%),Direct Smart-Fan Sensor (AHT20/SHT40),Core feature across all modules
+Environmental,Light_Illuminance,Yes,Yes (solar/outdoor),No,Lux,Additional Sensor (OPT3001/BH1750),High predictive power (UCI r=0.907)
+Environmental,CO2_Concentration,Yes,Yes,No,ppm,Additional Sensor (SCD40/SCD30),Strong secondary proxy (UCI r=0.712)
+Psychrometric,Humidity_Ratio,Yes,Derived,No,kg water / kg air,Derived Software Feature,Nonlinear psychrometric representation
+Acoustic,Sound_Pressure_Level,No,Yes,No,dBA,Additional Sensor (Microphone/I2S),Module 2 (Activity & Presence verification)
+Network,WiFi_Device_Count,No,Yes,No,Count,Cloud / Local AP Polling,Module 2 (Macro spatial occupancy indicator)
+Air_Quality,Total_VOC,No,Yes,No,ppb,Additional Sensor (SGP40),Module 2 (Biometric air quality proxy)
+Air_Quality,Particulate_Matter_PM25,No,Yes,No,ug/m3,Additional Sensor (PMS5003),Module 2 & Health/Purifier integration
+HVAC_Actuation,Ceiling_Fan_Energy,No,Yes,Yes (calculated),kWh,Direct Smart-Fan Telemetry (Atomberg BLDC),Module 3 (Energy optimization & fan control)
+HVAC_Actuation,VAV_Damper_Position,No,Yes,No,Percentage (%),Building BMS Telemetry,Module 3 (Commercial BMS co-simulation)
+HVAC_Actuation,Cooling_Coil_Valve,No,Yes,No,Percentage (%),Building BMS Telemetry,Module 3 (Commercial BMS co-simulation)
+Actuator_State,Fan_Speed_Command,No,No,Yes,Speed Index (1-5),Direct Smart-Fan Actuation,AACI Decision Engine Action Target
+Temporal,Time_of_Day_Hour,Yes,Yes,Yes,Hour (0-23),Derived Software Feature,Cyclic feature encoding (sin/cos)
+Temporal,Day_of_Week,Yes,Yes,Yes,Day (0-6),Derived Software Feature,Weekday vs Weekend schedule prior
+Target,Binary_Occupancy,Yes (0/1),Yes (0/1),No,Binary,Ground Truth Target,Primary target for Module 1
+Target,Occupant_Count,No,Yes (0-38),No,Integer,Ground Truth Target,Primary target for Module 2 Headcount
+

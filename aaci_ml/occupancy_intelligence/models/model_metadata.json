@@ -1,0 +1,395 @@
+{
+  "metadata_version": "1.0",
+  "timestamp": "2026-11-03T23:15:21",
+  "random_seed": 42,
+  "dataset": "archive (2)/Occupancy.csv",
+  "dataset_partitions": {
+    "train_partition": {
+      "file": "datatraining.txt",
+      "rows": 8143,
+      "indices": "2665 to 10807"
+    },
+    "test2_forward": {
+      "file": "datatest2.txt",
+      "rows": 9752,
+      "indices": "10808 to 20559"
+    },
+    "test1_historical": {
+      "file": "datatest.txt",
+      "rows": 2665,
+      "indices": "0 to 2664"
+    }
+  },
+  "feature_definitions": {
+    "set_a": [
+      "Temperature",
+      "Humidity",
+      "Light",
+      "CO2",
+      "HumidityRatio"
+    ],
+    "set_b": [
+      "Temperature",
+      "Humidity",
+      "HumidityRatio",
+      "Hour"
+    ],
+    "set_c": [
+      "Temperature",
+      "Humidity",
+      "Light",
+      "CO2"
+    ]
+  },
+  "models": {
+    "logistic_regression_set_a": {
+      "algo_name": "logistic_regression",
+      "feature_set": "set_a",
+      "model_file": "module1_logistic_regression_set_a.joblib",
+      "calibrated_model_file": "module1_logistic_regression_set_a_calibrated.joblib",
+      "scaler_file": "preprocessor_set_a.joblib",
+      "train_time_sec": 0.007176000013714656,
+      "latency_us_per_sample": 1.741299987770617,
+      "model_size_kb": 2.75390625,
+      "optimal_threshold": 0.21000000000000002,
+      "feature_importances": {
+        "Temperature": {
+          "coefficient": -1.3025262956485966,
+          "odds_ratio": 0.2718441660913557
+        },
+        "Humidity": {
+          "coefficient": 0.026633104250031937,
+          "odds_ratio": 1.0269909350228152
+        },
+        "Light": {
+          "coefficient": 3.909407990620799,
+          "odds_ratio": 49.869420068272234
+        },
+        "CO2": {
+          "coefficient": 1.8967365332151538,
+          "odds_ratio": 6.66411081224979
+        },
+        "HumidityRatio": {
+          "coefficient": -0.23329402455643353,
+          "odds_ratio": 0.7919206951588881
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.21000000000000002
+    },
+    "logistic_regression_set_b": {
+      "algo_name": "logistic_regression",
+      "feature_set": "set_b",
+      "model_file": "module1_logistic_regression_set_b.joblib",
+      "calibrated_model_file": "module1_logistic_regression_set_b_calibrated.joblib",
+      "scaler_file": "preprocessor_set_b.joblib",
+      "train_time_sec": 0.0061787000158801675,
+      "latency_us_per_sample": 1.4568000042345375,
+      "model_size_kb": 2.69140625,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "coefficient": 0.41296559595246174,
+          "odds_ratio": 1.5112930304423076
+        },
+        "Humidity": {
+          "coefficient": -4.466079208943652,
+          "odds_ratio": 0.011492286486736095
+        },
+        "HumidityRatio": {
+          "coefficient": 5.024632263148657,
+          "odds_ratio": 152.11430778957921
+        },
+        "Hour": {
+          "coefficient": -0.4409256215113367,
+          "odds_ratio": 0.6434405629298078
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    },
+    "logistic_regression_set_c": {
+      "algo_name": "logistic_regression",
+      "feature_set": "set_c",
+      "model_file": "module1_logistic_regression_set_c.joblib",
+      "calibrated_model_file": "module1_logistic_regression_set_c_calibrated.joblib",
+      "scaler_file": "preprocessor_set_c.joblib",
+      "train_time_sec": 0.00559599997359328,
+      "latency_us_per_sample": 1.3626000145450234,
+      "model_size_kb": 2.69140625,
+      "optimal_threshold": 0.2,
+      "feature_importances": {
+        "Temperature": {
+          "coefficient": -1.3598813569454111,
+          "odds_ratio": 0.25669122977859915
+        },
+        "Humidity": {
+          "coefficient": -0.19751655817731936,
+          "odds_ratio": 0.8207665501171334
+        },
+        "Light": {
+          "coefficient": 3.9120187914311924,
+          "odds_ratio": 49.999789300596255
+        },
+        "CO2": {
+          "coefficient": 1.8788587769432463,
+          "odds_ratio": 6.546030117326713
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.2
+    },
+    "decision_tree_set_a": {
+      "algo_name": "decision_tree",
+      "feature_set": "set_a",
+      "model_file": "module1_decision_tree_set_a.joblib",
+      "calibrated_model_file": "module1_decision_tree_set_a_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.008479499985696748,
+      "latency_us_per_sample": 1.9917000026907772,
+      "model_size_kb": 10.80078125,
+      "optimal_threshold": 0.11,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.01478308267795526
+        },
+        "Humidity": {
+          "importance": 0.0005146685741148223
+        },
+        "Light": {
+          "importance": 0.9668801517784972
+        },
+        "CO2": {
+          "importance": 0.01778103714254622
+        },
+        "HumidityRatio": {
+          "importance": 4.105982688648456e-05
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.11
+    },
+    "decision_tree_set_b": {
+      "algo_name": "decision_tree",
+      "feature_set": "set_b",
+      "model_file": "module1_decision_tree_set_b.joblib",
+      "calibrated_model_file": "module1_decision_tree_set_b_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.0071878999879118055,
+      "latency_us_per_sample": 1.4457000070251524,
+      "model_size_kb": 14.08203125,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.4526833174626159
+        },
+        "Humidity": {
+          "importance": 0.03508645200886381
+        },
+        "HumidityRatio": {
+          "importance": 0.24292358200717268
+        },
+        "Hour": {
+          "importance": 0.2693066485213476
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    },
+    "decision_tree_set_c": {
+      "algo_name": "decision_tree",
+      "feature_set": "set_c",
+      "model_file": "module1_decision_tree_set_c.joblib",
+      "calibrated_model_file": "module1_decision_tree_set_c_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.008500700001604855,
+      "latency_us_per_sample": 2.6217999984510243,
+      "model_size_kb": 10.80078125,
+      "optimal_threshold": 0.11,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.014783169471914577
+        },
+        "Humidity": {
+          "importance": 0.0005498604959549572
+        },
+        "Light": {
+          "importance": 0.9668858284941312
+        },
+        "CO2": {
+          "importance": 0.01778114153799932
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.11
+    },
+    "random_forest_set_a": {
+      "algo_name": "random_forest",
+      "feature_set": "set_a",
+      "model_file": "module1_random_forest_set_a.joblib",
+      "calibrated_model_file": "module1_random_forest_set_a_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.2196752000018023,
+      "latency_us_per_sample": 91.1439000046812,
+      "model_size_kb": 1457.84765625,
+      "optimal_threshold": 0.7,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.09318235465429071
+        },
+        "Humidity": {
+          "importance": 0.018422149128404886
+        },
+        "Light": {
+          "importance": 0.5983813615871787
+        },
+        "CO2": {
+          "importance": 0.2591358833528714
+        },
+        "HumidityRatio": {
+          "importance": 0.030878251277254375
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.7
+    },
+    "random_forest_set_b": {
+      "algo_name": "random_forest",
+      "feature_set": "set_b",
+      "model_file": "module1_random_forest_set_b.joblib",
+      "calibrated_model_file": "module1_random_forest_set_b_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.21220979999634437,
+      "latency_us_per_sample": 87.0553000131622,
+      "model_size_kb": 2529.87890625,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.37038673761840823
+        },
+        "Humidity": {
+          "importance": 0.13672944470957296
+        },
+        "HumidityRatio": {
+          "importance": 0.1659315622237804
+        },
+        "Hour": {
+          "importance": 0.3269522554482384
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    },
+    "random_forest_set_c": {
+      "algo_name": "random_forest",
+      "feature_set": "set_c",
+      "model_file": "module1_random_forest_set_c.joblib",
+      "calibrated_model_file": "module1_random_forest_set_c_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.2306867000006605,
+      "latency_us_per_sample": 87.56680000806227,
+      "model_size_kb": 1365.34765625,
+      "optimal_threshold": 0.77,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.09484911000859154
+        },
+        "Humidity": {
+          "importance": 0.0172064755490542
+        },
+        "Light": {
+          "importance": 0.6231772202830056
+        },
+        "CO2": {
+          "importance": 0.2647671941593487
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.77
+    },
+    "xgboost_set_a": {
+      "algo_name": "xgboost",
+      "feature_set": "set_a",
+      "model_file": "module1_xgboost_set_a.joblib",
+      "calibrated_model_file": "module1_xgboost_set_a_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.1767319999926258,
+      "latency_us_per_sample": 6.834100000560284,
+      "model_size_kb": 511.5185546875,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.028613677248358727
+        },
+        "Humidity": {
+          "importance": 0.027123425155878067
+        },
+        "Light": {
+          "importance": 0.7891337871551514
+        },
+        "CO2": {
+          "importance": 0.13842947781085968
+        },
+        "HumidityRatio": {
+          "importance": 0.016699718311429024
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    },
+    "xgboost_set_b": {
+      "algo_name": "xgboost",
+      "feature_set": "set_b",
+      "model_file": "module1_xgboost_set_b.joblib",
+      "calibrated_model_file": "module1_xgboost_set_b_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.20479210000485182,
+      "latency_us_per_sample": 7.4693000060506165,
+      "model_size_kb": 552.8623046875,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.32721349596977234
+        },
+        "Humidity": {
+          "importance": 0.13526864349842072
+        },
+        "HumidityRatio": {
+          "importance": 0.21123816072940826
+        },
+        "Hour": {
+          "importance": 0.3262796998023987
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    },
+    "xgboost_set_c": {
+      "algo_name": "xgboost",
+      "feature_set": "set_c",
+      "model_file": "module1_xgboost_set_c.joblib",
+      "calibrated_model_file": "module1_xgboost_set_c_calibrated.joblib",
+      "scaler_file": null,
+      "train_time_sec": 0.18228710000403225,
+      "latency_us_per_sample": 7.4566000257618725,
+      "model_size_kb": 522.5498046875,
+      "optimal_threshold": 0.1,
+      "feature_importances": {
+        "Temperature": {
+          "importance": 0.026711229234933853
+        },
+        "Humidity": {
+          "importance": 0.02326406165957451
+        },
+        "Light": {
+          "importance": 0.7999013066291809
+        },
+        "CO2": {
+          "importance": 0.15012341737747192
+        }
+      },
+      "recommended_production_threshold": 0.5,
+      "validation_optimized_threshold": 0.1
+    }
+  }
+}
