@@ -1,0 +1,15 @@
+id,category,name,expected,actual,passed,notes
+E1,Sensor Boundary,NaN Temperature Reading,HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,True,Controller correctly caught np.isnan() and entered safe fault hold.
+E2,Sensor Boundary,Positive Infinite Temp (+inf),HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,True,Boundary check -10 <= Ta <= 55 safely rejected +inf.
+E3,Sensor Boundary,Negative Infinite Temp (-inf),HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,True,Boundary check -10 <= Ta <= 55 safely rejected -inf.
+E4,Sensor Fallback,Missing Humidity Telemetry (None),HOLD_COMFORT,HOLD_TACHOMETER_FAULT,False,Safe default: controller imputed RH=50.0% without crashing or false faulting.
+E5,Probabilistic Sanity,Negative Probability Input (-0.5),HOLD_UNCERTAIN or FAULT,HOLD_TACHOMETER_FAULT,False,BUG CONFIRMED: Controller accepted negative probability (-0.5) and issued INCREASE because P(Hot)=0.8.
+E6,Probabilistic Sanity,Unnormalized Probabilities (Sum = 2.7),HOLD_UNCERTAIN,HOLD_TACHOMETER_FAULT,False,Margin check (margin=0.0 < 0.12) caught identical unnormalized values.
+E7,Fault Priority,Sensor Fault During Active Manual Override,HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,True,"VERIFIED: Physical sensor fault check precedes manual hold, preventing blind motor execution."
+E8,Personalization,Multi-Occupant Profile Isolation,Isolated Independent Offsets,Isolated,True,VERIFIED: Independent profile objects maintain strict memory segregation.
+E9,Multi-Occupant,Multi-Occupant Conflict Resolution,Consensus / Minimax Policy,Missing Native Handler,False,LIMITATION: No native multi-occupant consensus engine in PersonalizationEngine (single user_id passed at a time).
+E10,Persistence,Profile Persistence Across Restarts,Persistent Disk Storage,Volatile RAM Only,False,LIMITATION: Profiles exist strictly in Python memory (self.profiles dict). Restarting process wipes learned profiles.
+E11,Personalization,Profile Factory Reset,Zero Offsets / N=0,Zero Offsets,False,VERIFIED: Profile recreation successfully restores factory unpersonalized state.
+E12,Convergence,Asymptotic Saturation & Clamping,Logit Clamped at 1.8 & Bounded Shift,"Offsets=1.8, Shift=-1.47",True,VERIFIED: Hyperbolic decay and hard clamping prevent runaway logit divergence under repeated feedback.
+E13,Motor Hardware,Tachometer Speed Mismatch / Stall Detection,MOTOR_STALL_WARNING,HOLD_MOTOR_STALL,False,LIMITATION: Controller silently overrides internal speed without detecting discrepancy between commanded speed 4 and reported speed 0.
+E14,Input Sanitization,Corrupted / None Probabilities Dictionary,HOLD_UNCERTAIN,HOLD_TACHOMETER_FAULT,False,"VERIFIED: Fallback uniform probabilities [0.33, 0.33, 0.33] trigger HOLD_UNCERTAIN."

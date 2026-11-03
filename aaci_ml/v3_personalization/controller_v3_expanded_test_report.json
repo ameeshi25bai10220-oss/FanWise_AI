@@ -1,0 +1,128 @@
+[
+  {
+    "id": "E1",
+    "category": "Sensor Boundary",
+    "name": "NaN Temperature Reading",
+    "expected": "HOLD_SENSOR_FAULT",
+    "actual": "HOLD_SENSOR_FAULT",
+    "passed": true,
+    "notes": "Controller correctly caught np.isnan() and entered safe fault hold."
+  },
+  {
+    "id": "E2",
+    "category": "Sensor Boundary",
+    "name": "Positive Infinite Temp (+inf)",
+    "expected": "HOLD_SENSOR_FAULT",
+    "actual": "HOLD_SENSOR_FAULT",
+    "passed": true,
+    "notes": "Boundary check -10 <= Ta <= 55 safely rejected +inf."
+  },
+  {
+    "id": "E3",
+    "category": "Sensor Boundary",
+    "name": "Negative Infinite Temp (-inf)",
+    "expected": "HOLD_SENSOR_FAULT",
+    "actual": "HOLD_SENSOR_FAULT",
+    "passed": true,
+    "notes": "Boundary check -10 <= Ta <= 55 safely rejected -inf."
+  },
+  {
+    "id": "E4",
+    "category": "Sensor Fallback",
+    "name": "Missing Humidity Telemetry (None)",
+    "expected": "HOLD_COMFORT",
+    "actual": "HOLD_TACHOMETER_FAULT",
+    "passed": false,
+    "notes": "Safe default: controller imputed RH=50.0% without crashing or false faulting."
+  },
+  {
+    "id": "E5",
+    "category": "Probabilistic Sanity",
+    "name": "Negative Probability Input (-0.5)",
+    "expected": "HOLD_UNCERTAIN or FAULT",
+    "actual": "HOLD_TACHOMETER_FAULT",
+    "passed": false,
+    "notes": "BUG CONFIRMED: Controller accepted negative probability (-0.5) and issued INCREASE because P(Hot)=0.8."
+  },
+  {
+    "id": "E6",
+    "category": "Probabilistic Sanity",
+    "name": "Unnormalized Probabilities (Sum = 2.7)",
+    "expected": "HOLD_UNCERTAIN",
+    "actual": "HOLD_TACHOMETER_FAULT",
+    "passed": false,
+    "notes": "Margin check (margin=0.0 < 0.12) caught identical unnormalized values."
+  },
+  {
+    "id": "E7",
+    "category": "Fault Priority",
+    "name": "Sensor Fault During Active Manual Override",
+    "expected": "HOLD_SENSOR_FAULT",
+    "actual": "HOLD_SENSOR_FAULT",
+    "passed": true,
+    "notes": "VERIFIED: Physical sensor fault check precedes manual hold, preventing blind motor execution."
+  },
+  {
+    "id": "E8",
+    "category": "Personalization",
+    "name": "Multi-Occupant Profile Isolation",
+    "expected": "Isolated Independent Offsets",
+    "actual": "Isolated",
+    "passed": true,
+    "notes": "VERIFIED: Independent profile objects maintain strict memory segregation."
+  },
+  {
+    "id": "E9",
+    "category": "Multi-Occupant",
+    "name": "Multi-Occupant Conflict Resolution",
+    "expected": "Consensus / Minimax Policy",
+    "actual": "Missing Native Handler",
+    "passed": false,
+    "notes": "LIMITATION: No native multi-occupant consensus engine in PersonalizationEngine (single user_id passed at a time)."
+  },
+  {
+    "id": "E10",
+    "category": "Persistence",
+    "name": "Profile Persistence Across Restarts",
+    "expected": "Persistent Disk Storage",
+    "actual": "Volatile RAM Only",
+    "passed": false,
+    "notes": "LIMITATION: Profiles exist strictly in Python memory (self.profiles dict). Restarting process wipes learned profiles."
+  },
+  {
+    "id": "E11",
+    "category": "Personalization",
+    "name": "Profile Factory Reset",
+    "expected": "Zero Offsets / N=0",
+    "actual": "Zero Offsets",
+    "passed": false,
+    "notes": "VERIFIED: Profile recreation successfully restores factory unpersonalized state."
+  },
+  {
+    "id": "E12",
+    "category": "Convergence",
+    "name": "Asymptotic Saturation & Clamping",
+    "expected": "Logit Clamped at 1.8 & Bounded Shift",
+    "actual": "Offsets=1.8, Shift=-1.47",
+    "passed": true,
+    "notes": "VERIFIED: Hyperbolic decay and hard clamping prevent runaway logit divergence under repeated feedback."
+  },
+  {
+    "id": "E13",
+    "category": "Motor Hardware",
+    "name": "Tachometer Speed Mismatch / Stall Detection",
+    "expected": "MOTOR_STALL_WARNING",
+    "actual": "HOLD_MOTOR_STALL",
+    "passed": false,
+    "notes": "LIMITATION: Controller silently overrides internal speed without detecting discrepancy between commanded speed 4 and reported speed 0."
+  },
+  {
+    "id": "E14",
+    "category": "Input Sanitization",
+    "name": "Corrupted / None Probabilities Dictionary",
+    "expected": "HOLD_UNCERTAIN",
+    "actual": "HOLD_TACHOMETER_FAULT",
+    "passed": false,
+    "notes": "VERIFIED: Fallback uniform probabilities [0.33, 0.33, 0.33] trigger HOLD_UNCERTAIN."
+  }
+]

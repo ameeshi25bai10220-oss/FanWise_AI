@@ -1,0 +1,17 @@
+scenario_id,scenario_name,expected_action,actual_action,status,target_speed,current_speed,speed_delta,fault_detected,safety_guard_active,confidence_status,reason
+1,Telemetry Fault: Speed 99,HOLD_TELEMETRY_FAULT,HOLD_TELEMETRY_FAULT,PASSED,2,2,0,True,True,FAULT,Telemetry Fault: Measured fan speed 99 is invalid (valid: 0-5). Holding state to protect motor.
+2,Telemetry Fault: Negative Speed (-1),HOLD_TELEMETRY_FAULT,HOLD_TELEMETRY_FAULT,PASSED,2,2,0,True,True,FAULT,Telemetry Fault: Measured fan speed -1 is invalid (valid: 0-5). Holding state to protect motor.
+3,Sensor Fault: Missing Temperature (None),HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,PASSED,2,2,0,True,True,FAULT,Sensor Fault: Missing room temperature reading. Holding current speed safely.
+4,Sensor Fault: Impossible High Temperature (62.0C),HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,PASSED,2,2,0,True,True,FAULT,Sensor Fault: Impossible temperature 62.0C (valid: -10.0 to 55.0C). Holding speed.
+5,Sensor Fault: Impossible Low Temperature (-15.0C),HOLD_SENSOR_FAULT,HOLD_SENSOR_FAULT,PASSED,2,2,0,True,True,FAULT,Sensor Fault: Impossible temperature -15.0C (valid: -10.0 to 55.0C). Holding speed.
+6,Telemetry Stale: 250s Since Last Update,HOLD_STALE_TELEMETRY,HOLD_STALE_TELEMETRY,PASSED,2,2,0,True,True,STALE,Telemetry Stale: No update for 250s (exceeds 180s timeout). Auto-adjustments suspended.
+7,High Confidence Hot (P=0.70 >= 0.52),INCREASE,INCREASE,PASSED,3,3,1,False,False,HIGH,Hot discomfort predicted with 70.0% confidence (tau=0.52). Increasing speed by 1 to enhance cooling.
+8,High Confidence Cold (P=0.65 >= 0.45),DECREASE,DECREASE,PASSED,2,2,-1,False,False,HIGH,Cold discomfort predicted with 65.0% confidence (tau=0.45). Reducing speed by 1 to decrease draft.
+9,High Confidence Neutral (P=0.60 >= 0.48),HOLD_COMFORT,HOLD_COMFORT,PASSED,2,2,0,False,False,MODERATE,Neutral comfort predicted (60.0% confidence). Maintaining speed 2.
+10,Low Confidence Hot (P=0.40 < 0.52),HOLD_UNCERTAIN,HOLD_UNCERTAIN,PASSED,2,2,0,False,False,LOW_UNCERTAIN,Prediction confidence (40.0%) below threshold (52.0%) or margin (0.05) narrow. Holding speed.
+11,"Narrow Probability Margin (P_hot=0.49, P_neu=0.47)",HOLD_UNCERTAIN,HOLD_UNCERTAIN,PASSED,2,2,0,False,False,LOW_UNCERTAIN,Prediction confidence (49.0%) below threshold (52.0%) or margin (0.02) narrow. Holding speed.
+12,Hysteresis Cooldown (100s since last change < 300s),HOLD_COOLDOWN,HOLD_COOLDOWN,PASSED,3,3,0,False,False,HIGH,Hysteresis active: Fan speed adjusted recently (200s cooldown remaining).
+13,Manual Override Priority (Speed 4 for White Noise),HOLD_MANUAL,HOLD_MANUAL,PASSED,4,4,0,False,False,MANUAL,Manual override active (55 mins remaining). Reason: 'White noise for sleeping'. Auto-control paused.
+14,Manual Override Expiration (Resumes Auto After 60m),DECREASE,DECREASE,PASSED,3,3,-1,False,False,HIGH,Cold discomfort predicted with 70.0% confidence (tau=0.45). Reducing speed by 1 to decrease draft.
+15,Safety Guard: Cold Lockout (Ta=18.5C < 20C),DECREASE_SAFETY,DECREASE_SAFETY,PASSED,1,1,-1,False,True,HIGH,Safety Guard Active: Room temperature (18.5C) below 20.0C cold lockout. Throttling fan.
+16,"Safety Guard: Extreme Heat Floor (Ta=33.0C, Speed=0)",INCREASE_SAFETY,INCREASE_SAFETY,PASSED,2,2,1,False,True,HIGH,Safety Guard Active: Extreme room heat (33.0C). Enforcing minimum speed 2 for convective relief.
