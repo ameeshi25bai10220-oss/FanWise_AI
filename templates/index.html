@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FanWise AI - Atomberg Adaptive Ceiling Intelligence (AACI)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @keyframes spin-fan {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .fan-spinning {
+      animation: spin-fan var(--spin-duration, 0.8s) linear infinite;
+    }
+    .fan-paused {
+      animation-play-state: paused;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+          <i data-lucide="fan" class="w-6 h-6 text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-lg tracking-tight text-white">FanWise AI</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">AACI Phase 5</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono hidden sm:inline-flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Vercel Cloud
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Atomberg Adaptive Ceiling Intelligence • 3-Model Unified Pipeline</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <a href="#disclaimers" class="text-xs text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition">
+          Disclaimers
+        </a>
+        <a href="https://github.com/bhargav25bai10209-blip/FanWise_AI" target="_blank" class="flex items-center gap-1 text-xs text-slate-300 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+          <i data-lucide="github" class="w-4 h-4"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Controls & Presets (5 cols) -->
+    <div class="lg:col-span-5 space-y-6">
+
+      <!-- Scenario Presets -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i> One-Click Demonstration Scenarios
+        </h2>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button onclick="applyPreset('occupied_warm')" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-cyan-950/60 hover:border-cyan-700 border border-slate-700/60 text-left transition flex flex-col gap-1">
+            <span class="font-medium text-cyan-300 flex items-center gap-1.5">
+              <i data-lucide="sun" class="w-3.5 h-3.5"></i> Occupied Warm Room
+            </span>
+            <span class="text-[10px] text-slate-400">31°C, high CO2/light → Speed 3</span>
+          </button>
+          
+          <button onclick="applyPreset('unoccupied')" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-rose-950/60 hover:border-rose-700 border border-slate-700/60 text-left transition flex flex-col gap-1">
+            <span class="font-medium text-rose-300 flex items-center gap-1.5">
+              <i data-lucide="door-closed" class="w-3.5 h-3.5"></i> Empty Room Gate
+            </span>
+            <span class="text-[10px] text-slate-400">Low CO2/light → Speed 0 Off</span>
+          </button>
+
+          <button onclick="applyPreset('heatwave')" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-amber-950/60 hover:border-amber-700 border border-slate-700/60 text-left transition flex flex-col gap-1">
+            <span class="font-medium text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="flame" class="w-3.5 h-3.5"></i> Thermal Safety Floor
+            </span>
+            <span class="text-[10px] text-slate-400">36°C → P3 safety speed floor ≥1</span>
+          </button>
+
+          <button onclick="applyPreset('night')" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-indigo-950/60 hover:border-indigo-700 border border-slate-700/60 text-left transition flex flex-col gap-1">
+            <span class="font-medium text-indigo-300 flex items-center gap-1.5">
+              <i data-lucide="moon" class="w-3.5 h-3.5"></i> Night Comfort
+            </span>
+            <span class="text-[10px] text-slate-400">27°C, 60% RH, quiet Speed 2</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Sensor Telemetry Form -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h2 class="text-sm font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="sliders" class="w-4 h-4 text-cyan-400"></i> Environmental Sensors
+          </h2>
+          <span class="text-xs text-slate-400 font-mono">Live Inputs</span>
+        </div>
+
+        <!-- Temperature -->
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="thermometer" class="w-3.5 h-3.5 text-rose-400"></i> Air Temperature
+            </span>
+            <span id="temp-val" class="font-mono text-cyan-400 font-semibold">30.5 °C</span>
+          </div>
+          <input type="range" id="temp-input" min="15" max="45" step="0.5" value="30.5" 
+                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                 oninput="updateVal('temp-val', this.value + ' °C'); triggerRecommendation();">
+        </div>
+
+        <!-- Relative Humidity -->
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="droplets" class="w-3.5 h-3.5 text-blue-400"></i> Relative Humidity
+            </span>
+            <span id="humidity-val" class="font-mono text-cyan-400 font-semibold">65.0 %</span>
+          </div>
+          <input type="range" id="humidity-input" min="10" max="95" step="1" value="65.0" 
+                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                 oninput="updateVal('humidity-val', this.value + ' %'); triggerRecommendation();">
+        </div>
+
+        <!-- Light Level -->
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400"></i> Ambient Light
+            </span>
+            <span id="light-val" class="font-mono text-cyan-400 font-semibold">500 lux</span>
+          </div>
+          <input type="range" id="light-input" min="0" max="1000" step="10" value="500" 
+                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                 oninput="updateVal('light-val', this.value + ' lux'); triggerRecommendation();">
+        </div>
+
+        <!-- CO2 Level -->
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="wind" class="w-3.5 h-3.5 text-emerald-400"></i> CO₂ Concentration
+            </span>
+            <span id="co2-val" class="font-mono text-cyan-400 font-semibold">1100 ppm</span>
+          </div>
+          <input type="range" id="co2-input" min="300" max="2500" step="25" value="1100" 
+                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                 oninput="updateVal('co2-val', this.value + ' ppm'); triggerRecommendation();">
+        </div>
+
+        <!-- Room & Fan Mode Dropdowns -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Room Category</label>
+            <select id="room-input" onchange="triggerRecommendation();" 
+                    class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500">
+              <option value="Bedroom">Bedroom (Fan 1)</option>
+              <option value="Drawingroom">Drawingroom (Fan 1)</option>
+              <option value="Lounge">Lounge (Fan 1)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Fan Motor</label>
+            <select id="mode-input" onchange="triggerRecommendation();" 
+                    class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500">
+              <option value="BLDC">Atomberg BLDC</option>
+              <option value="Induction">Traditional Induction</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Manual Override Section -->
+        <div class="pt-3 border-t border-slate-800/80">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="hand" class="w-3.5 h-3.5 text-purple-400"></i> Manual User Override (P2)
+            </span>
+            <button id="clear-override-btn" onclick="clearOverride();" class="text-[10px] text-rose-400 hover:text-rose-300 hidden">
+              Clear Override
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="setManualOverride(1)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-purple-900/50 hover:border-purple-600 border border-slate-700 text-xs font-mono">1</button>
+            <button onclick="setManualOverride(2)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-purple-900/50 hover:border-purple-600 border border-slate-700 text-xs font-mono">2</button>
+            <button onclick="setManualOverride(3)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-purple-900/50 hover:border-purple-600 border border-slate-700 text-xs font-mono">3</button>
+            <button onclick="setManualOverride(4)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-purple-900/50 hover:border-purple-600 border border-slate-700 text-xs font-mono">4</button>
+            <button onclick="setManualOverride(5)" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-purple-900/50 hover:border-purple-600 border border-slate-700 text-xs font-mono">5</button>
+          </div>
+          <p id="override-active-label" class="text-[11px] text-purple-400 mt-1 font-mono hidden"></p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Right Column: Digital Twin & 3-Model Outputs (7 cols) -->
+    <div class="lg:col-span-7 space-y-6">
+
+      <!-- Virtual Fan Digital Twin Card -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="flex items-start justify-between relative z-10">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span id="decision-mode-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-950 text-cyan-400 border border-cyan-800 uppercase">
+                Adaptive Controller
+              </span>
+              <span id="safety-badge" class="px-2 py-0.5 rounded-full text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700">
+                P-Normal
+              </span>
+            </div>
+            <h3 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              Recommended Speed: <span id="recommended-speed-display" class="text-cyan-400 font-mono text-3xl">3</span>
+            </h3>
+            <p id="rationale-text" class="text-xs text-slate-400 max-w-md mt-1 leading-relaxed">
+              Evaluating multi-objective comfort, occupancy, and energy parameters...
+            </p>
+          </div>
+
+          <!-- Animated Fan Visualizer -->
+          <div class="flex flex-col items-center">
+            <div class="w-24 h-24 rounded-full bg-slate-950/80 border border-slate-800 flex items-center justify-center relative shadow-inner">
+              <div id="fan-icon-container" class="fan-spinning flex items-center justify-center text-cyan-400" style="--spin-duration: 0.6s;">
+                <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 1 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 1-7.002 8.618l1.45-5.412Z"/>
+                  <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            <span id="power-display" class="text-[11px] font-mono text-slate-400 mt-2 font-medium">Power: 20 W</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Models Intelligence Triad Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <!-- Model 1: Comfort Intelligence -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="heart-pulse" class="w-3.5 h-3.5 text-rose-400"></i> Model 1: Comfort
+              </span>
+              <span id="m1-status" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              Label: <span id="m1-label" class="text-rose-400 font-mono">Hot</span>
+            </div>
+            
+            <!-- Softmax Probabilities -->
+            <div class="space-y-1.5 text-[11px]">
+              <div>
+                <div class="flex justify-between text-slate-400"><span>Hot</span><span id="p-hot" class="font-mono">52%</span></div>
+                <div class="w-full bg-slate-800 rounded-full h-1"><div id="bar-hot" class="bg-rose-500 h-1 rounded-full" style="width: 52%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-slate-400"><span>Neutral</span><span id="p-neutral" class="font-mono">39%</span></div>
+                <div class="w-full bg-slate-800 rounded-full h-1"><div id="bar-neutral" class="bg-emerald-500 h-1 rounded-full" style="width: 39%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-slate-400"><span>Cold</span><span id="p-cold" class="font-mono">9%</span></div>
+                <div class="w-full bg-slate-800 rounded-full h-1"><div id="bar-cold" class="bg-blue-500 h-1 rounded-full" style="width: 9%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-[10px] text-slate-500 mt-3 pt-2 border-t border-slate-800/80">
+            Airflow: <span id="m1-airflow" class="text-slate-400 font-mono">0.29 m/s (Dryad)</span>
+          </div>
+        </div>
+
+        <!-- Model 2: Occupancy Intelligence -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="users" class="w-3.5 h-3.5 text-cyan-400"></i> Model 2: Occupancy
+              </span>
+              <span id="m2-status" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              State: <span id="m2-state" class="text-cyan-400 font-mono">Occupied</span>
+            </div>
+
+            <div class="space-y-2 text-[11px]">
+              <div>
+                <div class="flex justify-between text-slate-400">
+                  <span>Confidence P(occ)</span>
+                  <span id="m2-prob" class="font-mono text-cyan-300">95.2%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 mt-1">
+                  <div id="m2-prob-bar" class="bg-cyan-500 h-1.5 rounded-full" style="width: 95%"></div>
+                </div>
+              </div>
+
+              <div class="pt-1 text-slate-300 flex justify-between">
+                <span>Headcount:</span>
+                <span id="m2-headcount" class="font-mono text-white">~3 persons</span>
+              </div>
+              <div class="text-slate-400 flex justify-between">
+                <span>Feature Set:</span>
+                <span id="m2-feature-set" class="font-mono text-slate-300">set_a (Light+CO₂)</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-[10px] text-slate-500 mt-3 pt-2 border-t border-slate-800/80">
+            Hard Gate: <span id="m2-gate" class="text-emerald-400 font-mono">Inactive (P≥0.35)</span>
+          </div>
+        </div>
+
+        <!-- Model 3: Energy Intelligence -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Model 3: Energy
+              </span>
+              <span id="m3-status" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              Power: <span id="m3-power" class="text-amber-400 font-mono">20.0 W</span>
+            </div>
+
+            <div class="space-y-1.5 text-[11px] text-slate-400">
+              <div class="flex justify-between">
+                <span>Estimated Energy:</span>
+                <span id="m3-energy" class="font-mono text-slate-200">5.5 Wh</span>
+              </div>
+              <div class="flex justify-between">
+                <span>ML Forecast (Wh):</span>
+                <span id="m3-ml" class="font-mono text-slate-200">~6.1 Wh</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Role:</span>
+                <span class="font-mono text-cyan-400">Advisory (R²≈0.15)</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-[10px] text-slate-500 mt-3 pt-2 border-t border-slate-800/80">
+            Speed command: <span class="text-rose-400 font-mono font-medium">DISALLOWED</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- JSON Inspector & Diagnostics Collapsible -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <details class="group">
+          <summary class="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-300 uppercase tracking-wider">
+            <span class="flex items-center gap-2">
+              <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i> Full IntegrationResult JSON (22 Fields)
+            </span>
+            <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-4">
+            <pre id="json-inspector" class="bg-slate-950 p-4 rounded-xl text-[11px] font-mono text-slate-300 overflow-x-auto max-h-80 border border-slate-800">Loading initial telemetry...</pre>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Disclaimers Banner -->
+  <section id="disclaimers" class="bg-slate-950 border-t border-slate-900 py-6 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto space-y-2">
+      <h4 class="font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+        <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-500"></i> Research Integrity & Architectural Boundaries
+      </h4>
+      <p>
+        <strong>1. Model 1 Thermal Comfort:</strong> Trained on ASHRAE Database II commercial/office data. Softmax outputs are uncalibrated probabilities and do not represent calibrated confidence. Air velocity estimates use provisional Dryad open-access mappings.
+      </p>
+      <p>
+        <strong>2. Model 2 Occupancy:</strong> Module 2 Spatial Predictor maps academic ROBOD rooms (1–5). ROBOD academic spaces are not equated with residential bedroom/living room categories.
+      </p>
+      <p>
+        <strong>3. Model 3 Energy:</strong> Model 3 ML forecaster operates with R²≈0.1515 and is strictly advisory; it cannot directly command fan speed. Induction fan estimates carry the UNRESOLVED_INDUCTION_BASELINE disclaimer.
+      </p>
+    </div>
+  </section>
+
+  <!-- Script Logic -->
+  <script>
+    lucide.createIcons();
+
+    let debounceTimer = null;
+    let currentManualOverride = null;
+
+    function updateVal(id, val) {
+      document.getElementById(id).textContent = val;
+    }
+
+    function triggerRecommendation() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(fetchRecommendation, 150);
+    }
+
+    function applyPreset(preset) {
+      if (preset === 'occupied_warm') {
+        setInputs(31.0, 65.0, 500, 1200, 'Bedroom', 'BLDC');
+      } else if (preset === 'unoccupied') {
+        setInputs(26.0, 50.0, 10, 410, 'Bedroom', 'BLDC');
+      } else if (preset === 'heatwave') {
+        setInputs(36.5, 75.0, 600, 1400, 'Drawingroom', 'BLDC');
+      } else if (preset === 'night') {
+        setInputs(26.5, 60.0, 0, 800, 'Bedroom', 'BLDC');
+      }
+      triggerRecommendation();
+    }
+
+    function setInputs(temp, humidity, light, co2, room, mode) {
+      document.getElementById('temp-input').value = temp;
+      document.getElementById('temp-val').textContent = temp + ' °C';
+      document.getElementById('humidity-input').value = humidity;
+      document.getElementById('humidity-val').textContent = humidity + ' %';
+      document.getElementById('light-input').value = light;
+      document.getElementById('light-val').textContent = light + ' lux';
+      document.getElementById('co2-input').value = co2;
+      document.getElementById('co2-val').textContent = co2 + ' ppm';
+      document.getElementById('room-input').value = room;
+      document.getElementById('mode-input').value = mode;
+    }
+
+    async function setManualOverride(speed) {
+      const room = document.getElementById('room-input').value;
+      const fanId = room + '_Fan_1';
+      try {
+        const res = await fetch('/api/override', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fan_id: fanId, speed: speed, duration_s: 600 })
+        });
+        const data = await res.json();
+        currentManualOverride = speed;
+        document.getElementById('override-active-label').textContent = `Active Override: Speed ${speed} (600s lockout)`;
+        document.getElementById('override-active-label').classList.remove('hidden');
+        document.getElementById('clear-override-btn').classList.remove('hidden');
+        triggerRecommendation();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function clearOverride() {
+      const room = document.getElementById('room-input').value;
+      const fanId = room + '_Fan_1';
+      try {
+        await fetch('/api/override/clear', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fan_id: fanId })
+        });
+        currentManualOverride = null;
+        document.getElementById('override-active-label').classList.add('hidden');
+        document.getElementById('clear-override-btn').classList.add('hidden');
+        triggerRecommendation();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function fetchRecommendation() {
+      const payload = {
+        temperature_c: parseFloat(document.getElementById('temp-input').value),
+        relative_humidity_pct: parseFloat(document.getElementById('humidity-input').value),
+        light_lux: parseFloat(document.getElementById('light-input').value),
+        co2_ppm: parseFloat(document.getElementById('co2-input').value),
+        room_category: document.getElementById('room-input').value,
+        fan_mode: document.getElementById('mode-input').value,
+        fan_id: document.getElementById('room-input').value + '_Fan_1'
+      };
+
+      try {
+        const response = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error('API request failed');
+        const data = await response.json();
+        renderResult(data);
+      } catch (err) {
+        console.error('Error fetching recommendation:', err);
+      }
+    }
+
+    function renderResult(data) {
+      // 1. Digital Twin display
+      const recSpeed = data.recommended_speed ?? 0;
+      document.getElementById('recommended-speed-display').textContent = recSpeed;
+      
+      const fanContainer = document.getElementById('fan-icon-container');
+      if (recSpeed === 0) {
+        fanContainer.classList.add('fan-paused');
+      } else {
+        fanContainer.classList.remove('fan-paused');
+        const durations = { 1: '1.2s', 2: '0.8s', 3: '0.5s', 4: '0.35s', 5: '0.2s' };
+        fanContainer.style.setProperty('--spin-duration', durations[recSpeed] || '0.5s');
+      }
+
+      // Rationale & Badges
+      const expl = data.decision_explanation || {};
+      document.getElementById('rationale-text').textContent = expl.rationale || 'Speed optimized.';
+      document.getElementById('decision-mode-badge').textContent = expl.decision_mode || 'Adaptive';
+      
+      const safety = data.safety_status || {};
+      if (safety.thermal_safety_floor_triggered) {
+        document.getElementById('safety-badge').textContent = 'P3: Thermal Floor';
+        document.getElementById('safety-badge').className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-rose-950 text-rose-300 border border-rose-800';
+      } else if (safety.safety_active) {
+        document.getElementById('safety-badge').textContent = 'P-Constraint Active';
+        document.getElementById('safety-badge').className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-amber-950 text-amber-300 border border-amber-800';
+      } else {
+        document.getElementById('safety-badge').textContent = 'P-Normal';
+        document.getElementById('safety-badge').className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700';
+      }
+
+      // Power
+      const powerMap = { 0: 0, 1: 10, 2: 15, 3: 20, 4: 27, 5: 48 };
+      const watts = powerMap[recSpeed] || 0;
+      document.getElementById('power-display').textContent = `Power: ${watts} W`;
+
+      // Model 1: Comfort
+      const m1 = data.model1_result || {};
+      document.getElementById('m1-label').textContent = m1.comfort_label || 'Unknown';
+      const probs = m1.comfort_probabilities || {};
+      const pHot = Math.round((probs.Hot || 0) * 100);
+      const pNeu = Math.round((probs.Neutral || 0) * 100);
+      const pCold = Math.round((probs.Cold || 0) * 100);
+      document.getElementById('p-hot').textContent = pHot + '%';
+      document.getElementById('bar-hot').style.width = pHot + '%';
+      document.getElementById('p-neutral').textContent = pNeu + '%';
+      document.getElementById('bar-neutral').style.width = pNeu + '%';
+      document.getElementById('p-cold').textContent = pCold + '%';
+      document.getElementById('bar-cold').style.width = pCold + '%';
+      document.getElementById('m1-airflow').textContent = (m1.air_velocity_used_ms || 0.05) + ' m/s (Dryad)';
+
+      // Model 2: Occupancy
+      const m2 = data.model2_result || {};
+      document.getElementById('m2-state').textContent = m2.occupancy_state || 'Unknown';
+      const occProb = Math.round((m2.occupancy_probability || 0) * 100);
+      document.getElementById('m2-prob').textContent = occProb + '%';
+      document.getElementById('m2-prob-bar').style.width = occProb + '%';
+      document.getElementById('m2-headcount').textContent = m2.headcount_rounded ? `~${m2.headcount_rounded} persons` : 'None';
+      document.getElementById('m2-feature-set').textContent = m2.feature_set_used || 'set_a';
+      
+      const occAssess = data.occupancy_assessment || {};
+      document.getElementById('m2-gate').textContent = occAssess.hard_gate_active ? 'Active (Speed 0)' : 'Inactive (P≥0.35)';
+      document.getElementById('m2-gate').className = occAssess.hard_gate_active ? 'text-rose-400 font-mono font-medium' : 'text-emerald-400 font-mono';
+
+      // Model 3: Energy
+      document.getElementById('m3-power').textContent = `${watts}.0 W`;
+      const mlFc = m2.ml_forecast || (m1 ? {} : {});
+      document.getElementById('m3-energy').textContent = `${(watts * 0.25).toFixed(1)} Wh`;
+
+      // JSON Inspector
+      document.getElementById('json-inspector').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // Trigger initial calculation on load
+    window.addEventListener('DOMContentLoaded', () => {
+      triggerRecommendation();
+    });
+  </script>
+</body>
+</html>
