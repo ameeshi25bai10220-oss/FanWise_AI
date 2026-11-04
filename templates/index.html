@@ -98,11 +98,39 @@
     </div>
   </header>
 
-  <!-- Main Simulator Grid -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <!-- Dashboard View Switcher: keeps the demo focused without removing any capability -->
+  <nav id="dashboard-tabs" class="sticky top-16 z-40 border-b border-slate-800 bg-slate-950/95 backdrop-blur" aria-label="FanWise dashboard views">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+      <div class="flex gap-2 overflow-x-auto" role="tablist" aria-label="Choose a dashboard">
+        <button id="dashboard-tab-simulator" data-dashboard-tab="simulator" type="button" role="tab" aria-selected="true" onclick="switchDashboard('simulator')"
+                class="dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-cyan-500 bg-cyan-950/80 px-3 py-2 text-left text-cyan-200 shadow-lg shadow-cyan-950/30 transition">
+          <i data-lucide="sliders-horizontal" class="w-4 h-4 shrink-0"></i>
+          <span><span class="block text-xs font-semibold">Live Simulator</span><span class="hidden lg:block text-[10px] font-normal opacity-70">Controls & recommendation</span></span>
+        </button>
+        <button id="dashboard-tab-insights" data-dashboard-tab="insights" type="button" role="tab" aria-selected="false" onclick="switchDashboard('insights')"
+                class="dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2 text-left text-slate-400 hover:border-slate-700 hover:text-slate-200 transition">
+          <i data-lucide="brain-circuit" class="w-4 h-4 shrink-0"></i>
+          <span><span class="block text-xs font-semibold">AI Insights</span><span class="hidden lg:block text-[10px] font-normal opacity-70">Model-level intelligence</span></span>
+        </button>
+        <button id="dashboard-tab-energy" data-dashboard-tab="energy" type="button" role="tab" aria-selected="false" onclick="switchDashboard('energy')"
+                class="dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2 text-left text-slate-400 hover:border-slate-700 hover:text-slate-200 transition">
+          <i data-lucide="chart-no-axes-combined" class="w-4 h-4 shrink-0"></i>
+          <span><span class="block text-xs font-semibold">Energy & Savings</span><span class="hidden lg:block text-[10px] font-normal opacity-70">24-hour benchmark</span></span>
+        </button>
+        <button id="dashboard-tab-system" data-dashboard-tab="system" type="button" role="tab" aria-selected="false" onclick="switchDashboard('system')"
+                class="dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2 text-left text-slate-400 hover:border-slate-700 hover:text-slate-200 transition">
+          <i data-lucide="wrench" class="w-4 h-4 shrink-0"></i>
+          <span><span class="block text-xs font-semibold">System Lab</span><span class="hidden lg:block text-[10px] font-normal opacity-70">Twin, API & methodology</span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Simulator / Insights / System Grid -->
+  <main id="primary-dashboard" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <!-- LEFT COLUMN: The Interactive Environmental Cockpit (5 Cols) -->
-    <div class="lg:col-span-5 space-y-5">
+    <div id="simulator-controls" data-dashboard-section="simulator" class="lg:col-span-5 space-y-5">
 
       <!-- Preset Scenarios Ribbon -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
@@ -351,11 +379,24 @@
 
     </div>
 
-    <!-- RIGHT COLUMN: The Real-Time Intelligence & Digital Twin (7 Cols) -->
-    <div class="lg:col-span-7 space-y-5">
+    <!-- RIGHT COLUMN: Active dashboard content -->
+    <div id="dashboard-content" class="lg:col-span-7 space-y-5">
+
+      <!-- Context shown on the separated AI Insights and System Lab views -->
+      <div id="dashboard-panel-intro" class="hidden bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-start gap-3">
+          <span class="p-2 rounded-xl bg-cyan-950 text-cyan-400 border border-cyan-800">
+            <i data-lucide="layers-3" class="w-5 h-5"></i>
+          </span>
+          <div>
+            <h2 id="dashboard-panel-title" class="text-base font-bold text-white">AI Insights</h2>
+            <p id="dashboard-panel-description" class="text-xs text-slate-400 mt-1 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
 
       <!-- HERO WIDGET: Lovelace & ESPHome Inspired Smart Fan Card -->
-      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+      <div data-dashboard-section="simulator" class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
           
           <!-- Fan Status Details -->
@@ -416,7 +457,7 @@
       </div>
 
       <!-- DIGITAL TWIN ELECTROMECHANICAL FEEDBACK & ANOMALY INJECTION (ADDITION 4) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+      <div data-dashboard-section="system" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
           <div class="flex items-center gap-2">
             <span class="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
@@ -493,7 +534,7 @@
       </div>
 
       <!-- 4 Real-Time Intelligence Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div data-dashboard-section="insights" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- CARD 1: Model 1 - Thermal Comfort Intelligence -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
@@ -690,7 +731,7 @@
       </div>
 
       <!-- MULTI-OCCUPANT COMFORT & SHARED COMPROMISE SUITE (ADDITION 5) -->
-      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+      <div data-dashboard-section="insights" class="hidden bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2">
             <span class="p-1.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-400">
@@ -791,7 +832,7 @@
       </div>
 
       <!-- THE "GLASS BOX" DECISION PROCESS STEPPER (Transparency for Judges) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+      <div data-dashboard-section="simulator" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2">
             <i data-lucide="git-commit" class="w-4 h-4 text-cyan-400"></i> Real-Time Decision Process (The Glass Box)
@@ -835,17 +876,25 @@
         </div>
       </div>
 
-      <!-- JSON Inspector Drawer -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
+      <!-- Optional raw API response: isolated from the product demo in System Lab -->
+      <div data-dashboard-section="system" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
         <details class="group">
-          <summary class="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-xs font-semibold text-slate-300">
             <span class="flex items-center gap-2">
-              <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i> Full IntegrationResult JSON (22 Fields)
+              <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+              <span>Developer API Response</span>
+              <span class="hidden sm:inline-flex text-[9px] font-mono px-2 py-0.5 rounded-full bg-slate-950 text-slate-500 border border-slate-800 uppercase tracking-wider">Optional · 22-field JSON</span>
             </span>
-            <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+            <span class="flex items-center gap-2 text-[10px] font-normal text-slate-500">
+              <span class="hidden sm:inline">View raw machine-readable data</span>
+              <span class="group-open:rotate-180 transition-transform">▼</span>
+            </span>
           </summary>
           <div class="mt-3">
-            <pre id="json-inspector" class="bg-slate-950 p-3 rounded-xl text-[10px] font-mono text-slate-300 overflow-x-auto max-h-64 border border-slate-800">Loading initial telemetry...</pre>
+            <p class="mb-2 text-[11px] text-slate-500 leading-relaxed">
+              This is the raw server response used to populate the visual cards. It is included for technical inspection only and can remain closed during the product demo.
+            </p>
+            <pre id="json-inspector" class="bg-slate-950 p-4 rounded-xl text-[10px] leading-relaxed font-mono text-slate-300 whitespace-pre-wrap break-words overflow-y-auto overflow-x-hidden max-h-80 border border-slate-800">Loading initial telemetry...</pre>
           </div>
         </details>
       </div>
@@ -854,7 +903,7 @@
   </main>
 
   <!-- ENERGY OPTIMIZATION & STRATEGY COMPARISON SUITE (ADDITION 3) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+  <section id="energy-dashboard" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-10">
     <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
       
       <!-- Section Header & Scenario Controls -->
@@ -1079,8 +1128,8 @@
     </div>
   </section>
 
-  <!-- Technical Integrity & Compliance Disclaimer Banner -->
-  <footer class="bg-slate-950 border-t border-slate-900 py-6 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
+  <!-- Technical Integrity & Compliance Disclaimer Banner (System Lab only) -->
+  <footer id="research-footer" class="hidden bg-slate-950 border-t border-slate-900 py-6 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto space-y-2">
       <div class="font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
         <i data-lucide="shield-alert" class="w-4 h-4 text-amber-500"></i> Research Integrity & Dataset Disclosure
@@ -1109,6 +1158,60 @@
     let isAirflowAuto = true;
     let occupancyTimeoutSeconds = 300.0; // 5 minutes default grace
     let vacantDurationSeconds = 60.0;    // 1 minute vacant default for testing
+
+    // Dashboard tabs keep the same live data and APIs while separating the demo story.
+    const dashboardTabs = ['simulator', 'insights', 'energy', 'system'];
+
+    function switchDashboard(tab, updateUrl = true) {
+      if (!dashboardTabs.includes(tab)) tab = 'simulator';
+
+      const primaryDashboard = document.getElementById('primary-dashboard');
+      const energyDashboard = document.getElementById('energy-dashboard');
+      const dashboardContent = document.getElementById('dashboard-content');
+      const panelIntro = document.getElementById('dashboard-panel-intro');
+      const panelTitle = document.getElementById('dashboard-panel-title');
+      const panelDescription = document.getElementById('dashboard-panel-description');
+      const researchFooter = document.getElementById('research-footer');
+
+      // Energy has its own full-width dashboard. The other views reuse the existing grid.
+      const isEnergy = tab === 'energy';
+      primaryDashboard.classList.toggle('hidden', isEnergy);
+      energyDashboard.classList.toggle('hidden', !isEnergy);
+      researchFooter.classList.toggle('hidden', tab !== 'system');
+
+      document.querySelectorAll('[data-dashboard-section]').forEach(section => {
+        section.classList.toggle('hidden', section.dataset.dashboardSection !== tab);
+      });
+
+      if (!isEnergy) {
+        const isSimulator = tab === 'simulator';
+        dashboardContent.classList.toggle('lg:col-span-7', isSimulator);
+        dashboardContent.classList.toggle('lg:col-span-12', !isSimulator);
+        panelIntro.classList.toggle('hidden', isSimulator);
+
+        if (tab === 'insights') {
+          panelTitle.textContent = 'AI Insights';
+          panelDescription.textContent = 'Comfort, occupancy, personalization, and shared-room intelligence for the current simulator conditions.';
+        } else if (tab === 'system') {
+          panelTitle.textContent = 'System Lab & Technical Data';
+          panelDescription.textContent = 'Optional engineering tools: BLDC digital-twin fault tests, raw API output, and research methodology.';
+        }
+      }
+
+      const activeClasses = 'dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-cyan-500 bg-cyan-950/80 px-3 py-2 text-left text-cyan-200 shadow-lg shadow-cyan-950/30 transition';
+      const inactiveClasses = 'dashboard-tab flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2 text-left text-slate-400 hover:border-slate-700 hover:text-slate-200 transition';
+
+      document.querySelectorAll('[data-dashboard-tab]').forEach(button => {
+        const isActive = button.dataset.dashboardTab === tab;
+        button.className = isActive ? activeClasses : inactiveClasses;
+        button.setAttribute('aria-selected', String(isActive));
+        button.tabIndex = isActive ? 0 : -1;
+      });
+
+      if (updateUrl) {
+        history.replaceState(null, '', `#${tab}`);
+      }
+    }
 
     function updateVal(id, text) {
       document.getElementById(id).textContent = text;
@@ -1795,11 +1898,13 @@
 
     // Auto-run on load
     window.addEventListener('DOMContentLoaded', () => {
+      const requestedTab = window.location.hash.replace('#', '');
+      switchDashboard(dashboardTabs.includes(requestedTab) ? requestedTab : 'simulator', false);
       runSimulation();
       loadEnergyScenario('workday');
       injectTwinFault('NONE');
       loadMultiOccupantCompromise();
     });
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a55270b44ce2302d',t:'MTc5Mzc4Mjk1MQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a55270b44ce2302d',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
