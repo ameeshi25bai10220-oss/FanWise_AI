@@ -184,6 +184,44 @@ def get_twins():
     }), 200
 
 
+@app.route("/api/energy-comparison", methods=["GET", "POST", "OPTIONS"])
+def energy_comparison():
+    """
+    Evaluates 24-hour energy consumption across three operating strategies:
+      1. Conventional Fixed-Speed (e.g. Speed 4 continuous)
+      2. User Manual Operation (empirical residential RDD behavior)
+      3. FanWise Adaptive AI (Model 1 Comfort + Model 2 Occupancy Gate + Model 3 BLDC)
+    
+    Returns hourly timeline, cumulative Wh, percentage savings, and unoccupied savings.
+    """
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
+    from api.energy_comparison import simulate_energy_comparison
+
+    if request.method == "POST":
+        payload = request.get_json(silent=True) or {}
+    else:
+        payload = request.args
+
+    scenario = str(payload.get("scenario", "workday")).lower()
+    fixed_speed = int(payload.get("fixed_speed", 4))
+    tariff = float(payload.get("tariff_inr_per_kwh", 7.50))
+
+    try:
+        report = simulate_energy_comparison(
+            scenario=scenario,
+            fixed_speed_setting=fixed_speed,
+            tariff_inr_per_kwh=tariff,
+        )
+        return jsonify(report), 200
+    except Exception as exc:
+        return jsonify({
+            "error": "Energy comparison simulation failed",
+            "details": str(exc),
+        }), 500
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
