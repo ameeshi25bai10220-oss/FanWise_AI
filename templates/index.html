@@ -832,43 +832,43 @@
 
       <!-- THE "GLASS BOX" DECISION PROCESS STEPPER (Transparency for Judges) -->
       <div data-dashboard-section="simulator" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <h3 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2">
             <i data-lucide="git-commit" class="w-4 h-4 text-cyan-400"></i> Real-Time Decision Process (The Glass Box)
           </h3>
-          <span class="text-[11px] text-slate-400 font-mono">Why Speed Was Chosen</span>
+          <span class="text-[11px] text-slate-400 font-mono text-right">Select a Stage to Inspect</span>
         </div>
 
-        <!-- Stepper Visualizer -->
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
+        <!-- Stepper Visualizer: each stage exposes its complete explanation below. -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs" aria-label="Decision process stages">
           <!-- Step 1 -->
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1">
-            <span class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 1: SENSORS</span>
+          <button type="button" id="decision-stage-1" data-decision-stage="1" aria-pressed="false" onclick="selectDecisionStage(1)" class="w-full text-left bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1 cursor-pointer transition-colors duration-150 hover:border-cyan-700/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/80">
+            <span data-stage-heading class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 1: SENSORS</span>
             <span id="step-1-text" class="text-[11px] text-slate-300">31°C, 65% RH, 0.29m/s</span>
-          </div>
+          </button>
 
           <!-- Step 2 -->
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1">
-            <span class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 2: COMFORT</span>
+          <button type="button" id="decision-stage-2" data-decision-stage="2" aria-pressed="false" onclick="selectDecisionStage(2)" class="w-full text-left bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1 cursor-pointer transition-colors duration-150 hover:border-cyan-700/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/80">
+            <span data-stage-heading class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 2: COMFORT</span>
             <span id="step-2-text" class="text-[11px] text-slate-300">Hot (71% prob)</span>
-          </div>
+          </button>
 
           <!-- Step 3 -->
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1">
-            <span class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 3: SAFETY</span>
+          <button type="button" id="decision-stage-3" data-decision-stage="3" aria-pressed="false" onclick="selectDecisionStage(3)" class="w-full text-left bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex flex-col gap-1 cursor-pointer transition-colors duration-150 hover:border-cyan-700/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/80">
+            <span data-stage-heading class="text-[10px] font-mono text-cyan-400 font-semibold">STAGE 3: SAFETY</span>
             <span id="step-3-text" class="text-[11px] text-slate-300">P-Normal (Gate Off)</span>
-          </div>
+          </button>
 
           <!-- Step 4 -->
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-cyan-800/80 bg-cyan-950/20 flex flex-col gap-1">
-            <span class="text-[10px] font-mono text-cyan-300 font-bold">STAGE 4: DECISION</span>
+          <button type="button" id="decision-stage-4" data-decision-stage="4" aria-pressed="true" onclick="selectDecisionStage(4)" class="w-full text-left bg-slate-950 p-2.5 rounded-xl border border-cyan-700 bg-cyan-950/20 flex flex-col gap-1 cursor-pointer transition-colors duration-150 hover:border-cyan-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/80">
+            <span data-stage-heading class="text-[10px] font-mono text-cyan-300 font-bold">STAGE 4: DECISION</span>
             <span id="step-4-text" class="text-[11px] text-white font-medium">Speed 3 Optimal</span>
-          </div>
+          </button>
         </div>
 
-        <!-- Highlighted Natural Language Rationale -->
-        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80">
-          <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Controller Rationale:</div>
+        <!-- Selected stage's complete natural-language explanation -->
+        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80" aria-live="polite">
+          <div id="stage-detail-label" class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Controller Rationale:</div>
           <p id="full-rationale-text" class="text-xs text-cyan-200 leading-relaxed font-mono">
             Evaluating multi-objective comfort and energy cost...
           </p>
@@ -1158,6 +1158,9 @@
     let occupancyTimeoutSeconds = 300.0; // 5 minutes default grace
     let vacantDurationSeconds = 60.0;    // 1 minute vacant default for testing
     let simulationRequestSequence = 0;   // Ignore stale API responses during rapid interaction
+    let latestDecisionSteps = [];        // Complete Glass Box explanations from the latest response
+    let latestDecisionRationale = 'Evaluating multi-objective comfort and energy cost...';
+    let selectedDecisionStage = 4;       // Decision is the default view; the user's selection then persists
 
     // Dashboard tabs keep the same live data and APIs while separating the demo story.
     const dashboardTabs = ['simulator', 'insights', 'energy', 'system'];
@@ -1211,6 +1214,52 @@
       if (updateUrl) {
         history.replaceState(null, '', `#${tab}`);
       }
+    }
+
+    function selectDecisionStage(stageNumber) {
+      const parsedStage = Number(stageNumber);
+      if (![1, 2, 3, 4].includes(parsedStage)) return;
+      selectedDecisionStage = parsedStage;
+
+      document.querySelectorAll('[data-decision-stage]').forEach(card => {
+        const isSelected = Number(card.dataset.decisionStage) === selectedDecisionStage;
+        const heading = card.querySelector('[data-stage-heading]');
+        const summary = card.querySelector('[id^="step-"]');
+
+        card.setAttribute('aria-pressed', String(isSelected));
+        card.classList.toggle('border-cyan-700', isSelected);
+        card.classList.toggle('bg-cyan-950/20', isSelected);
+        card.classList.toggle('border-slate-800', !isSelected);
+
+        if (heading) {
+          heading.classList.toggle('text-cyan-300', isSelected);
+          heading.classList.toggle('font-bold', isSelected);
+          heading.classList.toggle('text-cyan-400', !isSelected);
+          heading.classList.toggle('font-semibold', !isSelected);
+        }
+        if (summary) {
+          summary.classList.toggle('text-white', isSelected);
+          summary.classList.toggle('font-medium', isSelected);
+          summary.classList.toggle('text-slate-300', !isSelected);
+        }
+      });
+
+      const selectedStep = latestDecisionSteps.find(step => Number(step.step) === selectedDecisionStage)
+        || latestDecisionSteps[selectedDecisionStage - 1];
+      const fallbackTitles = {
+        1: 'Sensor Telemetry Ingestion',
+        2: 'Comfort and Occupancy Interpretation',
+        3: 'Safety Guard Evaluation',
+        4: 'Controller Decision Rationale'
+      };
+      const detailLabel = document.getElementById('stage-detail-label');
+      const detailText = document.getElementById('full-rationale-text');
+      const compactText = document.getElementById(`step-${selectedDecisionStage}-text`);
+
+      detailLabel.textContent = `Stage ${selectedDecisionStage} — ${selectedStep?.title || fallbackTitles[selectedDecisionStage]}:`;
+      detailText.textContent = selectedDecisionStage === 4
+        ? (latestDecisionRationale || selectedStep?.detail || compactText?.textContent || 'Decision pending.')
+        : (selectedStep?.detail || compactText?.textContent || 'Stage detail pending.');
     }
 
     function updateVal(id, text) {
@@ -1624,13 +1673,23 @@
       // 9. Glass Box Decision Stepper
       const expl = data.decision_explanation || {};
       const steps = expl.decision_steps || [];
-      if (steps.length >= 4) {
-        document.getElementById('step-1-text').textContent = steps[0].detail.slice(0, 36) + '...';
-        document.getElementById('step-2-text').textContent = steps[1].detail.slice(0, 36) + '...';
-        document.getElementById('step-3-text').textContent = steps[2].detail.slice(0, 36) + '...';
-        document.getElementById('step-4-text').textContent = steps[3].detail.slice(0, 36) + '...';
-      }
-      document.getElementById('full-rationale-text').textContent = expl.rationale || 'Speed optimized.';
+      latestDecisionSteps = steps;
+      latestDecisionRationale = expl.rationale || 'Speed optimized.';
+
+      steps.slice(0, 4).forEach((step, index) => {
+        const stageNumber = index + 1;
+        const detail = String(step.detail || 'Stage detail unavailable.');
+        document.getElementById(`step-${stageNumber}-text`).textContent = detail.length > 36
+          ? detail.slice(0, 36) + '...'
+          : detail;
+
+        const stageCard = document.getElementById(`decision-stage-${stageNumber}`);
+        stageCard.title = `${step.title || `Stage ${stageNumber}`}: ${detail}`;
+        stageCard.setAttribute('aria-label', `Stage ${stageNumber}. ${step.title || ''}. ${detail}`);
+      });
+
+      // Preserve the stage the user chose while live telemetry refreshes.
+      selectDecisionStage(selectedDecisionStage);
 
       // 10. Raw JSON Inspector
       document.getElementById('json-inspector').textContent = JSON.stringify(data, null, 2);
@@ -1943,5 +2002,5 @@
       loadMultiOccupantCompromise();
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a55270b44ce2302d',t:'MTc5Mzc4Mjk1MQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a55270b44ce2302d',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a55270b44ce2302d',t:'MTc5Mzc4Mjk1MQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a55270b44ce2302d',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a552e009ecc9a798',t:'MTc5Mzc4NzUxMQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a552e009ecc9a798',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
