@@ -112,33 +112,40 @@
           </h2>
           <span class="text-[10px] text-slate-500 font-mono">1-Click Scenarios</span>
         </div>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <button onclick="applyPreset('occupied_warm')" class="p-2.5 rounded-xl bg-slate-950 hover:bg-cyan-950/40 border border-slate-800 hover:border-cyan-700 text-left transition flex flex-col gap-0.5 group">
-            <span class="font-medium text-cyan-300 group-hover:text-cyan-200 flex items-center gap-1.5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+          <button onclick="applyPreset('occupied_warm')" class="p-2 rounded-xl bg-slate-950 hover:bg-cyan-950/40 border border-slate-800 hover:border-cyan-700 text-left transition flex flex-col gap-0.5 group">
+            <span class="font-medium text-cyan-300 group-hover:text-cyan-200 flex items-center gap-1.5 text-[11px]">
               <i data-lucide="sun-medium" class="w-3.5 h-3.5"></i> Warm Afternoon
             </span>
-            <span class="text-[10px] text-slate-400">32°C, 65% RH, 2 people → Speed 4</span>
+            <span class="text-[9px] text-slate-400">32°C, 2 people → Speed 4</span>
           </button>
           
-          <button onclick="applyPreset('empty_room')" class="p-2.5 rounded-xl bg-slate-950 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-700 text-left transition flex flex-col gap-0.5 group">
-            <span class="font-medium text-rose-300 group-hover:text-rose-200 flex items-center gap-1.5">
-              <i data-lucide="door-closed" class="w-3.5 h-3.5"></i> Empty Room Gate
+          <button onclick="applyPreset('empty_grace')" class="p-2 rounded-xl bg-slate-950 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-700 text-left transition flex flex-col gap-0.5 group">
+            <span class="font-medium text-amber-300 group-hover:text-amber-200 flex items-center gap-1.5 text-[11px]">
+              <i data-lucide="hourglass" class="w-3.5 h-3.5"></i> Vacant: Grace Hold
             </span>
-            <span class="text-[10px] text-slate-400">0 occupants → Hard Gate Speed 0</span>
+            <span class="text-[9px] text-amber-400">Vacant 1m &lt; 5m timeout → Holds Speed 3</span>
           </button>
 
-          <button onclick="applyPreset('heatwave')" class="p-2.5 rounded-xl bg-slate-950 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-700 text-left transition flex flex-col gap-0.5 group">
-            <span class="font-medium text-amber-300 group-hover:text-amber-200 flex items-center gap-1.5">
+          <button onclick="applyPreset('empty_expired')" class="p-2 rounded-xl bg-slate-950 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-700 text-left transition flex flex-col gap-0.5 group">
+            <span class="font-medium text-rose-300 group-hover:text-rose-200 flex items-center gap-1.5 text-[11px]">
+              <i data-lucide="door-closed" class="w-3.5 h-3.5"></i> Vacant: Gate Enforced
+            </span>
+            <span class="text-[9px] text-rose-400">Vacant 6m &gt; 5m timeout → Powers off (0W)</span>
+          </button>
+
+          <button onclick="applyPreset('heatwave')" class="p-2 rounded-xl bg-slate-950 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-700 text-left transition flex flex-col gap-0.5 group">
+            <span class="font-medium text-amber-300 group-hover:text-amber-200 flex items-center gap-1.5 text-[11px]">
               <i data-lucide="flame" class="w-3.5 h-3.5"></i> P3 Thermal Floor
             </span>
-            <span class="text-[10px] text-slate-400">37°C room temp → Safety floor ≥1</span>
+            <span class="text-[9px] text-slate-400">37°C room temp → Min speed ≥ 1</span>
           </button>
 
-          <button onclick="applyPreset('night_sleep')" class="p-2.5 rounded-xl bg-slate-950 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-700 text-left transition flex flex-col gap-0.5 group">
-            <span class="font-medium text-indigo-300 group-hover:text-indigo-200 flex items-center gap-1.5">
+          <button onclick="applyPreset('night_sleep')" class="p-2 rounded-xl bg-slate-950 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-700 text-left transition flex flex-col gap-0.5 group">
+            <span class="font-medium text-indigo-300 group-hover:text-indigo-200 flex items-center gap-1.5 text-[11px]">
               <i data-lucide="moon" class="w-3.5 h-3.5"></i> Night Sleep Comfort
             </span>
-            <span class="text-[10px] text-slate-400">26.5°C, 1 occupant resting → Speed 2</span>
+            <span class="text-[9px] text-slate-400">26.5°C, 1 occupant → Speed 2</span>
           </button>
         </div>
       </div>
@@ -255,6 +262,42 @@
               <i data-lucide="users" class="w-3.5 h-3.5 text-slate-400"></i>
               <span>6+</span>
             </button>
+          </div>
+
+          <!-- 5b. Configurable Occupancy Timeout & Departure Simulation -->
+          <div class="pt-2 border-t border-slate-800/80 bg-slate-950/50 p-3 rounded-xl border border-slate-800 space-y-2.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                <i data-lucide="timer" class="w-4 h-4 text-cyan-400"></i> Configurable Occupancy Timeout
+              </span>
+              <span id="timeout-setting-label" class="font-mono text-cyan-300 text-[11px] font-semibold">5 min Grace Period</span>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-1.5 text-xs font-mono">
+              <button onclick="setOccupancyTimeout(0)" id="timeout-btn-0" class="py-1 px-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 text-[10px] text-center transition">0m (Instant)</button>
+              <button onclick="setOccupancyTimeout(60)" id="timeout-btn-60" class="py-1 px-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 text-[10px] text-center transition">1 min</button>
+              <button onclick="setOccupancyTimeout(300)" id="timeout-btn-300" class="py-1 px-1 rounded-lg bg-cyan-950 border border-cyan-500 text-cyan-300 text-[10px] text-center font-bold transition">5 min (Std)</button>
+              <button onclick="setOccupancyTimeout(600)" id="timeout-btn-600" class="py-1 px-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 text-[10px] text-center transition">10 min</button>
+            </div>
+
+            <!-- Elapsed Vacant Time Slider (Interactive Grace Test) -->
+            <div id="vacant-controls-panel" class="pt-1.5 border-t border-slate-800/60">
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-400 flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i> Vacant Duration:
+                </span>
+                <span id="vacant-val" class="font-mono text-amber-300 font-bold">1 min (Within Grace)</span>
+              </div>
+              <input type="range" id="vacant-input" min="0" max="600" step="30" value="60"
+                class="w-full accent-amber-400 cursor-pointer"
+                oninput="onVacantSliderChange(this.value);" />
+              <div class="flex justify-between text-[9px] text-slate-500 font-mono mt-0.5">
+                <span>0m (Just Left)</span>
+                <span>2.5m (Within Grace)</span>
+                <span>5m (Timeout)</span>
+                <span>10m (Expired)</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -468,6 +511,10 @@
                 <span>Estimated Headcount:</span>
                 <span id="m2-headcount-val" class="font-mono text-white font-semibold">2.0 persons (Low Density)</span>
               </div>
+              <div id="m2-grace-row" class="flex justify-between text-[11px] text-amber-300 font-mono">
+                <span class="flex items-center gap-1"><i data-lucide="hourglass" class="w-3 h-3"></i> Grace Timeout:</span>
+                <span id="m2-grace-val" class="font-semibold">Standby (5m)</span>
+              </div>
               <div class="flex justify-between text-[11px] text-slate-400">
                 <span>Feature Set Active:</span>
                 <span class="font-mono text-slate-300">set_a (Multimodal)</span>
@@ -656,6 +703,8 @@
     let currentOccupants = 2;
     let comfortPreference = 'neutral';
     let isAirflowAuto = true;
+    let occupancyTimeoutSeconds = 300.0; // 5 minutes default grace
+    let vacantDurationSeconds = 60.0;    // 1 minute vacant default for testing
 
     function updateVal(id, text) {
       document.getElementById(id).textContent = text;
@@ -719,13 +768,51 @@
         }
       });
       const labels = {
-        0: '0 Persons (Empty Space - Hard Gate)',
+        0: '0 Persons (Vacant Room - Testing Timeout)',
         1: '1 Person (Single Occupant)',
         2: '2 Persons (Low Density)',
         4: '4 Persons (Family / Meeting)',
         6: '6+ Persons (High Density Space)'
       };
       document.getElementById('occupants-label').textContent = labels[count] || `${count} Persons`;
+      
+      const vacantPanel = document.getElementById('vacant-controls-panel');
+      if (count === 0) {
+        vacantPanel.classList.remove('opacity-40');
+      } else {
+        vacantPanel.classList.add('opacity-40');
+      }
+      triggerSim();
+    }
+
+    function setOccupancyTimeout(secs) {
+      occupancyTimeoutSeconds = parseFloat(secs);
+      [0, 60, 300, 600].forEach(s => {
+        const btn = document.getElementById(`timeout-btn-${s}`);
+        if (s === secs) {
+          btn.className = 'py-1 px-1 rounded-lg bg-cyan-950 border border-cyan-500 text-cyan-300 text-[10px] text-center font-bold transition';
+        } else {
+          btn.className = 'py-1 px-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 text-[10px] text-center transition';
+        }
+      });
+      const lbls = {
+        0: '0m (Instant Shutoff)',
+        60: '1 min Grace Period',
+        300: '5 min Grace (Standard)',
+        600: '10 min Grace Period'
+      };
+      document.getElementById('timeout-setting-label').textContent = lbls[secs] || `${secs}s Timeout`;
+      triggerSim();
+    }
+
+    function onVacantSliderChange(secs) {
+      vacantDurationSeconds = parseFloat(secs);
+      const m = Math.floor(secs / 60);
+      const s = Math.round(secs % 60);
+      const statusText = secs < occupancyTimeoutSeconds 
+        ? `${m}m ${s}s (Within Grace Period)`
+        : `${m}m ${s}s (Timeout Expired - Hard Gate)`;
+      document.getElementById('vacant-val').textContent = statusText;
       triggerSim();
     }
 
@@ -754,13 +841,30 @@
         setSlider('humidity-input', 65, '65 %');
         setSlider('outdoor-input', 33, '33.0 °C');
         setOccupants(2);
+        setOccupancyTimeout(300);
         setComfortPref('neutral');
         setOperatingMode('auto');
-      } else if (preset === 'empty_room') {
-        setSlider('temp-input', 27.0, '27.0 °C');
-        setSlider('humidity-input', 55, '55 %');
+      } else if (preset === 'empty_grace') {
+        // Scenario: Nobody is in room, but left briefly (1 min vacant < 5 min timeout)
+        setSlider('temp-input', 28.0, '28.0 °C');
+        setSlider('humidity-input', 60, '60 %');
         setSlider('outdoor-input', 30, '30.0 °C');
-        setOccupants(0); // Triggers Gate
+        setOccupants(0);
+        setOccupancyTimeout(300);
+        document.getElementById('vacant-input').value = 60;
+        onVacantSliderChange(60);
+        manualSpeed = 3;
+        setOperatingMode('auto');
+      } else if (preset === 'empty_expired') {
+        // Scenario: Nobody is in room, gone > 5 mins (6 min vacant >= 5 min timeout)
+        setSlider('temp-input', 28.0, '28.0 °C');
+        setSlider('humidity-input', 60, '60 %');
+        setSlider('outdoor-input', 30, '30.0 °C');
+        setOccupants(0);
+        setOccupancyTimeout(300);
+        document.getElementById('vacant-input').value = 360;
+        onVacantSliderChange(360);
+        manualSpeed = 3;
         setOperatingMode('auto');
       } else if (preset === 'heatwave') {
         setSlider('temp-input', 37.0, '37.0 °C');
@@ -797,6 +901,8 @@
         outdoor_temp_c: parseFloat(document.getElementById('outdoor-input').value),
         air_velocity_ms: isAirflowAuto ? null : parseFloat(document.getElementById('vel-input').value),
         occupants_count: currentOccupants,
+        occupancy_timeout_s: occupancyTimeoutSeconds,
+        vacant_duration_s: currentOccupants === 0 ? vacantDurationSeconds : 0.0,
         comfort_preference: comfortPreference,
         clothing_clo: parseFloat(document.getElementById('clo-select').value),
         metabolic_met: parseFloat(document.getElementById('met-select').value),
@@ -806,6 +912,19 @@
         fan_mode: 'BLDC',
         room_category: 'Bedroom'
       };
+
+      try {
+        const res = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        renderSimulation(data);
+      } catch (err) {
+        console.error('Simulation API Error:', err);
+      }
+    }
 
       try {
         const res = await fetch('/api/recommend', {
@@ -857,12 +976,16 @@
 
       // 4. Hero Safety Pill
       const safety = data.safety_status || {};
+      const occAss = data.occupancy_assessment || {};
       const heroSafetyPill = document.getElementById('hero-safety-pill');
       if (safety.thermal_safety_floor_triggered) {
         heroSafetyPill.textContent = 'P3: Thermal Safety Floor Active';
         heroSafetyPill.className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-rose-950 text-rose-300 border border-rose-800 font-bold';
-      } else if (data.occupancy_assessment && data.occupancy_assessment.hard_gate_active) {
-        heroSafetyPill.textContent = 'P4: Occupancy Hard Gate Active';
+      } else if (occAss.hard_gate_active) {
+        heroSafetyPill.textContent = 'P4: Occupancy Hard Gate Active (Speed 0)';
+        heroSafetyPill.className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-rose-950 text-rose-300 border border-rose-800 font-bold';
+      } else if (occAss.grace_period_active) {
+        heroSafetyPill.textContent = `Occupancy Grace Hold (${Math.floor(occAss.grace_remaining_s / 60)}m left)`;
         heroSafetyPill.className = 'px-2 py-0.5 rounded-full text-xs font-mono bg-amber-950 text-amber-300 border border-amber-800 font-bold';
       } else {
         heroSafetyPill.textContent = 'P-Normal (All Constraints Satisfied)';
@@ -914,11 +1037,32 @@
       // 6. Model 2: Occupancy Intelligence
       const m2 = data.model2_result || {};
       const occBadge = document.getElementById('m2-state-badge');
-      occBadge.textContent = m2.occupancy_state || 'Unknown';
-      if (m2.occupancy_state === 'Occupied') {
+      const gatePill = document.getElementById('m2-gate-pill');
+      const graceVal = document.getElementById('m2-grace-val');
+
+      if (occAss.is_occupied) {
+        occBadge.textContent = 'Occupied';
         occBadge.className = 'px-2.5 py-0.5 rounded-lg font-bold font-mono text-sm bg-cyan-950/80 text-cyan-300 border border-cyan-800';
+        gatePill.textContent = 'Gate: Inactive';
+        gatePill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono';
+        graceVal.textContent = `Standby (${Math.round((occAss.timeout_setting_s || 300) / 60)}m timeout ready)`;
+        graceVal.className = 'text-slate-400 font-mono';
+      } else if (occAss.grace_period_active) {
+        occBadge.textContent = 'Vacant (Grace Hold)';
+        occBadge.className = 'px-2.5 py-0.5 rounded-lg font-bold font-mono text-sm bg-amber-950/80 text-amber-300 border border-amber-800';
+        const remM = Math.floor(occAss.grace_remaining_s / 60);
+        const remS = Math.round(occAss.grace_remaining_s % 60);
+        gatePill.textContent = `Grace Active (${remM}m ${remS}s)`;
+        gatePill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 font-mono font-bold animate-pulse';
+        graceVal.textContent = `Delaying shutoff (${remM}m ${remS}s left)`;
+        graceVal.className = 'text-amber-300 font-mono font-bold';
       } else {
+        occBadge.textContent = 'Vacant (Shut Off)';
         occBadge.className = 'px-2.5 py-0.5 rounded-lg font-bold font-mono text-sm bg-rose-950/80 text-rose-300 border border-rose-800';
+        gatePill.textContent = 'Hard Gate: Enforced (Speed 0)';
+        gatePill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-mono font-bold';
+        graceVal.textContent = `Timeout Expired (Fan off at 0W)`;
+        graceVal.className = 'text-rose-400 font-mono font-bold';
       }
 
       const occProb = ((m2.occupancy_probability || 0) * 100).toFixed(1);
@@ -927,15 +1071,6 @@
 
       const hc = m2.headcount_estimate !== null && m2.headcount_estimate !== undefined ? m2.headcount_estimate : 0;
       document.getElementById('m2-headcount-val').textContent = `${hc} person(s) (${m2.density_category || 'Empty'})`;
-
-      const gatePill = document.getElementById('m2-gate-pill');
-      if (data.occupancy_assessment && data.occupancy_assessment.hard_gate_active) {
-        gatePill.textContent = 'Hard Gate: Active (Speed 0)';
-        gatePill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-mono font-bold';
-      } else {
-        gatePill.textContent = 'Hard Gate: Inactive (Normal)';
-        gatePill.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono';
-      }
 
       // 7. Personalization Card
       const pers = data.personalization_assessment || {};

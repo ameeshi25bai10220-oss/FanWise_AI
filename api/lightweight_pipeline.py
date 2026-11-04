@@ -183,16 +183,24 @@ class LightweightPipeline:
         if occupants_count is not None:
             occupants_count = int(occupants_count)
             # Infer realistic Light & CO2 levels from occupant count if not manually passed
+            raw_light = raw_telemetry.get("light_lux")
+            raw_co2 = raw_telemetry.get("co2_ppm")
             if occupants_count == 0:
-                light = float(raw_telemetry.get("light_lux", 12.0))
-                co2 = float(raw_telemetry.get("co2_ppm", 415.0))
+                light = float(raw_light) if raw_light is not None else 12.0
+                co2 = float(raw_co2) if raw_co2 is not None else 415.0
             else:
-                light = float(raw_telemetry.get("light_lux", 250.0 + occupants_count * 80.0))
-                co2 = float(raw_telemetry.get("co2_ppm", 500.0 + occupants_count * 250.0))
+                light = float(raw_light) if raw_light is not None else (250.0 + occupants_count * 80.0)
+                co2 = float(raw_co2) if raw_co2 is not None else (500.0 + occupants_count * 250.0)
         else:
-            light = float(raw_telemetry["light_lux"]) if "light_lux" in raw_telemetry and raw_telemetry["light_lux"] is not None else 450.0
-            co2 = float(raw_telemetry["co2_ppm"]) if "co2_ppm" in raw_telemetry and raw_telemetry["co2_ppm"] is not None else 850.0
+            raw_light = raw_telemetry.get("light_lux")
+            light = float(raw_light) if raw_light is not None else 450.0
+            raw_co2 = raw_telemetry.get("co2_ppm")
+            co2 = float(raw_co2) if raw_co2 is not None else 850.0
             occupants_count = 1 if co2 >= 550.0 or light >= 100.0 else 0
+
+        # Occupancy Timeout & Grace Period Tracking
+        occupancy_timeout_s = float(raw_telemetry.get("occupancy_timeout_s", 300.0))
+        vacant_duration_s = float(raw_telemetry.get("vacant_duration_s", 0.0))
 
         # Personalization & Behavioral Parameters
         setpoint_shift_c = float(raw_telemetry.get("setpoint_shift_c", 0.0))
@@ -233,7 +241,20 @@ class LightweightPipeline:
         # ── 2. Model 2: Occupancy Intelligence ─────────────────────────────────
         m2_res = self._predict_model2(temp, rh, light, co2, occupants_count)
         occupancy_prob = m2_res["occupancy_probability"]
-        occupancy_hard_gate = (occupants_count == 0) or (occupancy_prob < 0.35)
+        is_unoccupied = (occupants_count == 0) or (occupancy_prob < 0.35)
+
+        # Configurable Occupancy Timeout & Grace Period
+        grace_period_active = False
+        remaining_grace_s = 0.0
+        occupancy_hard_gate = False
+
+        if is_unoccupied:
+            if occupancy_timeout_s > 0 and vacant_duration_s < occupancy_timeout_s:
+                grace_period_active = True
+                remaining_grace_s = max(0.0, occupancy_timeout_s - vacant_duration_s)
+                occupancy_hard_gate = False  # Grace period holds! Prevent immediate shutoff
+            else:
+                occupancy_hard_gate = True   # Timeout expired or instant shutoff (timeout = 0)
 
         # ── 3. Model 3: Energy Intelligence ───────────────────────────────────
         power_table = BLDC_POWER_MAP if fan_mode == "BLDC" else INDUCTION_POWER_MAP
@@ -266,14 +287,31 @@ class LightweightPipeline:
             "detail": f"Room: {temp:.1f}°C, {rh:.0f}% RH | Outdoor: {outdoor_temp:.1f}°C | Airflow: {vel_used:.3f} m/s ({vel_source})",
         })
 
-        # Decision Stepper: Step 2 (Occupancy Gate)
-        if occupancy_hard_gate:
-            decision_steps.append({
-                "step": 2,
-                "title": "Occupancy Intelligence & Gating",
-                "status": "GATE_TRIGGERED",
-                "detail": f"Occupants: {occupants_count} | Confidence: {occupancy_prob:.1%} < 35% threshold -> Hard Gate Activated",
-            })
+        # Decision Stepper: Step 2 (Occupancy Gate & Configurable Timeout)
+        if is_unoccupied:
+            if grace_period_active:
+                rem_m = int(remaining_grace_s // 60)
+                rem_s = int(remaining_grace_s % 60)
+                tot_m = int(occupancy_timeout_s // 60)
+                tot_s = int(occupancy_timeout_s % 60)
+                tot_str = f"{tot_m}m" if tot_s == 0 else f"{tot_m}m {tot_s}s"
+                decision_steps.append({
+                    "step": 2,
+                    "title": "Occupancy Intelligence & Gating",
+                    "status": "GRACE_HOLD",
+                    "detail": f"Unoccupied (Conf: {1.0 - occupancy_prob:.1%}) | Grace Period Active: {rem_m}m {rem_s}s remaining of {tot_str} timeout. Delaying fan shutoff to prevent cycling.",
+                })
+            else:
+                vac_m = int(vacant_duration_s // 60)
+                vac_s = int(vacant_duration_s % 60)
+                tot_m = int(occupancy_timeout_s // 60)
+                tot_str = f"{tot_m}m" if occupancy_timeout_s >= 60 else f"{int(occupancy_timeout_s)}s"
+                decision_steps.append({
+                    "step": 2,
+                    "title": "Occupancy Intelligence & Gating",
+                    "status": "GATE_TRIGGERED",
+                    "detail": f"Unoccupied (Conf: {1.0 - occupancy_prob:.1%}) | Vacant for {vac_m}m {vac_s}s >= {tot_str} timeout -> Hard Gate Enforced.",
+                })
         else:
             decision_steps.append({
                 "step": 2,
@@ -328,18 +366,35 @@ class LightweightPipeline:
                     "detail": "Data is stale (>300s). Freezing current speed to prevent erratic changes.",
                 })
 
-            # Priority P4: Occupancy Hard Gate
+            # Priority P4: Occupancy Hard Gate (enforced after timeout expires)
             elif occupancy_hard_gate:
                 winning_speed = 0
                 decision_mode = "occupancy_hard_gate"
                 active_priority = "P4 - Occupancy Hard Gate"
                 safety_active = True
-                rationale = "[Occupancy Hard Gate Active.] Space is unoccupied (0 occupants / P < 0.35). Fan shut off (Speed 0) for zero waste."
+                vac_info = f" ({int(vacant_duration_s)}s vacant >= {int(occupancy_timeout_s)}s timeout)" if occupancy_timeout_s > 0 else ""
+                rationale = f"[Occupancy Hard Gate Active.] Space is unoccupied{vac_info}. Fan shut off (Speed 0, 0.0 W) for zero wasted energy."
                 decision_steps.append({
                     "step": 3,
                     "title": "Safety Guard & Priority Hierarchy",
                     "status": "GATE_ENFORCED",
-                    "detail": "P4 Hard Gate enforced: Recommended Speed 0.",
+                    "detail": "P4 Occupancy Hard Gate enforced: Recommended Speed 0.",
+                })
+
+            # Priority Grace: Occupancy Timeout Grace Period Active
+            elif grace_period_active:
+                winning_speed = current_speed
+                decision_mode = "occupancy_grace_hold"
+                active_priority = "P-Occupancy Grace Hold"
+                safety_active = False
+                rem_m = int(remaining_grace_s // 60)
+                rem_s = int(remaining_grace_s % 60)
+                rationale = f"[Occupancy Grace Timeout Active.] Space became vacant ({int(vacant_duration_s)}s ago). Retaining Speed {winning_speed} for remaining {rem_m}m {rem_s}s of grace period to avoid abrupt shutoff when someone briefly steps out."
+                decision_steps.append({
+                    "step": 3,
+                    "title": "Safety Guard & Control Mode",
+                    "status": "GRACE_HOLD",
+                    "detail": f"Grace period active: Maintaining current Speed {winning_speed} until {int(occupancy_timeout_s)}s timeout expires.",
                 })
 
             # Priority P3: Thermal Safety Floor (T >= 35°C)
@@ -381,12 +436,19 @@ class LightweightPipeline:
                 "status": "OPTIMIZED",
                 "detail": f"Selected Speed {winning_speed} as global minimum cost among candidates {candidates}.",
             })
+        elif decision_mode == "occupancy_grace_hold":
+            decision_steps.append({
+                "step": 4,
+                "title": "Grace Hold Standby State",
+                "status": "GRACE_STANDBY",
+                "detail": f"Fan held at Speed {winning_speed} ({power_table[winning_speed]} W). Will automatically trigger Hard Gate (Speed 0) when timeout expires.",
+            })
         else:
             decision_steps.append({
                 "step": 4,
-                "title": "Multi-Objective Cost Minimization",
-                "status": "BYPASS_BY_SAFETY",
-                "detail": f"Safety constraint or manual command bypassed cost optimization to enforce Speed {winning_speed}.",
+                "title": "Direct Control Execution",
+                "status": "DIRECT_ENFORCED",
+                "detail": f"Recommended Speed {winning_speed} commanded directly by {active_priority}.",
             })
 
         # ── 5. Energy Economics & ROI Calculations ────────────────────────────
@@ -453,9 +515,18 @@ class LightweightPipeline:
             "recommended_speed": winning_speed,
             "comfort_assessment": m1_personalized,
             "occupancy_assessment": {
+                "status": "Occupied" if not is_unoccupied else ("Unoccupied (Grace Period Active)" if grace_period_active else "Unoccupied (Gate Enforced)"),
+                "is_occupied": not is_unoccupied,
                 "hard_gate_active": occupancy_hard_gate,
-                "occupancy_probability": occupancy_prob,
+                "grace_period_active": grace_period_active,
+                "grace_remaining_s": round(remaining_grace_s, 1),
+                "timeout_setting_s": occupancy_timeout_s,
+                "vacant_duration_s": vacant_duration_s,
+                "occupancy_probability": round(occupancy_prob, 4),
+                "occupancy_confidence": round(occupancy_prob if not is_unoccupied else (1.0 - occupancy_prob), 4),
                 "headcount": m2_res["headcount_rounded"],
+                "density_category": m2_res["density_category"],
+                "model_description": "Model 2 Multi-Module: UCI IoT Classifier + ROBOD Headcount Regressor",
             },
             "energy_assessment": {
                 "bldc_power_w": current_bldc_w,
