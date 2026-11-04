@@ -72,7 +72,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Vercel Cloud Live
             </span>
           </div>
-          <p class="text-[11px] text-slate-400">Atomberg Smart Ceiling Fan • 3-Model Real-Time Inference Cockpit</p>
+          <p class="text-[11px] text-slate-400">Atomberg Smart Ceiling Fan • AI Prototype by The Catalysts</p>
         </div>
       </div>
       
@@ -90,7 +90,7 @@
           </button>
         </div>
 
-        <a href="https://github.com/bhargav25bai10209-blip/FanWise_AI" target="_blank" 
+        <a href="https://github.com/ameeshi25bai10220-oss/FanWise_AI" target="_blank" 
            class="hidden md:flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900 hover:bg-slate-800 px-3 py-2 rounded-xl border border-slate-700 transition">
           <i data-lucide="github" class="w-4 h-4"></i> GitHub Repo
         </a>
@@ -145,7 +145,7 @@
             <span class="font-medium text-cyan-300 group-hover:text-cyan-200 flex items-center gap-1.5 text-[11px]">
               <i data-lucide="sun-medium" class="w-3.5 h-3.5"></i> Warm Afternoon
             </span>
-            <span class="text-[9px] text-slate-400">32°C, 2 people → Speed 4</span>
+            <span class="text-[9px] text-slate-400">29°C, 2 people → Speed 4</span>
           </button>
           
           <button onclick="applyPreset('empty_grace')" class="p-2 rounded-xl bg-slate-950 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-700 text-left transition flex flex-col gap-0.5 group">
@@ -173,7 +173,7 @@
             <span class="font-medium text-indigo-300 group-hover:text-indigo-200 flex items-center gap-1.5 text-[11px]">
               <i data-lucide="moon" class="w-3.5 h-3.5"></i> Night Sleep Comfort
             </span>
-            <span class="text-[9px] text-slate-400">26.5°C, 1 occupant → Speed 2</span>
+            <span class="text-[9px] text-slate-400">27.5°C, 1 occupant → Speed 2</span>
           </button>
         </div>
       </div>
@@ -196,7 +196,6 @@
               <i data-lucide="thermometer" class="w-4 h-4 text-rose-400"></i> Room Temperature
             </span>
             <div class="flex items-center gap-1.5">
-              <span id="temp-badge" class="text-[10px] px-1.5 py-0.2 rounded bg-rose-950/60 text-rose-300 border border-rose-800">Warm</span>
               <span id="temp-val" class="font-mono text-cyan-400 font-bold text-sm">31.0 °C</span>
             </div>
           </div>
@@ -314,7 +313,7 @@
                 <span class="text-slate-400 flex items-center gap-1">
                   <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i> Vacant Duration:
                 </span>
-                <span id="vacant-val" class="font-mono text-amber-300 font-bold">1 min (Within Grace)</span>
+                <span id="vacant-val" class="font-mono text-slate-400 font-semibold">Standby — select Empty to test vacancy</span>
               </div>
               <input type="range" id="vacant-input" min="0" max="600" step="30" value="60"
                 class="w-full accent-amber-400 cursor-pointer"
@@ -419,8 +418,8 @@
             </div>
 
             <!-- Manual Speed Controls (Active in Manual Mode) -->
-            <div id="manual-speed-selector" class="flex items-center gap-1.5 pt-2 justify-center md:justify-start">
-              <span class="text-[11px] text-slate-500 font-mono mr-1">Speed:</span>
+            <div id="manual-speed-selector" class="hidden items-center gap-1.5 pt-2 justify-center md:justify-start">
+              <span class="text-[11px] text-slate-500 font-mono mr-1">Manual Speed:</span>
               <button onclick="setManualSpeed(0)" class="speed-btn w-7 h-7 rounded-lg bg-slate-800 text-xs font-mono hover:bg-cyan-500 hover:text-slate-950 transition">0</button>
               <button onclick="setManualSpeed(1)" class="speed-btn w-7 h-7 rounded-lg bg-slate-800 text-xs font-mono hover:bg-cyan-500 hover:text-slate-950 transition">1</button>
               <button onclick="setManualSpeed(2)" class="speed-btn w-7 h-7 rounded-lg bg-slate-800 text-xs font-mono hover:bg-cyan-500 hover:text-slate-950 transition">2</button>
@@ -1158,6 +1157,7 @@
     let isAirflowAuto = true;
     let occupancyTimeoutSeconds = 300.0; // 5 minutes default grace
     let vacantDurationSeconds = 60.0;    // 1 minute vacant default for testing
+    let simulationRequestSequence = 0;   // Ignore stale API responses during rapid interaction
 
     // Dashboard tabs keep the same live data and APIs while separating the demo story.
     const dashboardTabs = ['simulator', 'insights', 'energy', 'system'];
@@ -1232,31 +1232,40 @@
       const autoBtn = document.getElementById('mode-auto-btn');
       const manualBtn = document.getElementById('mode-manual-btn');
       const heroModePill = document.getElementById('hero-mode-pill');
+      const manualSelector = document.getElementById('manual-speed-selector');
 
       if (mode === 'auto') {
         autoBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition bg-cyan-500 text-slate-950 shadow-sm flex items-center gap-1.5';
         manualBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition text-slate-400 hover:text-slate-200 flex items-center gap-1.5';
         heroModePill.textContent = 'AI Auto Adaptive';
         heroModePill.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800 uppercase tracking-wide';
+        manualSelector.classList.add('hidden');
+        manualSelector.classList.remove('flex');
       } else {
         manualBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition bg-purple-500 text-slate-950 shadow-sm flex items-center gap-1.5';
         autoBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition text-slate-400 hover:text-slate-200 flex items-center gap-1.5';
         heroModePill.textContent = 'Manual Direct Command';
         heroModePill.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-purple-950 text-purple-300 border border-purple-800 uppercase tracking-wide';
+        manualSelector.classList.remove('hidden');
+        manualSelector.classList.add('flex');
+        updateManualSpeedButtons(manualSpeed);
       }
       triggerSim();
     }
 
-    function setManualSpeed(speed) {
-      manualSpeed = speed;
-      // Highlight selected speed button
+    function updateManualSpeedButtons(speed) {
       document.querySelectorAll('.speed-btn').forEach((btn, idx) => {
         if (idx === speed) {
-          btn.className = 'speed-btn w-7 h-7 rounded-lg bg-cyan-500 text-slate-950 text-xs font-mono font-bold transition';
+          btn.className = 'speed-btn w-7 h-7 rounded-lg bg-purple-500 text-white text-xs font-mono font-bold transition';
         } else {
-          btn.className = 'speed-btn w-7 h-7 rounded-lg bg-slate-800 text-xs font-mono hover:bg-cyan-500 hover:text-slate-950 transition';
+          btn.className = 'speed-btn w-7 h-7 rounded-lg bg-slate-800 text-xs font-mono hover:bg-purple-500 hover:text-white transition';
         }
       });
+    }
+
+    function setManualSpeed(speed) {
+      manualSpeed = speed;
+      updateManualSpeedButtons(speed);
       if (operatingMode !== 'manual') {
         setOperatingMode('manual');
       } else {
@@ -1283,12 +1292,7 @@
       };
       document.getElementById('occupants-label').textContent = labels[count] || `${count} Persons`;
       
-      const vacantPanel = document.getElementById('vacant-controls-panel');
-      if (count === 0) {
-        vacantPanel.classList.remove('opacity-40');
-      } else {
-        vacantPanel.classList.add('opacity-40');
-      }
+      updateVacancyControlState();
       triggerSim();
     }
 
@@ -1309,17 +1313,31 @@
         600: '10 min Grace Period'
       };
       document.getElementById('timeout-setting-label').textContent = lbls[secs] || `${secs}s Timeout`;
+      updateVacancyControlState();
       triggerSim();
+    }
+
+    function updateVacancyControlState() {
+      const status = document.getElementById('vacant-val');
+      if (currentOccupants !== 0) {
+        status.textContent = 'Standby — select Empty to test vacancy';
+        status.className = 'font-mono text-slate-400 font-semibold';
+        return;
+      }
+
+      const m = Math.floor(vacantDurationSeconds / 60);
+      const s = Math.round(vacantDurationSeconds % 60);
+      status.textContent = vacantDurationSeconds < occupancyTimeoutSeconds
+        ? `${m}m ${s}s (Within Grace Period)`
+        : `${m}m ${s}s (Timeout Expired — Hard Gate)`;
+      status.className = vacantDurationSeconds < occupancyTimeoutSeconds
+        ? 'font-mono text-amber-300 font-bold'
+        : 'font-mono text-rose-300 font-bold';
     }
 
     function onVacantSliderChange(secs) {
       vacantDurationSeconds = parseFloat(secs);
-      const m = Math.floor(secs / 60);
-      const s = Math.round(secs % 60);
-      const statusText = secs < occupancyTimeoutSeconds 
-        ? `${m}m ${s}s (Within Grace Period)`
-        : `${m}m ${s}s (Timeout Expired - Hard Gate)`;
-      document.getElementById('vacant-val').textContent = statusText;
+      updateVacancyControlState();
       triggerSim();
     }
 
@@ -1342,11 +1360,25 @@
       triggerSim();
     }
 
+    function preparePresetDefaults() {
+      // Make each one-click scenario deterministic regardless of earlier interactions.
+      manualSpeed = 3;
+      updateManualSpeedButtons(manualSpeed);
+      document.getElementById('clo-select').value = '0.6';
+      document.getElementById('met-select').value = '1.2';
+      document.getElementById('vel-auto-toggle').checked = true;
+      document.getElementById('vel-input').disabled = true;
+      document.getElementById('vel-source-note').textContent = 'Dynamically derived from Provisional Dryad mapping at current fan speed.';
+      isAirflowAuto = true;
+    }
+
     function applyPreset(preset) {
+      preparePresetDefaults();
+
       if (preset === 'occupied_warm') {
-        setSlider('temp-input', 32.0, '32.0 °C');
+        setSlider('temp-input', 29.0, '29.0 °C');
         setSlider('humidity-input', 65, '65 %');
-        setSlider('outdoor-input', 33, '33.0 °C');
+        setSlider('outdoor-input', 30, '30.0 °C');
         setOccupants(2);
         setOccupancyTimeout(300);
         setComfortPref('neutral');
@@ -1360,7 +1392,6 @@
         setOccupancyTimeout(300);
         document.getElementById('vacant-input').value = 60;
         onVacantSliderChange(60);
-        manualSpeed = 3;
         setOperatingMode('auto');
       } else if (preset === 'empty_expired') {
         // Scenario: Nobody is in room, gone > 5 mins (6 min vacant >= 5 min timeout)
@@ -1371,7 +1402,6 @@
         setOccupancyTimeout(300);
         document.getElementById('vacant-input').value = 360;
         onVacantSliderChange(360);
-        manualSpeed = 3;
         setOperatingMode('auto');
       } else if (preset === 'heatwave') {
         setSlider('temp-input', 37.0, '37.0 °C');
@@ -1381,11 +1411,12 @@
         setComfortPref('cooler');
         setOperatingMode('auto');
       } else if (preset === 'night_sleep') {
-        setSlider('temp-input', 26.5, '26.5 °C');
+        setSlider('temp-input', 27.5, '27.5 °C');
         setSlider('humidity-input', 55, '55 %');
-        setSlider('outdoor-input', 27, '27.0 °C');
+        setSlider('outdoor-input', 28, '28.0 °C');
+        document.getElementById('met-select').value = '0.8';
         setOccupants(1);
-        setComfortPref('warmer');
+        setComfortPref('neutral');
         setOperatingMode('auto');
       }
     }
@@ -1402,6 +1433,7 @@
     }
 
     async function runSimulation() {
+      const requestSequence = ++simulationRequestSequence;
       const payload = {
         temperature_c: parseFloat(document.getElementById('temp-input').value),
         relative_humidity_pct: parseFloat(document.getElementById('humidity-input').value),
@@ -1426,9 +1458,14 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+        if (!res.ok) {
+          throw new Error(`Simulation API returned HTTP ${res.status}`);
+        }
         const data = await res.json();
+        if (requestSequence !== simulationRequestSequence) return;
         renderSimulation(data);
       } catch (err) {
+        if (requestSequence !== simulationRequestSequence) return;
         console.error('Simulation API Error:', err);
       }
     }
