@@ -185,3 +185,4 @@ class FanDigitalTwin:
             "is_digital_twin": True,
             "disclaimer": "Software Digital Twin simulating electromechanical BLDC response; not physical motor hardware.",
         }
+

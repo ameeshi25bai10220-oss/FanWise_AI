@@ -1,33 +1,30 @@
 # Vercel Deployment Exclusions
-# Exclude raw training datasets and archives (these are >150MB total)
+# ─────────────────────────────────────────────────────────────────
+# RULE: Only api/ and templates/ are needed at runtime.
+#       Everything else is training research and must be excluded
+#       to keep the serverless function bundle under 500 MB.
+# ─────────────────────────────────────────────────────────────────
+
+# Raw datasets (never needed at runtime)
 archive (2)/
 archive (3)/
 doi_10_6078_D1V67R__v20180717/
 RDD Datset/
 SupplementaryData/
 
+# Entire ML research/training tree (heavy .joblib files, CSVs, notebooks)
+# The runtime uses api/models_bundle.json — NOT these sklearn artifacts
+aaci_ml/
+
 # Testing & temporary caches
 .pytest_cache/
 catboost_info/
-v/
-.git/
-.gitignore
 **/__pycache__/
 **/*.pyc
 *.tmp
 *.log
 
-# Research logs, raw CSVs, evaluation images
-aaci_ml/**/audit/
-aaci_ml/**/benchmarks/
-aaci_ml/v2_improved/
-aaci_ml/v2_verification/
-aaci_ml/v3_personalization/
-aaci_ml/01_inspect_dataset.py
-aaci_ml/02_train_model.py
-aaci_ml/03_audit_pipeline.py
-aaci_ml/*.png
-aaci_ml/*.csv
-aaci_ml/*.jsonl
+# Non-runtime root files
 *.pdf
+DEPLOYMENT.md
 
