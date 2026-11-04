@@ -169,6 +169,47 @@ Percentage energy savings are calculated against each baseline:
 
 ---
 
+## Addition 4: Atomberg BLDC Fan Digital Twin
+
+To validate and demonstrate the control system without requiring physical hardware in hand, FanWise AI includes an electromechanical **Fan Digital Twin** (`api/digital_twin.py`) that models an Atomberg Renesa 1200mm ceiling fan:
+
+* **Tripartite Speed Architecture:** Separates **Target Speed** (controller's desired state), **Commanded Speed** (signal dispatched to motor driver MCU), and **Measured Tachometer Speed** (physical rotor feedback).
+* **Ramp-Up / Ramp-Down Physical Dynamics:** Simulates a **15-second physical transition delay** with intermediate RPM and watt interpolation, avoiding instantaneous artificial jumps.
+* **Tachometer Response with Aerodynamic Jitter:** Models realistic blade rotational speeds: `[0, 130, 180, 240, 300, 360] RPM` with $\pm 2\text{ RPM}$ aerodynamic flutter.
+* **Interactive Anomaly & Fault Injection Suite:**
+  * **Motor Stall:** Commanded speed $> 0$, but rotor is locked (Tachometer = 0 RPM, stall current = 4.2 W) $\to$ Triggers emergency fault alert.
+  * **Speed Mismatch:** Controller commands Speed 4, but tachometer indicates Speed 1 $\to$ Triggers tachometer mismatch warning.
+  * **Sensor Fault:** Ambient sensor disconnected / returning impossible `NaN` $\to$ Triggers Priority P1 fail-safe floor.
+  * **Stale Telemetry:** Telemetry stream age $> 300\text{s}$ $\to$ Enforces staleness freeze.
+  * **Manual Remote Lockout:** Simulates IR/RF remote command taking precedence for 600 seconds.
+
+> [!NOTE]
+> *Software Disclaimer:* This module is an engineering software digital twin simulating BLDC motor electromechanics and tachometer dynamics; it is not physical hardware on a test bench.
+
+---
+
+## Addition 5: Multi-Occupant Comfort Intelligence & Transparent Trade-Offs
+
+Conventional smart fans fail in multi-occupant rooms because they assume a single uniform preference. FanWise AI features a **Multi-Occupant Comfort & Shared Compromise Engine** (`api/multi_occupant.py`):
+
+### 1. Dual-Occupant Divergence Scenario
+* **Occupant A (Priya - Runs Hot):** Light clothing (0.5 Clo), active metabolic rate (1.3 Met), setpoint shift $-1.8^\circ\text{C}$ $\to$ Perceived temperature feels $+1.8^\circ\text{C}$ hotter $\to$ Desires **Speed 4/5 (Turbo Cooling)**.
+* **Occupant B (Rohan - Chill Sensitive):** Long sleeves (0.8 Clo), sedentary resting (0.9 Met), setpoint shift $+1.8^\circ\text{C}$ $\to$ Perceived temperature feels $-1.8^\circ\text{C}$ cooler $\to$ Desires **Speed 1 (Gentle Breeze)**.
+
+### 2. Conflict Detection & Pareto-Optimal Compromise
+* **Conflict Severity:** Evaluates the airflow gap $|s_A - s_B| = |5 - 1| = 4$ steps (Severe Conflict).
+* **Compromise Optimization:** Solves a joint utilitarian cost function:
+  $$\mathcal{J}(s) = \text{Discomfort}_A(s) + \text{Discomfort}_B(s) + \text{DraftPenalty}_B(s) + \text{Energy}(s)$$
+  Recommends **Speed 2 (10.0 W)** as the optimal shared setting.
+
+### 3. Engineering Honesty: Transparent Physical Trade-Off Communication
+A single ceiling fan creates a continuous, room-level airflow field and **cannot independently satisfy opposing airflow preferences in different parts of the room**. Rather than pretending AI can bend fluid physics, FanWise AI explicitly communicates this trade-off:
+* **Trade-off on Occupant A:** Airflow is reduced to Speed 2 (~0.24 m/s) instead of Speed 4/5. Provides fundamental convective relief while protecting Occupant B from uncomfortable drafts.
+* **Trade-off on Occupant B:** Draft velocity is strictly capped safely below draft-nuisance thresholds.
+* **Spatial Seating Optimization:** Advises positioning Occupant A directly under the blade center-line (high velocity zone $\approx 0.8\text{ m/s}$) and Occupant B toward the perimeter ($<0.2\text{ m/s}$).
+
+---
+
 ## Project Structure
 
 ```

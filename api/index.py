@@ -222,6 +222,58 @@ def energy_comparison():
         }), 500
 
 
+@app.route("/api/twin/simulate", methods=["POST", "OPTIONS"])
+def simulate_twin():
+    """
+    Simulates physical BLDC motor electromechanics, tachometer RPM response,
+    transition dynamics, and fault/anomaly conditions.
+    """
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
+    from api.digital_twin import FanDigitalTwin
+
+    payload = request.get_json(silent=True) or {}
+    fan_id = payload.get("fan_id", "Bedroom_Fan_1")
+    commanded_speed = int(payload.get("commanded_speed", 3))
+    fault = str(payload.get("injected_fault", "NONE")).upper()
+    elapsed_transition_s = float(payload.get("elapsed_transition_s", 15.0))
+
+    twin = FanDigitalTwin(fan_id=fan_id)
+    state = twin.step(
+        new_commanded_speed=commanded_speed,
+        injected_fault=fault,
+        elapsed_transition_s=elapsed_transition_s,
+    )
+    return jsonify(state), 200
+
+
+@app.route("/api/multi-occupant/evaluate", methods=["POST", "OPTIONS"])
+def multi_occupant_evaluate():
+    """
+    Evaluates multi-occupant thermal comfort with divergent preferences (e.g. Hot vs. Cold),
+    detects conflicts, calculates shared compromise speed, and communicates transparent trade-offs.
+    """
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
+    from api.multi_occupant import evaluate_multi_occupant_compromise
+
+    payload = request.get_json(silent=True) or {}
+    room_temp = float(payload.get("room_temperature_c", 28.5))
+    rh = float(payload.get("relative_humidity_pct", 60.0))
+    occ_a = payload.get("occupant_a")
+    occ_b = payload.get("occupant_b")
+
+    result = evaluate_multi_occupant_compromise(
+        room_temp_c=room_temp,
+        relative_humidity=rh,
+        occupant_a=occ_a,
+        occupant_b=occ_b,
+    )
+    return jsonify(result), 200
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)

@@ -349,6 +349,107 @@
 
       </div>
 
+      <!-- MULTI-OCCUPANT COMFORT & SHARED COMPROMISE SUITE (ADDITION 5) -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-400">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </span>
+            <div>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                Multi-Occupant Comfort Intelligence
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">Dual Occupant Simulation</span>
+              </h3>
+              <p class="text-[10px] text-slate-400">
+                Detects opposing comfort demands and calculates shared Pareto-optimal compromise
+              </p>
+            </div>
+          </div>
+          <!-- Compromise Speed Badge -->
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono text-slate-400">Shared Compromise:</span>
+            <span id="mo-compromise-badge" class="px-2.5 py-0.5 rounded-lg bg-purple-950 border border-purple-500 text-purple-300 font-bold font-mono text-xs">
+              Speed 2 (10.0 W)
+            </span>
+          </div>
+        </div>
+
+        <!-- Dual Occupant Profiles Side-by-Side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Occupant A Card -->
+          <div class="bg-slate-950/80 border border-rose-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-rose-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant A (Priya)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-bold">Runs Hot</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-a" class="text-rose-300 font-bold">30.3 °C (+1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-a" class="text-amber-300 font-bold">Hot → Speed 4/5 (Turbo)</span>
+            </div>
+          </div>
+
+          <!-- Occupant B Card -->
+          <div class="bg-slate-950/80 border border-blue-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-blue-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant B (Rohan)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800 font-bold">Chill Sensitive</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-b" class="text-blue-300 font-bold">26.7 °C (-1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-b" class="text-cyan-300 font-bold">Cold → Speed 1 (Gentle)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conflict Analysis & Severity Alert -->
+        <div id="mo-conflict-banner" class="bg-amber-950/30 border border-amber-800/80 p-3 rounded-xl flex items-start gap-2.5 text-xs">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div id="mo-conflict-title" class="font-bold text-amber-300 flex items-center gap-2">
+              Comfort Conflict Detected: Speed Gap = 3 Steps (Moderate Severity)
+            </div>
+            <p id="mo-conflict-desc" class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">
+              Occupant A demands Speed 4/5 cooling while Occupant B demands Speed 1 gentle breeze. Single-objective controllers would either overcool Occupant B or overheat Occupant A.
+            </p>
+          </div>
+        </div>
+
+        <!-- Transparent Engineering Trade-off Box -->
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-purple-900/60 space-y-2 text-xs">
+          <div class="font-mono text-[11px] font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wide">
+            <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i> Transparent Physical Trade-Off Communication
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed font-sans">
+            <strong>Physical Constraint Acknowledgment:</strong> A single ceiling fan creates a uniform air velocity field across the room and <em>cannot independently supply divergent microclimates</em> to occupants in different areas.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] font-mono pt-1 text-slate-400">
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-rose-300">Impact on Occupant A:</strong> Airflow set to Speed 2 (~0.24 m/s) instead of Speed 4/5. Provides basic convective cooling while avoiding excessive draft on Occupant B.
+            </div>
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-blue-300">Impact on Occupant B:</strong> Protected from severe drafts and cold discomfort. Draft velocity capped safely below draft nuisance threshold.
+            </div>
+          </div>
+          <div class="text-[10px] text-cyan-300 font-mono pt-1 flex items-center gap-1.5">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i> Spatial Seating Advice: Position Occupant A directly under the blade center-line (high velocity zone ~0.8 m/s) and Occupant B toward the perimeter (&lt;0.2 m/s).
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <!-- RIGHT COLUMN: The Real-Time Intelligence & Digital Twin (7 Cols) -->
@@ -412,6 +513,83 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- DIGITAL TWIN ELECTROMECHANICAL FEEDBACK & ANOMALY INJECTION (ADDITION 4) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+            </span>
+            <div>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                BLDC Motor Digital Twin
+                <span id="twin-motor-badge" class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold">Nominal State (STEADY)</span>
+              </h3>
+              <p class="text-[10px] text-slate-500 font-mono">
+                Software simulation of physical Atomberg Renesa BLDC motor response & tachometer feedback
+              </p>
+            </div>
+          </div>
+          <!-- Disclaimer pill -->
+          <span class="text-[9px] font-mono text-slate-400 bg-slate-950 px-2 py-1 rounded-md border border-slate-800">
+            Virtual Motor Simulator
+          </span>
+        </div>
+
+        <!-- Telemetry Tripartite Status Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+          <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+            <span class="text-[10px] text-slate-500 block">Commanded Speed:</span>
+            <span id="twin-cmd-speed" class="text-sm font-bold text-cyan-400">Speed 3</span>
+          </div>
+          <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+            <span class="text-[10px] text-slate-500 block">Tachometer Feedback:</span>
+            <span id="twin-meas-speed" class="text-sm font-bold text-emerald-400">Speed 3 (240 RPM)</span>
+          </div>
+          <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+            <span class="text-[10px] text-slate-500 block">Power Consumption:</span>
+            <span id="twin-power" class="text-sm font-bold text-amber-400">16.0 W</span>
+          </div>
+          <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+            <span class="text-[10px] text-slate-500 block">Transition Delay:</span>
+            <span id="twin-transition" class="text-sm font-bold text-slate-300">Steady (15s ramp)</span>
+          </div>
+        </div>
+
+        <!-- Anomaly / Alert Banner -->
+        <div id="twin-alert-banner" class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-[11px] font-mono text-slate-300 flex items-start gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+          <span id="twin-alert-text">Normal operation. All motor telemetry parameters nominal.</span>
+        </div>
+
+        <!-- Interactive Fault Injection Console for Judges -->
+        <div class="pt-1">
+          <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400"></i> Inject Simulated Motor Anomalies & Test Controller Resilience:
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-mono">
+            <button onclick="injectTwinFault('NONE')" id="fault-btn-none" class="py-1.5 px-2 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 text-[10px] text-left transition flex items-center gap-1.5 font-bold">
+              <span>🟢 Nominal Healthy</span>
+            </button>
+            <button onclick="injectTwinFault('MOTOR_STALL')" id="fault-btn-stall" class="py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-rose-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5">
+              <span>⚠️ Motor Stall (0 RPM)</span>
+            </button>
+            <button onclick="injectTwinFault('SPEED_MISMATCH')" id="fault-btn-mismatch" class="py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-amber-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5">
+              <span>⚠️ Tach Mismatch</span>
+            </button>
+            <button onclick="injectTwinFault('SENSOR_FAULT')" id="fault-btn-sensor" class="py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-rose-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5">
+              <span>⚠️ Sensor Drop (NaN)</span>
+            </button>
+            <button onclick="injectTwinFault('STALE_TELEMETRY')" id="fault-btn-stale" class="py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-indigo-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5">
+              <span>⚠️ Stale Data (&gt;300s)</span>
+            </button>
+            <button onclick="injectTwinFault('MANUAL_OVERRIDE')" id="fault-btn-override" class="py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-purple-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5">
+              <span>🔒 Remote Lockout</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -612,6 +790,107 @@
 
       </div>
 
+      <!-- MULTI-OCCUPANT COMFORT & SHARED COMPROMISE SUITE (ADDITION 5) -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-400">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </span>
+            <div>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                Multi-Occupant Comfort Intelligence
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">Dual Occupant Simulation</span>
+              </h3>
+              <p class="text-[10px] text-slate-400">
+                Detects opposing comfort demands and calculates shared Pareto-optimal compromise
+              </p>
+            </div>
+          </div>
+          <!-- Compromise Speed Badge -->
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono text-slate-400">Shared Compromise:</span>
+            <span id="mo-compromise-badge" class="px-2.5 py-0.5 rounded-lg bg-purple-950 border border-purple-500 text-purple-300 font-bold font-mono text-xs">
+              Speed 2 (10.0 W)
+            </span>
+          </div>
+        </div>
+
+        <!-- Dual Occupant Profiles Side-by-Side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Occupant A Card -->
+          <div class="bg-slate-950/80 border border-rose-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-rose-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant A (Priya)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-bold">Runs Hot</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-a" class="text-rose-300 font-bold">30.3 °C (+1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-a" class="text-amber-300 font-bold">Hot → Speed 4/5 (Turbo)</span>
+            </div>
+          </div>
+
+          <!-- Occupant B Card -->
+          <div class="bg-slate-950/80 border border-blue-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-blue-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant B (Rohan)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800 font-bold">Chill Sensitive</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-b" class="text-blue-300 font-bold">26.7 °C (-1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-b" class="text-cyan-300 font-bold">Cold → Speed 1 (Gentle)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conflict Analysis & Severity Alert -->
+        <div id="mo-conflict-banner" class="bg-amber-950/30 border border-amber-800/80 p-3 rounded-xl flex items-start gap-2.5 text-xs">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div id="mo-conflict-title" class="font-bold text-amber-300 flex items-center gap-2">
+              Comfort Conflict Detected: Speed Gap = 3 Steps (Moderate Severity)
+            </div>
+            <p id="mo-conflict-desc" class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">
+              Occupant A demands Speed 4/5 cooling while Occupant B demands Speed 1 gentle breeze. Single-objective controllers would either overcool Occupant B or overheat Occupant A.
+            </p>
+          </div>
+        </div>
+
+        <!-- Transparent Engineering Trade-off Box -->
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-purple-900/60 space-y-2 text-xs">
+          <div class="font-mono text-[11px] font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wide">
+            <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i> Transparent Physical Trade-Off Communication
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed font-sans">
+            <strong>Physical Constraint Acknowledgment:</strong> A single ceiling fan creates a uniform air velocity field across the room and <em>cannot independently supply divergent microclimates</em> to occupants in different areas.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] font-mono pt-1 text-slate-400">
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-rose-300">Impact on Occupant A:</strong> Airflow set to Speed 2 (~0.24 m/s) instead of Speed 4/5. Provides basic convective cooling while avoiding excessive draft on Occupant B.
+            </div>
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-blue-300">Impact on Occupant B:</strong> Protected from severe drafts and cold discomfort. Draft velocity capped safely below draft nuisance threshold.
+            </div>
+          </div>
+          <div class="text-[10px] text-cyan-300 font-mono pt-1 flex items-center gap-1.5">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i> Spatial Seating Advice: Position Occupant A directly under the blade center-line (high velocity zone ~0.8 m/s) and Occupant B toward the perimeter (&lt;0.2 m/s).
+          </div>
+        </div>
+
+      </div>
+
       <!-- THE "GLASS BOX" DECISION PROCESS STEPPER (Transparency for Judges) -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -770,6 +1049,107 @@
           </div>
           <div class="text-[10px] text-slate-500 pt-2 border-t border-slate-800/80 font-mono">
             Measurable household cost reduction
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MULTI-OCCUPANT COMFORT & SHARED COMPROMISE SUITE (ADDITION 5) -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-xl bg-purple-950/80 border border-purple-500/50 text-purple-400">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </span>
+            <div>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                Multi-Occupant Comfort Intelligence
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">Dual Occupant Simulation</span>
+              </h3>
+              <p class="text-[10px] text-slate-400">
+                Detects opposing comfort demands and calculates shared Pareto-optimal compromise
+              </p>
+            </div>
+          </div>
+          <!-- Compromise Speed Badge -->
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono text-slate-400">Shared Compromise:</span>
+            <span id="mo-compromise-badge" class="px-2.5 py-0.5 rounded-lg bg-purple-950 border border-purple-500 text-purple-300 font-bold font-mono text-xs">
+              Speed 2 (10.0 W)
+            </span>
+          </div>
+        </div>
+
+        <!-- Dual Occupant Profiles Side-by-Side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Occupant A Card -->
+          <div class="bg-slate-950/80 border border-rose-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-rose-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant A (Priya)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-bold">Runs Hot</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-a" class="text-rose-300 font-bold">30.3 °C (+1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-a" class="text-amber-300 font-bold">Hot → Speed 4/5 (Turbo)</span>
+            </div>
+          </div>
+
+          <!-- Occupant B Card -->
+          <div class="bg-slate-950/80 border border-blue-950/60 p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-blue-300 flex items-center gap-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i> Occupant B (Rohan)
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800 font-bold">Chill Sensitive</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Effective Perceived Temp:</span>
+              <span id="mo-eff-temp-b" class="text-blue-300 font-bold">26.7 °C (-1.8°C)</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex justify-between font-mono">
+              <span>Sensation & Desired Airflow:</span>
+              <span id="mo-desired-b" class="text-cyan-300 font-bold">Cold → Speed 1 (Gentle)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conflict Analysis & Severity Alert -->
+        <div id="mo-conflict-banner" class="bg-amber-950/30 border border-amber-800/80 p-3 rounded-xl flex items-start gap-2.5 text-xs">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div id="mo-conflict-title" class="font-bold text-amber-300 flex items-center gap-2">
+              Comfort Conflict Detected: Speed Gap = 3 Steps (Moderate Severity)
+            </div>
+            <p id="mo-conflict-desc" class="text-[11px] text-slate-300 mt-0.5 leading-relaxed">
+              Occupant A demands Speed 4/5 cooling while Occupant B demands Speed 1 gentle breeze. Single-objective controllers would either overcool Occupant B or overheat Occupant A.
+            </p>
+          </div>
+        </div>
+
+        <!-- Transparent Engineering Trade-off Box -->
+        <div class="bg-slate-950 p-3.5 rounded-xl border border-purple-900/60 space-y-2 text-xs">
+          <div class="font-mono text-[11px] font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wide">
+            <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i> Transparent Physical Trade-Off Communication
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed font-sans">
+            <strong>Physical Constraint Acknowledgment:</strong> A single ceiling fan creates a uniform air velocity field across the room and <em>cannot independently supply divergent microclimates</em> to occupants in different areas.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] font-mono pt-1 text-slate-400">
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-rose-300">Impact on Occupant A:</strong> Airflow set to Speed 2 (~0.24 m/s) instead of Speed 4/5. Provides basic convective cooling while avoiding excessive draft on Occupant B.
+            </div>
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+              <strong class="text-blue-300">Impact on Occupant B:</strong> Protected from severe drafts and cold discomfort. Draft velocity capped safely below draft nuisance threshold.
+            </div>
+          </div>
+          <div class="text-[10px] text-cyan-300 font-mono pt-1 flex items-center gap-1.5">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i> Spatial Seating Advice: Position Occupant A directly under the blade center-line (high velocity zone ~0.8 m/s) and Occupant B toward the perimeter (&lt;0.2 m/s).
           </div>
         </div>
 
@@ -1329,6 +1709,10 @@
 
       // 10. Raw JSON Inspector
       document.getElementById('json-inspector').textContent = JSON.stringify(data, null, 2);
+
+      // 11. Synchronize Digital Twin & Multi-Occupant State
+      injectTwinFault(activeTwinFault);
+      loadMultiOccupantCompromise();
     }
 
     // ── Energy Optimization Benchmark Functions (Addition 3) ───────────────────
@@ -1503,10 +1887,133 @@
       tip.classList.add('hidden');
     }
 
+    // ── Digital Twin & Multi-Occupant Functions (Additions 4 & 5) ─────────────
+    let activeTwinFault = 'NONE';
+
+    async function injectTwinFault(fault) {
+      activeTwinFault = fault;
+      const faultMap = {
+        'NONE': 'none',
+        'MOTOR_STALL': 'stall',
+        'SPEED_MISMATCH': 'mismatch',
+        'SENSOR_FAULT': 'sensor',
+        'STALE_TELEMETRY': 'stale',
+        'MANUAL_OVERRIDE': 'override',
+      };
+      
+      Object.keys(faultMap).forEach(k => {
+        const btnId = `fault-btn-${faultMap[k]}`;
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          if (k === fault) {
+            btn.className = 'py-1.5 px-2 rounded-lg bg-cyan-950 border border-cyan-500 text-cyan-300 text-[10px] text-left transition flex items-center gap-1.5 font-bold';
+          } else {
+            btn.className = 'py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-600 text-slate-400 text-[10px] text-left transition flex items-center gap-1.5';
+          }
+        }
+      });
+
+      const currentRecSpeed = parseInt(document.getElementById('hero-speed-display').textContent) || 3;
+      try {
+        const res = await fetch('/api/twin/simulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            commanded_speed: currentRecSpeed,
+            injected_fault: fault,
+            elapsed_transition_s: 15.0
+          })
+        });
+        const state = await res.json();
+        renderDigitalTwin(state);
+      } catch (err) {
+        console.error('Twin simulation error:', err);
+      }
+    }
+
+    function renderDigitalTwin(twin) {
+      document.getElementById('twin-cmd-speed').textContent = `Speed ${twin.commanded_speed}`;
+      document.getElementById('twin-meas-speed').textContent = `Speed ${twin.measured_speed} (${twin.rpm} RPM)`;
+      document.getElementById('twin-power').textContent = `${twin.power_w.toFixed(1)} W`;
+      document.getElementById('twin-transition').textContent = twin.motor_state;
+
+      const badge = document.getElementById('twin-motor-badge');
+      badge.textContent = twin.motor_state;
+      if (twin.health_status === 'FAULT' || twin.active_fault !== 'NONE') {
+        badge.className = 'text-[9px] font-mono px-2 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-bold';
+      } else {
+        badge.className = 'text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold';
+      }
+
+      const alertBanner = document.getElementById('twin-alert-banner');
+      const alertText = document.getElementById('twin-alert-text');
+      alertText.textContent = twin.anomaly_alert;
+      if (twin.active_fault !== 'NONE') {
+        alertBanner.className = 'bg-rose-950/40 p-2.5 rounded-xl border border-rose-800/80 text-[11px] font-mono text-rose-300 flex items-start gap-2';
+      } else {
+        alertBanner.className = 'bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-[11px] font-mono text-slate-300 flex items-start gap-2';
+      }
+    }
+
+    async function loadMultiOccupantCompromise() {
+      const roomTemp = parseFloat(document.getElementById('temp-input').value) || 28.5;
+      const rh = parseFloat(document.getElementById('humidity-input').value) || 60.0;
+      try {
+        const res = await fetch('/api/multi-occupant/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            room_temperature_c: roomTemp,
+            relative_humidity_pct: rh
+          })
+        });
+        const data = await res.json();
+        renderMultiOccupant(data);
+      } catch (err) {
+        console.error('Multi-occupant error:', err);
+      }
+    }
+
+    function renderMultiOccupant(data) {
+      const comp = data.compromise_decision || {};
+      const occs = data.occupants || [];
+      const conflict = data.conflict_analysis || {};
+
+      const powerMap = [0.0, 5.0, 10.0, 16.0, 22.0, 28.0];
+      const pWatts = powerMap[comp.recommended_compromise_speed] || 10.0;
+      document.getElementById('mo-compromise-badge').textContent = `Speed ${comp.recommended_compromise_speed} (${pWatts.toFixed(1)} W)`;
+      
+      if (occs.length >= 2) {
+        const diffA = (occs[0].effective_temp_c - data.room_temperature_c).toFixed(1);
+        document.getElementById('mo-eff-temp-a').textContent = `${occs[0].effective_temp_c} °C (${diffA >= 0 ? '+' : ''}${diffA}°C)`;
+        document.getElementById('mo-desired-a').textContent = `${occs[0].sensation} → Speed ${occs[0].desired_speed}`;
+
+        const diffB = (occs[1].effective_temp_c - data.room_temperature_c).toFixed(1);
+        document.getElementById('mo-eff-temp-b').textContent = `${occs[1].effective_temp_c} °C (${diffB >= 0 ? '+' : ''}${diffB}°C)`;
+        document.getElementById('mo-desired-b').textContent = `${occs[1].sensation} → Speed ${occs[1].desired_speed}`;
+      }
+
+      const confBanner = document.getElementById('mo-conflict-banner');
+      const confTitle = document.getElementById('mo-conflict-title');
+      const confDesc = document.getElementById('mo-conflict-desc');
+
+      if (conflict.has_conflict) {
+        confBanner.className = 'bg-amber-950/30 border border-amber-800/80 p-3 rounded-xl flex items-start gap-2.5 text-xs';
+        confTitle.textContent = `Comfort Conflict Detected: Speed Gap = ${conflict.speed_gap_steps} Steps (${conflict.severity} Severity)`;
+        confDesc.textContent = conflict.conflict_description;
+      } else {
+        confBanner.className = 'bg-emerald-950/30 border border-emerald-800/80 p-3 rounded-xl flex items-start gap-2.5 text-xs';
+        confTitle.textContent = 'Preferences Aligned: No Comfort Conflict';
+        confDesc.textContent = 'Both occupants have compatible thermal sensation expectations.';
+      }
+    }
+
     // Auto-run on load
     window.addEventListener('DOMContentLoaded', () => {
       runSimulation();
       loadEnergyScenario('workday');
+      injectTwinFault('NONE');
+      loadMultiOccupantCompromise();
     });
   </script>
 </body>
